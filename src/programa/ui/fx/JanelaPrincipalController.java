@@ -1,92 +1,90 @@
 package programa.ui.fx;
 
-import javafx.scene.control.MenuItem;
 import programa.Programa;
 
 import java.net.URL;
+
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 
 public class JanelaPrincipalController implements Initializable {
-	@FXML
-	private Button btFechar, btCliente, btProduto;
-	@FXML
-	private MenuItem itemClienteInserir, itemClienteControle, itemProdutoInserir, itemProdutoControle;
+    @FXML
+    private Button btFechar, btCliente, btProduto;
+    @FXML
+    private MenuItem itemClienteInserir, itemClienteControle, itemProdutoInserir, itemProdutoControle;
 
-	private UICliente uiCliente;
-	private UICidade uiCidade;
-	private UIProduto uiProduto;
 
-	public JanelaPrincipalController(UICliente uiCliente, UICidade uiCidade, UIProduto uiProduto) {
-		this.uiCliente = uiCliente;
-		this.uiCidade = uiCidade;
-		this.uiProduto = uiProduto;
-	}
 
-	public void initialize(URL url, ResourceBundle bundle) {
-		btFechar.setOnAction(new EventHandler<ActionEvent>() {
+    public JanelaPrincipalController() {
 
-			@Override
-			public void handle(ActionEvent arg0) {
-				System.exit(0);
-				// JOptionPane.showMessageDialog(null, "Mensagem");
-			}
-		});
-		
-		btCliente.setOnAction(new EventHandler<ActionEvent>() {
+    }
 
-			@Override
-			public void handle(ActionEvent arg0) {
-				Programa.uiCliente.listarClientes();
-			}
-		});
-		
-		btProduto.setOnAction(new EventHandler<ActionEvent>() {
+    public void initialize(URL url, ResourceBundle bundle) {
+        btFechar.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-				Programa.uiProduto.listarProdutos();
-			}
-		});
+            @Override
+            public void handle(ActionEvent arg0) {
+                System.exit(0);
+                // JOptionPane.showMessageDialog(null, "Mensagem");
+            }
+        });
 
-		itemClienteInserir.setOnAction(new EventHandler<ActionEvent>() {
+        btCliente.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-				Programa.uiCliente.lerCliente();
-			}
-		});
+            @Override
+            public void handle(ActionEvent arg0) {
+                JanelaPrincipal.uiCliente.listarClientes();
+            }
+        });
 
-		itemClienteControle.setOnAction(new EventHandler<ActionEvent>() {
+        btProduto.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-				Programa.uiCliente.listarClientes();
-			}
-		});
-		
-		itemProdutoInserir.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                JanelaPrincipal.uiProduto.listarProdutos();
+            }
+        });
 
-			@Override
-			public void handle(ActionEvent event) {
-				Programa.uiProduto.lerProduto();
-			}
-		});
+        itemClienteInserir.setOnAction(new EventHandler<ActionEvent>() {
 
-		itemProdutoControle.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                JanelaPrincipal.uiCliente.lerCliente();
+            }
+        });
 
-			@Override
-			public void handle(ActionEvent event) {
-				Programa.uiProduto.listarProdutos();
-			}
-		});
-		
-		
+        itemClienteControle.setOnAction(new EventHandler<ActionEvent>() {
 
-	}
+            @Override
+            public void handle(ActionEvent event) {
+                JanelaPrincipal.uiCliente.listarClientes();
+            }
+        });
+
+        itemProdutoInserir.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                JanelaPrincipal.uiProduto.lerProduto();
+            }
+        });
+
+        itemProdutoControle.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                JanelaPrincipal.uiProduto.listarProdutos();
+            }
+        });
+
+
+    }
 }

@@ -6,31 +6,48 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import programa.dados.*;
+import programa.negocio.Controle;
+
+import java.io.IOException;
 
 public class JanelaPrincipal extends Application {
-	private static Stage stage;
 
-	private UICliente uiCliente;
-	private UICidade uiCidade;
-	private UIProduto uiProduto;
+    public JanelaPrincipal() {
+    }
 
-	public JanelaPrincipal(UICliente uiCliente, UICidade uiCidade, UIProduto uiProduto) {
-		this.uiCliente = uiCliente;
-		this.uiCidade = uiCidade;
-		this.uiProduto = uiProduto;
-		launch();
-	}
+    public static UICliente uiCliente;
+    public static UICidade uiCidade;
+    public static UIProduto uiProduto;
 
-	@Override
-	public void start(Stage stage) throws Exception {
-		JanelaPrincipal.stage = stage;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Principal.fxml"));		
-		loader.setController(new JanelaPrincipalController(uiCliente, uiCidade, uiProduto));
-		Parent parent = loader.load();
-		Scene scene = new Scene(parent);
-		stage.setScene(scene);
-		stage.setTitle("Tela Principal");
-		stage.show();
-	}
+    public static void main(String args[]) {
+        IRepositorioCliente repoCliente = new ClienteDAO();
+        IRepositorioCidade repoCidade = new CidadeDAO();
+        IRepositorioProduto repoProduto = new ProdutoDAO();
+
+        Controle ctr = new Controle(repoCliente, repoCidade, repoProduto);
+
+        uiCliente = new UICliente(ctr);
+        uiCidade = new UICidade(ctr);
+        uiProduto = new UIProduto(ctr);
+        launch(args);
+    }
+
+
+    @Override
+    public void start(Stage stage) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Principal.fxml"));
+        loader.setController(new JanelaPrincipalController());
+
+        try {
+            Parent parent = loader.load();
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.setTitle("Tela Principal");
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 }

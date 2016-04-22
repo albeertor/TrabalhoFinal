@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import programa.negocio.entidades.Produto;
 
@@ -61,6 +62,21 @@ public class ProdutoDAO implements IRepositorioProduto {
 		}
 
 		return proxId;
+	}
+
+	@Override
+	public boolean alterar(Produto prod) {
+		return false;
+	}
+
+	@Override
+	public List<Produto> getLista() {
+		return null;
+	}
+
+	@Override
+	public List<Produto> getPesquisa(Produto prod) {
+		return null;
 	}
 
 }
