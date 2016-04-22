@@ -31,14 +31,14 @@ public class Cliente {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Cliente(String nome, Date dtAniversario, Cidade cidade) {
+	public Cliente(String nome, String cpf, Cidade cidade) {
 		this.nome = nome;
-		this.dtNasc = dtAniversario;
+		this.cpf = cpf;
 		this.cidade = cidade;
 	}
 
-	public static Cliente newInstance(String nome, Date dtAniversario, Cidade cidade){
-		return new Cliente(nome,dtAniversario,cidade);
+	public static Cliente newInstance(String nome, String cpf, Cidade cidade){
+		return new Cliente(nome,cpf,cidade);
 	}
 	
 	public static Cliente newInstance(String nome, Date dtAniversario,

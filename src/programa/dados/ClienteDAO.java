@@ -26,8 +26,8 @@ public class ClienteDAO implements IRepositorioCliente {
 	@Override
 	public boolean inserir(Cliente c) {
 		try {
-			PreparedStatement stmt = conexao
-					.prepareStatement("INSERT into cliente(nmCliente, dtnasc, cpf, rg, cep, endereco, cdcidade,fone) value (?,?,?,?,?,?,?,?)");
+			PreparedStatement stmt = conexao.prepareStatement(
+					"INSERT into cliente(nmCliente, dtnasc, cpf, rg, cep, endereco, cdcidade,fone) value (?,?,?,?,?,?,?,?)");
 
 			stmt.setString(1, c.getNome());
 			Date d = new Date(c.getDtNasc().getTime());
@@ -52,8 +52,7 @@ public class ClienteDAO implements IRepositorioCliente {
 	@Override
 	public boolean excluir(Cliente c) {
 		try {
-			PreparedStatement stmt = conexao
-					.prepareStatement("DELETE FROM cliente WHERE cdCliente=?");
+			PreparedStatement stmt = conexao.prepareStatement("DELETE FROM cliente WHERE cdCliente=?");
 			stmt.setLong(1, c.getCodCliente());
 
 			stmt.execute();
@@ -70,8 +69,7 @@ public class ClienteDAO implements IRepositorioCliente {
 	public Cidade getCidade(int cdCidade) {
 		PreparedStatement stmt;
 		try {
-			stmt = conexao
-					.prepareStatement("SELECT * FROM cidade WHERE cdcidade=?");
+			stmt = conexao.prepareStatement("SELECT * FROM cidade WHERE cdcidade=?");
 			stmt.setInt(1, cdCidade);
 
 			ResultSet rs = stmt.executeQuery();
@@ -143,8 +141,8 @@ public class ClienteDAO implements IRepositorioCliente {
 	@Override
 	public long getProxId() {
 		try {
-			PreparedStatement stmt = conexao
-					.prepareStatement("SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'cliente'");
+			PreparedStatement stmt = conexao.prepareStatement(
+					"SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'cliente'");
 			ResultSet rs = stmt.executeQuery();
 			if (rs.first()) {
 				proxId = rs.getLong("AUTO_INCREMENT");
@@ -164,8 +162,8 @@ public class ClienteDAO implements IRepositorioCliente {
 	public boolean alterar(Cliente c) {
 		if (c != null) {
 			try {
-				PreparedStatement stmt = conexao
-						.prepareStatement("UPDATE cliente SET nmCliente=?, dtNasc=?, cpf=?, rg=?, cep=?, endereco=?, cdcidade=?, fone=? WHERE cdCliente=?");
+				PreparedStatement stmt = conexao.prepareStatement(
+						"UPDATE cliente SET nmCliente=?, dtNasc=?, cpf=?, rg=?, cep=?, endereco=?, cdcidade=?, fone=? WHERE cdCliente=?");
 
 				stmt.setString(1, c.getNome());
 				Date d = new Date(c.getDtNasc().getTime());
@@ -194,90 +192,89 @@ public class ClienteDAO implements IRepositorioCliente {
 	@Override
 	public List<Cliente> getPesquisa(Cliente c) {
 		List<Cliente> lista = new ArrayList<Cliente>();
-		
+
 		PreparedStatement stmt;
-		if(c.getNome() == null && c.getDtNasc() == null && c.getCodCliente() == 0 && c.getCidade() != null){
-		try {
-			stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE cdcidade = ?");
-						
-			stmt.setLong(1	, c.getCidade().getCodCidade());	
-		
-			ResultSet rs = stmt.executeQuery();
+		if (c.getNome() == null && c.getCpf() == null && c.getCodCliente() == 0 && c.getCidade() != null) {
+			try {
+				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE cdcidade = ?");
 
-			while (rs.next()) {
-				Cliente cliente = new Cliente();
-				cliente.setCodCliente(rs.getLong("cdCliente"));
-				cliente.setNome(rs.getString("nmCliente"));
-				cliente.setDtAniversario(rs.getDate("dtNasc"));
-				cliente.setCpf(rs.getString("cpf"));
-				cliente.setRg(rs.getString("rg"));
-				cliente.setEndereco(rs.getString("endereco"));
+				stmt.setLong(1, c.getCidade().getCodCidade());
 
-				int cdcid = rs.getInt("cdCidade");
-				Cidade cid = getCidade(cdcid);
+				ResultSet rs = stmt.executeQuery();
 
-				cliente.setCidade(cid);
-				cliente.setTel(rs.getString("fone"));
-				cliente.setCep(rs.getString("cep"));
-				lista.add(cliente);
+				while (rs.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setCodCliente(rs.getLong("cdCliente"));
+					cliente.setNome(rs.getString("nmCliente"));
+					cliente.setDtAniversario(rs.getDate("dtNasc"));
+					cliente.setCpf(rs.getString("cpf"));
+					cliente.setRg(rs.getString("rg"));
+					cliente.setEndereco(rs.getString("endereco"));
+
+					int cdcid = rs.getInt("cdCidade");
+					Cidade cid = getCidade(cdcid);
+
+					cliente.setCidade(cid);
+					cliente.setTel(rs.getString("fone"));
+					cliente.setCep(rs.getString("cep"));
+					lista.add(cliente);
+				}
+
+				rs.close();
+				stmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-
-			rs.close();
-			stmt.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
-		}
-		if(c.getNome() != null && c.getDtNasc() != null && c.getCodCliente() != 0 && c.getCidade() != null){
-		try {
-			stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE nmcliente like ? and dtnasc = ? and cdcliente = ? and cdcidade = ?");
-			
-			
-			stmt.setString(1, c.getNome() + "%");
-			
-			Date d = new Date(c.getDtNasc().getTime());
-			stmt.setDate(2, d);
-			
-			stmt.setLong(3, c.getCodCliente());
-			
-			stmt.setLong(4, c.getCidade().getCodCidade());
-	
-			ResultSet rs = stmt.executeQuery();
+		if (c.getNome() != null && c.getCpf() != null && c.getCodCliente() != 0 && c.getCidade() != null) {
+			try {
+				stmt = conexao.prepareStatement(
+						"SELECT * FROM cliente WHERE nmcliente like ? and cpf = ? and cdcliente = ? and cdcidade = ?");
 
-			while (rs.next()) {
-				Cliente cliente = new Cliente();
-				cliente.setCodCliente(rs.getLong("cdCliente"));
-				cliente.setNome(rs.getString("nmCliente"));
-				cliente.setDtAniversario(rs.getDate("dtNasc"));
-				cliente.setCpf(rs.getString("cpf"));
-				cliente.setRg(rs.getString("rg"));
-				cliente.setEndereco(rs.getString("endereco"));
+				stmt.setString(1, c.getNome() + "%");
 
-				int cdcid = rs.getInt("cdCidade");
-				Cidade cid = getCidade(cdcid);
+				stmt.setString(2, c.getCpf());
 
-				cliente.setCidade(cid);
-				cliente.setTel(rs.getString("fone"));
-				cliente.setCep(rs.getString("cep"));
-				lista.add(cliente);
+				stmt.setLong(3, c.getCodCliente());
+
+				stmt.setLong(4, c.getCidade().getCodCidade());
+
+				ResultSet rs = stmt.executeQuery();
+
+				while (rs.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setCodCliente(rs.getLong("cdCliente"));
+					cliente.setNome(rs.getString("nmCliente"));
+					cliente.setDtAniversario(rs.getDate("dtNasc"));
+					cliente.setCpf(rs.getString("cpf"));
+					cliente.setRg(rs.getString("rg"));
+					cliente.setEndereco(rs.getString("endereco"));
+
+					int cdcid = rs.getInt("cdCidade");
+					Cidade cid = getCidade(cdcid);
+
+					cliente.setCidade(cid);
+					cliente.setTel(rs.getString("fone"));
+					cliente.setCep(rs.getString("cep"));
+					lista.add(cliente);
+				}
+
+				rs.close();
+				stmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-
-			rs.close();
-			stmt.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
-		}
-				
-		if(c.getNome() == null && c.getDtNasc() == null && c.getCodCliente() != 0 && c.getCidade() != null){
+
+		if (c.getNome() == null && c.getCpf() == null && c.getCodCliente() != 0 && c.getCidade() != null) {
 			try {
 				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE cdcliente = ? and cdcidade = ?");
-				
+
 				stmt.setLong(1, c.getCodCliente());
 				stmt.setLong(2, c.getCidade().getCodCidade());
-					
+
 				ResultSet rs = stmt.executeQuery();
 
 				while (rs.next()) {
@@ -305,16 +302,17 @@ public class ClienteDAO implements IRepositorioCliente {
 				e.printStackTrace();
 			}
 		}
-		
-		if(c.getNome() != null && c.getDtNasc() != null && c.getCodCliente() != 0 && c.getCidade() == null){
+
+		if (c.getNome() != null && c.getCpf() != null && c.getCodCliente() != 0 && c.getCidade() == null) {
 			try {
-				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE  nmcliente like ? and dtnasc = ? and cdcliente = ?");
-			
+				stmt = conexao.prepareStatement(
+						"SELECT * FROM cliente WHERE  nmcliente like ? and cpf = ? and cdcliente = ?");
+
 				stmt.setString(1, c.getNome() + "%");
-				Date d = new Date(c.getDtNasc().getTime());
-				stmt.setDate(2, d);
+
+				stmt.setString(2, c.getCpf());
 				stmt.setLong(3, c.getCodCliente());
-								
+
 				ResultSet rs = stmt.executeQuery();
 
 				while (rs.next()) {
@@ -342,17 +340,15 @@ public class ClienteDAO implements IRepositorioCliente {
 				e.printStackTrace();
 			}
 		}
-		
-		if(c.getNome() == null && c.getCodCliente() == 0 && c.getDtNasc() != null && c.getCidade() != null){
+
+		if (c.getNome() == null && c.getCodCliente() == 0 && c.getCpf() != null && c.getCidade() != null) {
 			try {
-				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE dtnasc = ? and cdcidade = ?");
-								
-				Date d = new Date(c.getDtNasc().getTime());
-				stmt.setDate(1, d);
-							
+				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE cpf = ? and cdcidade = ?");
+
+				stmt.setString(1, c.getCpf());
+
 				stmt.setLong(2, c.getCidade().getCodCidade());
-		
-			
+
 				ResultSet rs = stmt.executeQuery();
 
 				while (rs.next()) {
@@ -380,20 +376,18 @@ public class ClienteDAO implements IRepositorioCliente {
 				e.printStackTrace();
 			}
 		}
-		
-		if(c.getNome() == null && c.getCodCliente() != 0 && c.getDtNasc() != null && c.getCidade() != null){
+
+		if (c.getNome() == null && c.getCodCliente() != 0 && c.getCpf() != null && c.getCidade() != null) {
 			try {
-				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE dtnasc = ? and cdcliente = ? and cdcidade = ?");
-								
-				
-				Date d = new Date(c.getDtNasc().getTime());
-				stmt.setDate(1, d);
-								
+				stmt = conexao
+						.prepareStatement("SELECT * FROM cliente WHERE cpf = ? and cdcliente = ? and cdcidade = ?");
+
+				stmt.setString(1, c.getCpf());
+
 				stmt.setLong(2, c.getCodCliente());
-								
+
 				stmt.setLong(3, c.getCidade().getCodCidade());
-		
-			
+
 				ResultSet rs = stmt.executeQuery();
 
 				while (rs.next()) {
@@ -421,17 +415,18 @@ public class ClienteDAO implements IRepositorioCliente {
 				e.printStackTrace();
 			}
 		}
-		
-		if(c.getDtNasc() == null && c.getCodCliente() != 0 && c.getNome() != null && c.getCidade() != null){
+
+		if (c.getCpf() == null && c.getCodCliente() != 0 && c.getNome() != null && c.getCidade() != null) {
 			try {
-				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE nmcliente like ? and cdcliente = ? and cdcidade = ?");
-								
+				stmt = conexao.prepareStatement(
+						"SELECT * FROM cliente WHERE nmcliente like ? and cdcliente = ? and cdcidade = ?");
+
 				stmt.setString(1, c.getNome() + "%");
-				
+
 				stmt.setLong(2, c.getCodCliente());
-				
+
 				stmt.setLong(3, c.getCidade().getCodCidade());
-					
+
 				ResultSet rs = stmt.executeQuery();
 
 				while (rs.next()) {
@@ -459,20 +454,18 @@ public class ClienteDAO implements IRepositorioCliente {
 				e.printStackTrace();
 			}
 		}
-		
-		if(c.getCodCliente() == 0 && c.getNome() != null && c.getDtNasc() != null && c.getCidade() != null){
+
+		if (c.getCodCliente() == 0 && c.getNome() != null && c.getCpf() != null && c.getCidade() != null) {
 			try {
-				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE nmcliente like ? and dtnasc = ? and cdcidade = ?");
-								
+				stmt = conexao
+						.prepareStatement("SELECT * FROM cliente WHERE nmcliente like ? and cpf = ? and cdcidade = ?");
+
 				stmt.setString(1, c.getNome() + "%");
-								
-				Date d = new Date(c.getDtNasc().getTime());
-				stmt.setDate(2, d);
-				
-												
+
+				stmt.setString(2, c.getCpf());
+
 				stmt.setLong(3, c.getCidade().getCodCidade());
-		
-			
+
 				ResultSet rs = stmt.executeQuery();
 
 				while (rs.next()) {
@@ -500,16 +493,15 @@ public class ClienteDAO implements IRepositorioCliente {
 				e.printStackTrace();
 			}
 		}
-		
-		if(c.getDtNasc() == null && c.getCodCliente() == 0 && c.getNome() != null && c.getCidade() != null	){
+
+		if (c.getCpf() == null && c.getCodCliente() == 0 && c.getNome() != null && c.getCidade() != null) {
 			try {
 				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE nmcliente like ? and cdcidade = ?");
-			
+
 				stmt.setString(1, c.getNome() + "%");
-							
+
 				stmt.setLong(2, c.getCidade().getCodCidade());
-		
-			
+
 				ResultSet rs = stmt.executeQuery();
 
 				while (rs.next()) {
@@ -537,229 +529,217 @@ public class ClienteDAO implements IRepositorioCliente {
 				e.printStackTrace();
 			}
 		}
-			
-		if(c.getNome() == null && c.getDtNasc() == null && c.getCodCliente() != 0 && c.getCidade() == null){
-				try {
-					stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE cdcliente = ?");
-					
-					stmt.setLong(1, c.getCodCliente());
-											
-					ResultSet rs = stmt.executeQuery();
 
-					while (rs.next()) {
-						Cliente cliente = new Cliente();
-						cliente.setCodCliente(rs.getLong("cdCliente"));
-						cliente.setNome(rs.getString("nmCliente"));
-						cliente.setDtAniversario(rs.getDate("dtNasc"));
-						cliente.setCpf(rs.getString("cpf"));
-						cliente.setRg(rs.getString("rg"));
-						cliente.setEndereco(rs.getString("endereco"));
+		if (c.getNome() == null && c.getCpf() == null && c.getCodCliente() != 0 && c.getCidade() == null) {
+			try {
+				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE cdcliente = ?");
 
-						int cdcid = rs.getInt("cdCidade");
-						Cidade cid = getCidade(cdcid);
+				stmt.setLong(1, c.getCodCliente());
 
-						cliente.setCidade(cid);
-						cliente.setTel(rs.getString("fone"));
-						cliente.setCep(rs.getString("cep"));
-						lista.add(cliente);
-					}
+				ResultSet rs = stmt.executeQuery();
 
-					rs.close();
-					stmt.close();
+				while (rs.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setCodCliente(rs.getLong("cdCliente"));
+					cliente.setNome(rs.getString("nmCliente"));
+					cliente.setDtAniversario(rs.getDate("dtNasc"));
+					cliente.setCpf(rs.getString("cpf"));
+					cliente.setRg(rs.getString("rg"));
+					cliente.setEndereco(rs.getString("endereco"));
 
-				} catch (SQLException e) {
-					e.printStackTrace();
+					int cdcid = rs.getInt("cdCidade");
+					Cidade cid = getCidade(cdcid);
+
+					cliente.setCidade(cid);
+					cliente.setTel(rs.getString("fone"));
+					cliente.setCep(rs.getString("cep"));
+					lista.add(cliente);
 				}
+
+				rs.close();
+				stmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			
-			if(c.getNome() == null && c.getCodCliente() == 0 && c.getDtNasc() != null && c.getCidade() == null){
-				try {
-					stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE dtnasc = ?");
-									
-					Date d = new Date(c.getDtNasc().getTime());
-					stmt.setDate(1, d);
-					
-								
-					ResultSet rs = stmt.executeQuery();
+		}
 
-					while (rs.next()) {
-						Cliente cliente = new Cliente();
-						cliente.setCodCliente(rs.getLong("cdCliente"));
-						cliente.setNome(rs.getString("nmCliente"));
-						cliente.setDtAniversario(rs.getDate("dtNasc"));
-						cliente.setCpf(rs.getString("cpf"));
-						cliente.setRg(rs.getString("rg"));
-						cliente.setEndereco(rs.getString("endereco"));
+		if (c.getNome() == null && c.getCodCliente() == 0 && c.getCpf() != null && c.getCidade() == null) {
+			try {
+				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE cpf = ?");
 
-						int cdcid = rs.getInt("cdCidade");
-						Cidade cid = getCidade(cdcid);
+				stmt.setString(1, c.getCpf());
 
-						cliente.setCidade(cid);
-						cliente.setTel(rs.getString("fone"));
-						cliente.setCep(rs.getString("cep"));
-						lista.add(cliente);
-					}
+				ResultSet rs = stmt.executeQuery();
 
-					rs.close();
-					stmt.close();
+				while (rs.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setCodCliente(rs.getLong("cdCliente"));
+					cliente.setNome(rs.getString("nmCliente"));
+					cliente.setDtAniversario(rs.getDate("dtNasc"));
+					cliente.setCpf(rs.getString("cpf"));
+					cliente.setRg(rs.getString("rg"));
+					cliente.setEndereco(rs.getString("endereco"));
 
-				} catch (SQLException e) {
-					e.printStackTrace();
+					int cdcid = rs.getInt("cdCidade");
+					Cidade cid = getCidade(cdcid);
+
+					cliente.setCidade(cid);
+					cliente.setTel(rs.getString("fone"));
+					cliente.setCep(rs.getString("cep"));
+					lista.add(cliente);
 				}
+
+				rs.close();
+				stmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			
-			if(c.getNome() == null && c.getCodCliente() != 0 && c.getDtNasc() != null && c.getCidade() == null){
-				try {
-					stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE dtnasc = ? and cdcliente = ?");
-									
-					
-					Date d = new Date(c.getDtNasc().getTime());
-					stmt.setDate(1, d);
-									
-					stmt.setLong(2, c.getCodCliente());
-									
-					
-				
-					ResultSet rs = stmt.executeQuery();
+		}
 
-					while (rs.next()) {
-						Cliente cliente = new Cliente();
-						cliente.setCodCliente(rs.getLong("cdCliente"));
-						cliente.setNome(rs.getString("nmCliente"));
-						cliente.setDtAniversario(rs.getDate("dtNasc"));
-						cliente.setCpf(rs.getString("cpf"));
-						cliente.setRg(rs.getString("rg"));
-						cliente.setEndereco(rs.getString("endereco"));
+		if (c.getNome() == null && c.getCodCliente() != 0 && c.getCpf() != null && c.getCidade() == null) {
+			try {
+				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE cpf = ? and cdcliente = ?");
 
-						int cdcid = rs.getInt("cdCidade");
-						Cidade cid = getCidade(cdcid);
+				stmt.setString(1, c.getCpf());
 
-						cliente.setCidade(cid);
-						cliente.setTel(rs.getString("fone"));
-						cliente.setCep(rs.getString("cep"));
-						lista.add(cliente);
-					}
+				stmt.setLong(2, c.getCodCliente());
 
-					rs.close();
-					stmt.close();
+				ResultSet rs = stmt.executeQuery();
 
-				} catch (SQLException e) {
-					e.printStackTrace();
+				while (rs.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setCodCliente(rs.getLong("cdCliente"));
+					cliente.setNome(rs.getString("nmCliente"));
+					cliente.setDtAniversario(rs.getDate("dtNasc"));
+					cliente.setCpf(rs.getString("cpf"));
+					cliente.setRg(rs.getString("rg"));
+					cliente.setEndereco(rs.getString("endereco"));
+
+					int cdcid = rs.getInt("cdCidade");
+					Cidade cid = getCidade(cdcid);
+
+					cliente.setCidade(cid);
+					cliente.setTel(rs.getString("fone"));
+					cliente.setCep(rs.getString("cep"));
+					lista.add(cliente);
 				}
+
+				rs.close();
+				stmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			
-			if(c.getDtNasc() == null && c.getCodCliente() != 0 && c.getNome() != null && c.getCidade() == null){
-				try {
-					stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE nmcliente like ? and cdcliente = ?");
-									
-					stmt.setString(1, c.getNome() + "%");
-					
-					stmt.setLong(2, c.getCodCliente());
-									
-					ResultSet rs = stmt.executeQuery();
+		}
 
-					while (rs.next()) {
-						Cliente cliente = new Cliente();
-						cliente.setCodCliente(rs.getLong("cdCliente"));
-						cliente.setNome(rs.getString("nmCliente"));
-						cliente.setDtAniversario(rs.getDate("dtNasc"));
-						cliente.setCpf(rs.getString("cpf"));
-						cliente.setRg(rs.getString("rg"));
-						cliente.setEndereco(rs.getString("endereco"));
+		if (c.getCpf() == null && c.getCodCliente() != 0 && c.getNome() != null && c.getCidade() == null) {
+			try {
+				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE nmcliente like ? and cdcliente = ?");
 
-						int cdcid = rs.getInt("cdCidade");
-						Cidade cid = getCidade(cdcid);
+				stmt.setString(1, c.getNome() + "%");
 
-						cliente.setCidade(cid);
-						cliente.setTel(rs.getString("fone"));
-						cliente.setCep(rs.getString("cep"));
-						lista.add(cliente);
-					}
+				stmt.setLong(2, c.getCodCliente());
 
-					rs.close();
-					stmt.close();
+				ResultSet rs = stmt.executeQuery();
 
-				} catch (SQLException e) {
-					e.printStackTrace();
+				while (rs.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setCodCliente(rs.getLong("cdCliente"));
+					cliente.setNome(rs.getString("nmCliente"));
+					cliente.setDtAniversario(rs.getDate("dtNasc"));
+					cliente.setCpf(rs.getString("cpf"));
+					cliente.setRg(rs.getString("rg"));
+					cliente.setEndereco(rs.getString("endereco"));
+
+					int cdcid = rs.getInt("cdCidade");
+					Cidade cid = getCidade(cdcid);
+
+					cliente.setCidade(cid);
+					cliente.setTel(rs.getString("fone"));
+					cliente.setCep(rs.getString("cep"));
+					lista.add(cliente);
 				}
+
+				rs.close();
+				stmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			
-			if(c.getCodCliente() == 0 && c.getNome() != null && c.getDtNasc() != null && c.getCidade() == null){
-				try {
-					stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE nmcliente like ? and dtnasc = ?");
-									
-					stmt.setString(1, c.getNome() + "%");
-									
-					Date d = new Date(c.getDtNasc().getTime());
-					stmt.setDate(2, d);
-					
-								
-				
-					ResultSet rs = stmt.executeQuery();
+		}
 
-					while (rs.next()) {
-						Cliente cliente = new Cliente();
-						cliente.setCodCliente(rs.getLong("cdCliente"));
-						cliente.setNome(rs.getString("nmCliente"));
-						cliente.setDtAniversario(rs.getDate("dtNasc"));
-						cliente.setCpf(rs.getString("cpf"));
-						cliente.setRg(rs.getString("rg"));
-						cliente.setEndereco(rs.getString("endereco"));
+		if (c.getCodCliente() == 0 && c.getNome() != null && c.getCpf() != null && c.getCidade() == null) {
+			try {
+				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE nmcliente like ? and cpf = ?");
 
-						int cdcid = rs.getInt("cdCidade");
-						Cidade cid = getCidade(cdcid);
+				stmt.setString(1, c.getNome() + "%");
 
-						cliente.setCidade(cid);
-						cliente.setTel(rs.getString("fone"));
-						cliente.setCep(rs.getString("cep"));
-						lista.add(cliente);
-					}
+				stmt.setString(2, c.getCpf());
 
-					rs.close();
-					stmt.close();
+				ResultSet rs = stmt.executeQuery();
 
-				} catch (SQLException e) {
-					e.printStackTrace();
+				while (rs.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setCodCliente(rs.getLong("cdCliente"));
+					cliente.setNome(rs.getString("nmCliente"));
+					cliente.setDtAniversario(rs.getDate("dtNasc"));
+					cliente.setCpf(rs.getString("cpf"));
+					cliente.setRg(rs.getString("rg"));
+					cliente.setEndereco(rs.getString("endereco"));
+
+					int cdcid = rs.getInt("cdCidade");
+					Cidade cid = getCidade(cdcid);
+
+					cliente.setCidade(cid);
+					cliente.setTel(rs.getString("fone"));
+					cliente.setCep(rs.getString("cep"));
+					lista.add(cliente);
 				}
+
+				rs.close();
+				stmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			
-			if(c.getDtNasc() == null && c.getCodCliente() == 0 && c.getNome() != null && c.getCidade() == null	){
-				try {
-					stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE nmcliente like ?");
-				
-					stmt.setString(1, c.getNome() + "%");
-								
-				
-				
-					ResultSet rs = stmt.executeQuery();
+		}
 
-					while (rs.next()) {
-						Cliente cliente = new Cliente();
-						cliente.setCodCliente(rs.getLong("cdCliente"));
-						cliente.setNome(rs.getString("nmCliente"));
-						cliente.setDtAniversario(rs.getDate("dtNasc"));
-						cliente.setCpf(rs.getString("cpf"));
-						cliente.setRg(rs.getString("rg"));
-						cliente.setEndereco(rs.getString("endereco"));
+		if (c.getCpf() == null && c.getCodCliente() == 0 && c.getNome() != null && c.getCidade() == null) {
+			try {
+				stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE nmcliente like ?");
 
-						int cdcid = rs.getInt("cdCidade");
-						Cidade cid = getCidade(cdcid);
+				stmt.setString(1, c.getNome() + "%");
 
-						cliente.setCidade(cid);
-						cliente.setTel(rs.getString("fone"));
-						cliente.setCep(rs.getString("cep"));
-						lista.add(cliente);
-					}
+				ResultSet rs = stmt.executeQuery();
 
-					rs.close();
-					stmt.close();
+				while (rs.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setCodCliente(rs.getLong("cdCliente"));
+					cliente.setNome(rs.getString("nmCliente"));
+					cliente.setDtAniversario(rs.getDate("dtNasc"));
+					cliente.setCpf(rs.getString("cpf"));
+					cliente.setRg(rs.getString("rg"));
+					cliente.setEndereco(rs.getString("endereco"));
 
-				} catch (SQLException e) {
-					e.printStackTrace();
+					int cdcid = rs.getInt("cdCidade");
+					Cidade cid = getCidade(cdcid);
+
+					cliente.setCidade(cid);
+					cliente.setTel(rs.getString("fone"));
+					cliente.setCep(rs.getString("cep"));
+					lista.add(cliente);
 				}
+
+				rs.close();
+				stmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		
-		
+		}
+
 		return lista;
 	}
 

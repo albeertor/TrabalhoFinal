@@ -10,17 +10,14 @@ import javafx.stage.Stage;
 public class JanelaPrincipal extends Application {
 	private static Stage stage;
 
-	private Button btEntrar;
-
 	private UICliente uiCliente;
 	private UICidade uiCidade;
+	private UIProduto uiProduto;
 
-	public JanelaPrincipal() {
-	}
-
-	public JanelaPrincipal(UICliente uiCliente, UICidade uiCidade) {
+	public JanelaPrincipal(UICliente uiCliente, UICidade uiCidade, UIProduto uiProduto) {
 		this.uiCliente = uiCliente;
 		this.uiCidade = uiCidade;
+		this.uiProduto = uiProduto;
 		launch();
 	}
 
@@ -28,8 +25,7 @@ public class JanelaPrincipal extends Application {
 	public void start(Stage stage) throws Exception {
 		JanelaPrincipal.stage = stage;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Principal.fxml"));
-		JanelaPrincipalController j = new JanelaPrincipalController(uiCliente, uiCidade);
-
+		JanelaPrincipalController j = new JanelaPrincipalController(uiCliente, uiCidade, uiProduto);
 		loader.setController(j);
 		Parent parent = loader.load();
 		Scene scene = new Scene(parent);

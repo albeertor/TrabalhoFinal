@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 import programa.Programa;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Cliente;
-import programa.ui.swing.ClienteTableModel;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -56,21 +55,20 @@ public class JanelaClienteListaController implements Initializable {
 	@FXML
 	private CheckBox chCodigo, chNome, chCpf, chCidade;
 	@FXML
-	private ComboBox<Cidade> cbCidade;
+	private ComboBox<String> cbCidade;
 	@FXML
 	private Stage stage;
 
-	protected ClienteTableModel tmCliente;
+	
 	private UICliente uiCliente;
 	private List<Cliente> c;
 	private static ObservableList<ItensProperty> cliente = FXCollections.observableArrayList();;
-	private List<Cidade> listCidade;
-
+	private List<Cidade> listaCidade;
 
 	public JanelaClienteListaController(UICliente uiCliente, List<Cliente> clientes, List<Cidade> listaCidade) {
 		this.uiCliente = uiCliente;
 		this.c = clientes;
-		this.listCidade = listaCidade;
+		this.listaCidade = listaCidade;
 	}
 
 	public class ItensProperty {
@@ -132,20 +130,26 @@ public class JanelaClienteListaController implements Initializable {
 	}
 
 	public void initialize(URL url, ResourceBundle bundle) {
-	
+
 		for (int i = 0; i < c.size(); i++) {
 			cliente.add(new ItensProperty(c.get(i).getCodCliente(), c.get(i).getNome(), c.get(i).getTel(),
 					c.get(i).getCpf(), c.get(i).getCidade().getNome()));
 		}
 
 		tbCliente.setItems(cliente);
-		System.out.println(cliente.get(2).getNome());
-
 		columnCodigo.setCellValueFactory(new PropertyValueFactory<ItensProperty, Integer>("cod"));
 		columnNome.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("nome"));
 		columnTel.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("tel"));
 		columnCpf.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("cpf"));
 		columnCidade.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("cidade"));
+
+		String[] nmcidades = new String[listaCidade.size() + 1];
+		for (int i = 0; i < listaCidade.size(); i++) {
+			nmcidades[i + 1] = listaCidade.get(i).getNome();
+		}
+		nmcidades[0] = "QUALQUER CIDADE";
+		ObservableList<String> nmCid = FXCollections.observableArrayList(nmcidades);
+		cbCidade.setItems(nmCid);
 
 		btFechar.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -173,7 +177,6 @@ public class JanelaClienteListaController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-
 				Programa.uiCliente.lerCliente();
 			}
 		});
@@ -188,9 +191,12 @@ public class JanelaClienteListaController implements Initializable {
 					if (cod == c.get(i).getCodCliente())
 						cli = c.get(i);
 				}
-				if(cli != null)
+				if (cli != null) {
 					Programa.uiCliente.alterarCliente(cli);
-				
+					cliente.clear();
+					Stage stg = (Stage) btAlterar.getScene().getWindow();
+					stg.close();
+				}
 			}
 		});
 
@@ -198,17 +204,18 @@ public class JanelaClienteListaController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		btPesquisar.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-
+				int cod = tbCliente.getSelectionModel().getSelectedItem().getCod();
+				Cliente cli = null;
+				for (int i = 0; i < c.size(); i++) {
+					if (cod == c.get(i).getCodCliente())
+						cli = c.get(i);
+				}
+				if (cli != null) {
+					Programa.uiCliente.excluirCliente(cli);
+					cliente.clear();
+					Stage stg = (Stage) btExcluir.getScene().getWindow();
+					stg.close();
+				}
 			}
 		});
 
@@ -216,106 +223,128 @@ public class JanelaClienteListaController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
+				fCodigo.setText(null);
+				fNome.setText(null);
+				fCpf.setText(null);
+				cbCidade.getSelectionModel().select(-1);
 
+				chCodigo.setSelected(false);
+				chNome.setSelected(false);
+				chCpf.setSelected(false);
+				chCidade.setSelected(false);
 			}
 		});
 
-		// btPesquisar.addActionListener(new ActionListener() {
-		//
-		// public void actionPerformed(ActionEvent arg0) {
-		// boolean validacao = true;
-		// String dataMasc =" / / ";
-		// Date dataNasc = null;
-		//
-		// if(chCodigo.isSelected() && fCodigo.getText().isEmpty()){
-		// fCodigo.setBackground(Color.pink);
-		// validacao = false;
-		// }else
-		// fCodigo.setBackground(Color.WHITE);
-		//
-		// if(chNome.isSelected() && fNome.getText().isEmpty()){
-		// fNome.setBackground(Color.pink);
-		// validacao = false;
-		// }else
-		// fNome.setBackground(Color.WHITE);
-		//
-		// if(chCpf.isSelected() && fCpf.getText().isEmpty()){
-		//
-		//
-		// }
-		//
-		// if (validacao == true) {
-		// long cod = 0;
-		// if (chCodigo.isSelected()) {
-		// if (fCodigo.getText().trim().length() > 0) {
-		// try {
-		// cod =
-		// NumberFormat.getIntegerInstance().parse(fCodigo.getText()).longValue();
-		// } catch (ParseException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// }
-		// }
-		//
-		// String nome = null;
-		// if (chNome.isSelected()) {
-		// if (fNome.getText() != null) {
-		// nome = fNome.getText();
-		// }
-		// }
-		//
-		// if (chDtAniv.isSelected()) {
-		// if (!fDtAniv.getText().equals(dataMasc)) {
-		// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		// String ds = fDtAniv.getText();
-		// dataNasc = null;
-		// try {
-		// dataNasc = sdf.parse(ds);
-		// } catch (ParseException e1) {
-		// e1.printStackTrace();
-		// }
-		// } else
-		// dataNasc = null;
-		// }
-		//
-		// Cidade c = null;
-		// if (chCidade.isSelected()) {
-		// String nmCidade = (String) cbCidade.getSelectedItem();
-		// if (!cbCidade.getSelectedItem().equals("QUALQUER UMA")) {
-		// for (int i = 0; i < lista.size(); i++) {
-		// if (lista.get(i).getNome() == nmCidade)
-		// c = lista.get(i);
-		// }
-		// }
-		// }
-		//
-		// clientePesq = Cliente.newInstance(nome, dataNasc, c);
-		//
-		// clientePesq.setCodCliente(cod);
-		// List<Cliente> cPesq = uiCliente.listarPesquisa(clientePesq);
-		//
-		// frame.dispose();
-		// initGUI(cPesq, lista);
-		// frame.setVisible(true);
-		// }else
-		// JOptionPane.showMessageDialog(frame, "Preencha corretamente os campos
-		// selecionados", "Erro",
-		// JOptionPane.ERROR_MESSAGE);
-		//
-		// }
-		// });
-		//
-		//
-		// btLimpar.addActionListener(new ActionListener() {
-		// public void actionPerformed(ActionEvent arg0) {
-		// fCodigo.setText(null);
-		// fNome.setText(null);
-		// fDtAniv.setText(null);
-		// cbCidade.setSelectedIndex(0);
-		// }
-		// });
+		btPesquisar.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				boolean validacao = false;
+
+				String nome = null;
+				if (chNome.isSelected() && fNome.getText() != null) {
+					nome = fNome.getText();
+					fNome.setStyle(" -fx-control-inner-background: white;");
+					validacao = true;
+				} else {
+					if (chNome.isSelected() && fNome.getText() == null) {
+						fNome.setStyle(" -fx-control-inner-background: pink;");
+
+					}
+					if (chNome.isSelected() == false && fNome.getText() != null) {
+						chNome.setStyle(" -fx-control-inner-background: pink;");
+
+					}
+
+				}
+				if (chNome.isSelected() == false && fNome.getText() == null) {
+					fNome.setStyle(" -fx-control-inner-background: white;");
+					validacao = true;
+				}
+
+				long cod = 0;
+				if (chCodigo.isSelected() && fCodigo.getText() != null) {
+					cod = Long.valueOf(fCodigo.getText()).longValue();
+					fCodigo.setStyle(" -fx-control-inner-background: white;");
+					validacao = true;
+				} else {
+					if (chCodigo.isSelected() && fCodigo.getText() == null) {
+						fCodigo.setStyle(" -fx-control-inner-background: pink;");
+
+					}
+					if (chCodigo.isSelected() == false && fCodigo.getText() != null) {
+						chCodigo.setStyle(" -fx-control-inner-background: pink;");
+					}
+
+				}
+				if (chCodigo.isSelected() == false && fCodigo.getText() == null) {
+					fCodigo.setStyle(" -fx-control-inner-background: white;");
+					validacao = true;
+				}
+
+				String cpf = null;
+				if (chCpf.isSelected() && fCpf.getText() != null) {
+					cpf = fNome.getText();
+					fCpf.setStyle(" -fx-control-inner-background: white;");
+					validacao = true;
+				} else {
+					if (chCpf.isSelected() && fCpf.getText() == null) {
+						fCpf.setStyle(" -fx-control-inner-background: pink;");
+
+					}
+					if (chCpf.isSelected() == false && fNome.getText() != null) {
+						chCpf.setStyle(" -fx-control-inner-background: pink;");
+
+					}
+
+				}
+				if (chCpf.isSelected() == false && fCpf.getText() == null) {
+					fCpf.setStyle(" -fx-control-inner-background: white;");
+					validacao = true;
+				}
+
+				Cidade c = null;
+				if (chCidade.isSelected() && cbCidade.getSelectionModel().getSelectedItem() != null) {
+
+					String nmCidade = (String) cbCidade.getSelectionModel().getSelectedItem();
+					if (!nmCidade.equals("QUALQUER CIDADE")) {
+						for (int i = 0; i < listaCidade.size(); i++) {
+							if (listaCidade.get(i).getNome() == nmCidade)
+								c = listaCidade.get(i);
+
+						}
+					}
+					validacao = true;
+
+				}
+
+				if (validacao == true) {
+					if(nome == null && cpf == null && cod == 0 && c == null){
+						cliente.clear();
+						Programa.uiCliente.listarClientes();
+						Stage stg = (Stage) btResetar.getScene().getWindow();
+						stg.close();
+					}else{
+					Cliente clientePesq = Cliente.newInstance(nome, cpf, c);
+
+					clientePesq.setCodCliente(cod);
+					List<Cliente> cPesq = uiCliente.listarPesquisa(clientePesq);
+
+					cliente.clear();
+
+					try {
+						JanelaClienteLista j = new JanelaClienteLista(cPesq, listaCidade, uiCliente);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Stage stg = (Stage) btExcluir.getScene().getWindow();
+					stg.close();
+					}
+				}
+			}
+		});
+
 	}
 
 }

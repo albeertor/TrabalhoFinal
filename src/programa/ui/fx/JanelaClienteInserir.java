@@ -30,7 +30,6 @@ public class JanelaClienteInserir extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		System.out.println(proxId);
 		JanelaClienteInserir.stage = stage;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("InserirCliente.fxml"));
 		loader.setController(new JanelaClienteInserirController(c, proxId, listaCidade));

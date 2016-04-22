@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="459.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="459.0">
+			<menus>
+				<Menu id="menuInserir" fx:id="menuInserir" mnemonicParsing="false" text="Inserir">
+					<items>
+						<MenuItem mnemonicParsing="false" text="Close" />
+					</items>
+				</Menu>
+				<Menu id="menuAlterar" fx:id="menuAlterar" mnemonicParsing="false" text="Alterar">
+					<items>
+						<MenuItem mnemonicParsing="false" text="Delete" />
+					</items>
+				</Menu>
+				<Menu id="menuExcluir" fx:id="menuExcluir" mnemonicParsing="false" text="Excluir">
+					<items>
+						<MenuItem mnemonicParsing="false" text="About" />
+					</items>
+				</Menu>
+				<Menu id="menuFechar" fx:id="menuFechar" mnemonicParsing="false" text="Fechar">
+					<items>
+						<MenuItem mnemonicParsing="false" text="About" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+		<TableView fx:id="tbCliente" layoutX="14.0" layoutY="106.0" prefHeight="289.0" prefWidth="430.0">
+			<columns>
+				<TableColumn fx:id="columnCodigo" prefWidth="51.0" text="Código" />
+				<TableColumn fx:id="columnNome" prefWidth="175.0" text="Nome" />
+				<TableColumn fx:id="columnQtd" prefWidth="103.0" text="Quantidade" />
+				<TableColumn fx:id="columnVlUnit" prefWidth="101.0" text="Valor Unitário" />
+			</columns>
+		</TableView>
+		<CheckBox fx:id="chCodigo" layoutX="16.0" layoutY="42.0" mnemonicParsing="false" text="Código:" />
+		<TextField fx:id="fCodigo" layoutX="16.0" layoutY="68.0" prefHeight="25.0" prefWidth="106.0" />
+		<CheckBox fx:id="chNome" layoutX="139.0" layoutY="42.0" mnemonicParsing="false" text="Nome:" />
+		<TextField fx:id="fNome" layoutX="139.0" layoutY="68.0" prefHeight="25.0" prefWidth="159.0" />
+		<Button fx:id="btLimpar" layoutX="371.0" layoutY="42.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Limpar" />
+		<Button fx:id="btPesquisar" layoutX="371.0" layoutY="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Pesquisar" />
+		<ButtonBar layoutX="9.0" layoutY="394.0" prefHeight="40.0" prefWidth="430.0">
+			<buttons>
+				<Button fx:id="btInserir" mnemonicParsing="false" text="Inserir" />
+				<Button fx:id="btAlterar" mnemonicParsing="false" text="Alterar" />
+				<Button fx:id="btExcluir" mnemonicParsing="false" text="Excluir" />
+				<Button fx:id="btResetar" mnemonicParsing="false" text="Resetar" />
+				<Button fx:id="btFechar" mnemonicParsing="false" text="Fechar" />
+			</buttons>
+		</ButtonBar>
+	</children>
+</Pane>

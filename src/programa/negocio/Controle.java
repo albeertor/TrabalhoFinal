@@ -4,16 +4,20 @@ import java.util.List;
 
 import programa.dados.IRepositorioCidade;
 import programa.dados.IRepositorioCliente;
+import programa.dados.IRepositorioProduto;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Cliente;
+import programa.negocio.entidades.Produto;
 
 public class Controle {
 	private ControladorCliente cCliente;
 	private ControladorCidade cCidade;
+	private ControladorProduto cProduto;
 
-	public Controle(IRepositorioCliente repoCliente, IRepositorioCidade repoCidade) {
+	public Controle(IRepositorioCliente repoCliente, IRepositorioCidade repoCidade, IRepositorioProduto repoProduto) {
 		cCliente = new ControladorCliente(repoCliente);
 		cCidade = new ControladorCidade(repoCidade);
+		cProduto = new ControladorProduto(repoProduto);
 	}
 
 	public boolean inserir(Cliente c) {
@@ -56,5 +60,13 @@ public class Controle {
 
 	public List<Cidade> getListaCest(String sgEst) {
 		return cCidade.getListaCest(sgEst);
+	}
+
+	public boolean inserirProduto(Produto prod) {
+		return cProduto.inserir(prod);
+	}
+
+	public long proxCod() {
+		return cProduto.proxCod();
 	}
 }

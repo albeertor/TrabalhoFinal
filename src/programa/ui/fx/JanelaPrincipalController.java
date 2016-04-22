@@ -14,18 +14,18 @@ import javafx.scene.control.Button;
 
 public class JanelaPrincipalController implements Initializable {
 	@FXML
-	private Button btFechar, btInserir, btCliente;
-
+	private Button btFechar, btCliente, btProduto;
 	@FXML
-	private MenuItem itemClienteInserir, itemClienteListar;
+	private MenuItem itemClienteInserir, itemClienteControle, itemProdutoInserir, itemProdutoControle;
 
 	private UICliente uiCliente;
 	private UICidade uiCidade;
+	private UIProduto uiProduto;
 
-	public JanelaPrincipalController(UICliente uiCliente, UICidade uiCidade) {
+	public JanelaPrincipalController(UICliente uiCliente, UICidade uiCidade, UIProduto uiProduto) {
 		this.uiCliente = uiCliente;
 		this.uiCidade = uiCidade;
-
+		this.uiProduto = uiProduto;
 	}
 
 	public void initialize(URL url, ResourceBundle bundle) {
@@ -45,12 +45,12 @@ public class JanelaPrincipalController implements Initializable {
 				Programa.uiCliente.listarClientes();
 			}
 		});
-
-		btInserir.setOnAction(new EventHandler<ActionEvent>() {
+		
+		btProduto.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
-			public void handle(ActionEvent arg0) {
-				Programa.uiCliente.lerCliente();
+			public void handle(ActionEvent event) {
+				Programa.uiProduto.listarProdutos();
 			}
 		});
 
@@ -62,13 +62,31 @@ public class JanelaPrincipalController implements Initializable {
 			}
 		});
 
-		itemClienteListar.setOnAction(new EventHandler<ActionEvent>() {
+		itemClienteControle.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				Programa.uiCliente.listarClientes();
 			}
 		});
+		
+		itemProdutoInserir.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Programa.uiProduto.lerProduto();
+			}
+		});
+
+		itemProdutoControle.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Programa.uiProduto.listarProdutos();
+			}
+		});
+		
+		
 
 	}
 }
