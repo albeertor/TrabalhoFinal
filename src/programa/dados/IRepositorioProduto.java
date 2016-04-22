@@ -11,6 +11,8 @@ public interface IRepositorioProduto {
 	long proxCod();
 
 	boolean alterar(Produto prod);
+	
+	boolean excluir(Produto prod);
 
 	List<Produto> getLista();
 

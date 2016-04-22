@@ -62,7 +62,7 @@ public class JanelaClienteListaController implements Initializable {
 	
 	private UICliente uiCliente;
 	private List<Cliente> c;
-	private static ObservableList<ItensProperty> cliente = FXCollections.observableArrayList();;
+	private static ObservableList<ItensProperty> cliente = FXCollections.observableArrayList();
 	private List<Cidade> listaCidade;
 
 	public JanelaClienteListaController(UICliente uiCliente, List<Cliente> clientes, List<Cidade> listaCidade) {
@@ -166,7 +166,7 @@ public class JanelaClienteListaController implements Initializable {
 			@Override
 			public void handle(ActionEvent arg0) {
 				cliente.clear();
-				Programa.uiCliente.listarClientes();
+				uiCliente.listarClientes();
 				Stage stg = (Stage) btResetar.getScene().getWindow();
 				stg.close();
 
@@ -177,7 +177,7 @@ public class JanelaClienteListaController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				Programa.uiCliente.lerCliente();
+				uiCliente.lerCliente();
 			}
 		});
 
@@ -192,7 +192,7 @@ public class JanelaClienteListaController implements Initializable {
 						cli = c.get(i);
 				}
 				if (cli != null) {
-					Programa.uiCliente.alterarCliente(cli);
+					uiCliente.alterarCliente(cli);
 					cliente.clear();
 					Stage stg = (Stage) btAlterar.getScene().getWindow();
 					stg.close();

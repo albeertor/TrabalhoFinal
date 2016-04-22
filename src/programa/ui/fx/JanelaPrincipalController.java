@@ -1,7 +1,6 @@
 package programa.ui.fx;
 
 import javafx.scene.control.MenuItem;
-import programa.Programa;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,7 +41,7 @@ public class JanelaPrincipalController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				Programa.uiCliente.listarClientes();
+				uiCliente.listarClientes();
 			}
 		});
 		
@@ -50,7 +49,7 @@ public class JanelaPrincipalController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				Programa.uiProduto.listarProdutos();
+				uiProduto.listarProdutos();
 			}
 		});
 
@@ -58,7 +57,7 @@ public class JanelaPrincipalController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				Programa.uiCliente.lerCliente();
+				uiCliente.lerCliente();
 			}
 		});
 
@@ -66,7 +65,7 @@ public class JanelaPrincipalController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				Programa.uiCliente.listarClientes();
+				uiCliente.listarClientes();
 			}
 		});
 		
@@ -74,7 +73,7 @@ public class JanelaPrincipalController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				Programa.uiProduto.lerProduto();
+				uiProduto.lerProduto();
 			}
 		});
 
@@ -82,7 +81,7 @@ public class JanelaPrincipalController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				Programa.uiProduto.listarProdutos();
+				uiProduto.listarProdutos();
 			}
 		});
 		

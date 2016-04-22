@@ -138,54 +138,54 @@ public class JanelaClienteInserirController implements Initializable {
 
 		}
 		
-//		fTel.textProperty().addListener(new ChangeListener<String>() {
-//
-//			@Override
-//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
-//					fTel.setText(newValue);
-//                } else {
-//                	fTel.setText(oldValue);
-//                }
-//			}
-//		});
-//		
-//		fCPF.textProperty().addListener(new ChangeListener<String>() {
-//
-//			@Override
-//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
-//					fCPF.setText(newValue);
-//                } else {
-//                	fCPF.setText(oldValue);
-//                }
-//			}
-//		});
-//		
-//		fCEP.textProperty().addListener(new ChangeListener<String>() {
-//
-//			@Override
-//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
-//					fCEP.setText(newValue);
-//                } else {
-//                	fCEP.setText(oldValue);
-//                }
-//			}
-//		});
-//		
-//		fRG.textProperty().addListener(new ChangeListener<String>() {
-//
-//			@Override
-//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
-//					fRG.setText(newValue);
-//                } else {
-//                	fRG.setText(oldValue);
-//                }
-//			}
-//		});
-//		 
+		fTel.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
+					fTel.setText(newValue);
+                } else {
+                	fTel.setText(oldValue);
+                }
+			}
+		});
+		
+		fCPF.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
+					fCPF.setText(newValue);
+                } else {
+                	fCPF.setText(oldValue);
+                }
+			}
+		});
+		
+		fCEP.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
+					fCEP.setText(newValue);
+                } else {
+                	fCEP.setText(oldValue);
+                }
+			}
+		});
+		
+		fRG.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
+					fRG.setText(newValue);
+                } else {
+                	fRG.setText(oldValue);
+                }
+			}
+		});
+		 
 		cbSgEstado.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

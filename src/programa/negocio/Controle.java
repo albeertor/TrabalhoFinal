@@ -81,4 +81,8 @@ public class Controle {
 	public List<Produto> getPesquisa(Produto prod) {
 		return cProduto.getPesquisa(prod);
 	}
+
+	public boolean excluir(Produto p) {
+		return cProduto.excluir(p);
+	}
 }

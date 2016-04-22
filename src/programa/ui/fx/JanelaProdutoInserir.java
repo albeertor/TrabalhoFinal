@@ -12,15 +12,18 @@ public class JanelaProdutoInserir extends Application{
 	private static Stage stage;
 	private Produto p = null;
 	private long proxCod;
+	private UIProduto uiProduto;
 
-	public JanelaProdutoInserir(Produto p, long proxCod) throws Exception {	
+	public JanelaProdutoInserir(Produto p, long proxCod, UIProduto uiProduto) throws Exception {	
 		this.p = p;
 		this.proxCod = proxCod;
+		this.uiProduto = uiProduto;
 		start(new Stage());
 	}
 	
-	public JanelaProdutoInserir(long proxCod) throws Exception {
+	public JanelaProdutoInserir(long proxCod, UIProduto uiProduto) throws Exception {
 		this.proxCod = proxCod;
+		this.uiProduto = uiProduto;
 		start(new Stage());
 	}
 
@@ -28,7 +31,7 @@ public class JanelaProdutoInserir extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		JanelaProdutoInserir.stage = stage;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("InserirProduto.fxml"));
-		loader.setController(new JanelaProdutoInserirController(p,proxCod));
+		loader.setController(new JanelaProdutoInserirController(p,proxCod,uiProduto));
 		Parent parent = loader.load();
 		Scene scene = new Scene(parent);
 		stage.setScene(scene);

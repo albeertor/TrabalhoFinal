@@ -2,9 +2,8 @@ package programa.ui.fx;
 
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-import programa.Programa;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import programa.negocio.Controle;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Cliente;
@@ -14,6 +13,7 @@ import programa.ui.fx.JanelaClienteLista;
 
 public class UICliente {
 	private Controle ctr;
+	private Alert alert;
 
 	public List<Cidade> getListaCidade() {
 		return ctr.getListaCidades();
@@ -29,10 +29,13 @@ public class UICliente {
 
 	public void inserirCliente(Cliente c) {
 		if (c != null) {
-			if (ctr.inserir(c))
-				JOptionPane.showMessageDialog(null, "Cliente inserido com sucesso");
-			else
-				JOptionPane.showMessageDialog(null, "Falha ao inserir cliente");
+			if (ctr.inserir(c)) {
+				alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Cliente");
+				alert.setHeaderText(null);
+				alert.setContentText("Inserido com sucesso!");
+				alert.showAndWait();
+			}
 		}
 	}
 
@@ -43,7 +46,6 @@ public class UICliente {
 		try {
 			j = new JanelaClienteInserir(proxId, getListaCidade());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -53,7 +55,6 @@ public class UICliente {
 		try {
 			JanelaClienteLista j = new JanelaClienteLista(clientes, getListaCidade(), this);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -63,10 +64,15 @@ public class UICliente {
 	}
 
 	public void alterar(Cliente c) {
-		if (ctr.alterar(c))
-			JOptionPane.showMessageDialog(null, "Cliente Alterado");
-		else
-			JOptionPane.showMessageDialog(null, "Falha ao alterar cliente");
+		if (c != null) {
+			if (ctr.alterar(c)) {
+				alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Cliente");
+				alert.setHeaderText(null);
+				alert.setContentText("Excluido com sucesso!");
+				alert.showAndWait();
+			}
+		}
 	}
 
 	public void alterarCliente(Cliente c) {
@@ -82,8 +88,13 @@ public class UICliente {
 
 	public void excluirCliente(Cliente c) {
 		if (c != null) {
-			if (ctr.excluir(c))
-				JOptionPane.showMessageDialog(null, "Cliente excluido");
+			if (ctr.excluir(c)) {
+				alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Cliente");
+				alert.setHeaderText(null);
+				alert.setContentText("Excluido com sucesso!");
+				alert.showAndWait();
+			}
 		}
 	}
 }

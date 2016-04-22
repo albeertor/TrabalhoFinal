@@ -15,6 +15,10 @@ public class Produto {
 		this.desc = desc;
 	}
 	
+	public Produto() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getDesc() {
 		return desc;
 	}

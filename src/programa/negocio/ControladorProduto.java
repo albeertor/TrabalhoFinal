@@ -32,4 +32,8 @@ private IRepositorioProduto repoProduto;
 		return repoProduto.getPesquisa(prod);
 	}
 
+	public boolean excluir(Produto p) {
+		return repoProduto.excluir(p);
+	}
+
 }
