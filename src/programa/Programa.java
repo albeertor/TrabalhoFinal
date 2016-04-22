@@ -11,9 +11,7 @@ import programa.ui.fx.UICidade;
 import programa.ui.fx.UICliente;
 import programa.ui.fx.UIProduto;
 import programa.ui.fx.JanelaPrincipal;
-//import programa.ui.swing.UICidade;
-//import programa.ui.swing.UICliente;
-//import programa.ui.swing.JanelaPrincipal;
+
 
 public class Programa {
 	public static UICliente uiCliente;

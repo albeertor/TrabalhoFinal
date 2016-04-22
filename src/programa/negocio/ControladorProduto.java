@@ -1,5 +1,7 @@
 package programa.negocio;
 
+import java.util.List;
+
 import programa.dados.IRepositorioProduto;
 import programa.negocio.entidades.Produto;
 
@@ -17,4 +19,17 @@ private IRepositorioProduto repoProduto;
 	public long proxCod() {
 		return repoProduto.proxCod();
 	}
+
+	public boolean alterar(Produto prod) {
+		return repoProduto.alterar(prod);
+	}
+
+	public List<Produto> getLista() {
+		return repoProduto.getLista();
+	}
+
+	public List<Produto> getPesquisa(Produto prod) {
+		return repoProduto.getPesquisa(prod);
+	}
+
 }

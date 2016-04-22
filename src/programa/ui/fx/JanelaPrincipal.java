@@ -24,9 +24,8 @@ public class JanelaPrincipal extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		JanelaPrincipal.stage = stage;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Principal.fxml"));
-		JanelaPrincipalController j = new JanelaPrincipalController(uiCliente, uiCidade, uiProduto);
-		loader.setController(j);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Principal.fxml"));		
+		loader.setController(new JanelaPrincipalController(uiCliente, uiCidade, uiProduto));
 		Parent parent = loader.load();
 		Scene scene = new Scene(parent);
 		stage.setScene(scene);

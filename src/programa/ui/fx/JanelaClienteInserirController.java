@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -135,7 +137,55 @@ public class JanelaClienteInserirController implements Initializable {
 			cbCidade.setItems(nmCid);
 
 		}
-
+		
+//		fTel.textProperty().addListener(new ChangeListener<String>() {
+//
+//			@Override
+//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
+//					fTel.setText(newValue);
+//                } else {
+//                	fTel.setText(oldValue);
+//                }
+//			}
+//		});
+//		
+//		fCPF.textProperty().addListener(new ChangeListener<String>() {
+//
+//			@Override
+//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
+//					fCPF.setText(newValue);
+//                } else {
+//                	fCPF.setText(oldValue);
+//                }
+//			}
+//		});
+//		
+//		fCEP.textProperty().addListener(new ChangeListener<String>() {
+//
+//			@Override
+//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
+//					fCEP.setText(newValue);
+//                } else {
+//                	fCEP.setText(oldValue);
+//                }
+//			}
+//		});
+//		
+//		fRG.textProperty().addListener(new ChangeListener<String>() {
+//
+//			@Override
+//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
+//					fRG.setText(newValue);
+//                } else {
+//                	fRG.setText(oldValue);
+//                }
+//			}
+//		});
+//		 
 		cbSgEstado.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

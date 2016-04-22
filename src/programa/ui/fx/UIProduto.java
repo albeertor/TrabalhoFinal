@@ -1,8 +1,11 @@
 package programa.ui.fx;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import programa.negocio.Controle;
+import programa.negocio.entidades.Cliente;
 import programa.negocio.entidades.Produto;
 
 public class UIProduto {
@@ -10,11 +13,6 @@ public class UIProduto {
 
 	public UIProduto(Controle controle) {
 		this.ctr = controle;
-	}
-
-	public void listarProdutos() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void lerProduto() {
@@ -31,7 +29,7 @@ public class UIProduto {
 
 	public void inserirProduto(Produto prod) {
 		if (prod != null) {
-			if (ctr.inserirProduto(prod))
+			if (ctr.inserir(prod))
 				JOptionPane.showMessageDialog(null, "Produto inserido com sucesso");
 			else
 				JOptionPane.showMessageDialog(null, "Falha ao inserir produto");
@@ -40,8 +38,24 @@ public class UIProduto {
 	}
 
 	public void alterarProduto(Produto prod) {
-		// TODO Auto-generated method stub
-		
+		if (ctr.alterar(prod))
+			JOptionPane.showMessageDialog(null, "Cliente Alterado");
+		else
+			JOptionPane.showMessageDialog(null, "Falha ao alterar cliente");
+	}
+	
+	public void listarProdutos() {
+		List<Produto> produtos = ctr.getListaProdutos();
+		try {
+			JanelaProdutoLista j = new JanelaProdutoLista(produtos, this);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public List<Produto> listarPesquisa(Produto prod) {
+		return ctr.getPesquisa(prod);
 	}
 
 }

@@ -62,11 +62,23 @@ public class Controle {
 		return cCidade.getListaCest(sgEst);
 	}
 
-	public boolean inserirProduto(Produto prod) {
+	public boolean inserir(Produto prod) {
 		return cProduto.inserir(prod);
 	}
 
 	public long proxCod() {
 		return cProduto.proxCod();
+	}
+
+	public boolean alterar(Produto prod) {
+		return cProduto.alterar(prod);
+	}
+
+	public List<Produto> getListaProdutos() {
+		return cProduto.getLista();
+	}
+
+	public List<Produto> getPesquisa(Produto prod) {
+		return cProduto.getPesquisa(prod);
 	}
 }
