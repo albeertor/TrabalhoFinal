@@ -1,32 +1,27 @@
 package programa.ui.fx;
 
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import programa.Programa;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Cliente;
 
-import java.awt.Color;
-import java.awt.event.ActionListener;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -41,15 +36,16 @@ public class JanelaClienteInserirController implements Initializable {
 	private TextField fCod, fNome, fTel, fCPF, fCEP, fRG, fEndereco;
 	@FXML
 	private DatePicker dtNasc;
+	@FXML
 	private ComboBox<String> cbCidade;
 	@FXML
 	private ComboBox<String> cbSgEstado;
-	
+
 	private Cliente c;
 	private long proxId;
 	private List<Cidade> listaCidade;
 	private List<String> estado;
-	
+
 	public JanelaClienteInserirController(Cliente c, long proxId, List<Cidade> listaCidade) {
 		this.c = c;
 		this.proxId = proxId;
@@ -57,6 +53,42 @@ public class JanelaClienteInserirController implements Initializable {
 	}
 
 	public void initialize(URL url, ResourceBundle bundle) {
+		dtNasc.setShowWeekNumbers(false);
+		
+		String pattern = "dd/MM/yyyy";
+		
+		dtNasc.setPromptText(pattern.toLowerCase());
+		
+		dtNasc.setConverter(new StringConverter<LocalDate>() {
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+			@Override
+			public String toString(LocalDate date) {
+				 if (date != null) {
+		             return dateFormatter.format(date);
+		         } else {
+		             return "";
+		         }	}
+			
+			@Override
+			public LocalDate fromString(String string) {
+				 if (string != null && !string.isEmpty()) {
+		             return LocalDate.parse(string, dateFormatter);
+		         } else {
+		             return null;
+		         }
+			}
+		});
+		
+		
+		dtNasc.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				LocalDate date = dtNasc.getValue();
+			    System.out.println("Selected date: " + date);
+			}
+		});
+		
 		if(c != null){
 			fCod.setText(c.getCodCliente()+"");
 			fNome.setText(c.getNome());
@@ -64,9 +96,11 @@ public class JanelaClienteInserirController implements Initializable {
 			fCPF.setText(c.getCpf());
 			fCEP.setText(c.getCep());
 			fRG.setText(c.getRg());
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			String data = sdf.format(c.getDtNasc());
-			System.out.println(data);
+			Date input = c.getDtNasc();
+			Instant instant = input.toInstant();
+			ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
+			LocalDate dte = zdt.toLocalDate();
+			dtNasc.setValue(dte);			
 			fEndereco.setText(c.getEndereco());
 				
 			estado = Programa.uiCidade.getListaEstado();
@@ -139,12 +173,16 @@ public class JanelaClienteInserirController implements Initializable {
 						validacao = false;
 					} else
 						fNome.setStyle(" -fx-control-inner-background: whit;");
-//					if (fDtNasc.getText().equals("  /  /    ")) {
-//						fDtNasc.setStyle(" -fx-control-inner-background: pink;");
-//						validacao = false;
-//					} else
-//						fDtNasc.setStyle(" -fx-control-inner-background: white;");
-
+					
+					LocalDate dt = dtNasc.getValue();
+					Instant instant = Instant.from(dt.atStartOfDay(ZoneId.systemDefault()));
+					Date date = Date.from(instant);
+					if(date.getTime() < new Date().getTime()){
+						System.out.println("ANTES DE HJ");
+					}else{
+						validacao = false;
+					}
+					
 					if (fRG.getText().equals("")) {
 						fRG.setStyle(" -fx-control-inner-background: pink;");
 						validacao = false;
@@ -177,28 +215,6 @@ public class JanelaClienteInserirController implements Initializable {
 					} else
 						fTel.setStyle(" -fx-control-inner-background: white;");
 					
-//					Date dataNasc = null;
-//					
-//					if(!fDtNasc.getText().equals("  /  /    ")){
-//					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//					String ds = fDtNasc.getText();
-//					try {
-//						dataNasc = sdf.parse(ds);
-//					} catch (ParseException e1) {
-//						e1.printStackTrace();
-//					}			
-//					Date dtAtual = Calendar.getInstance().getTime();
-//						if(dataNasc.after(dtAtual)){
-//							fDtNasc.setStyle(" -fx-control-inner-background: pink;");
-//							JOptionPane.showMessageDialog(null, "Data inválida", "Erro",
-//									JOptionPane.ERROR_MESSAGE);
-//							validacao = false;
-//							
-//						}else
-//							fDtNasc.setStyle(" -fx-control-inner-background: white;");
-//					}
-//					
-					
 					if (validacao == true && c == null) {
 						String nome = fNome.getText();
 											
@@ -215,7 +231,7 @@ public class JanelaClienteInserirController implements Initializable {
 								c = listaCidade.get(i);
 						}
 				
-						Cliente cliente = Cliente.newInstance(nome, new Date(), tel, cpf, rg, cep, endereco, c);
+						Cliente cliente = Cliente.newInstance(nome, date, tel, cpf, rg, cep, endereco, c);
 						cliente.setCodCliente(proxId);
 						Programa.uiCliente.inserirCliente(cliente);
 						stage.close();
@@ -235,7 +251,7 @@ public class JanelaClienteInserirController implements Initializable {
 								if (listaCidade.get(i).getNome() == nmCidade)
 									cid = listaCidade.get(i);
 							}
-							Cliente cliente = Cliente.newInstance(nome, new Date(), tel, cpf, rg, cep, endereco, cid);
+							Cliente cliente = Cliente.newInstance(nome, date, tel, cpf, rg, cep, endereco, cid);
 							cliente.setCodCliente(c.getCodCliente());
 							Programa.uiCliente.alterar(cliente);
 						}else{
