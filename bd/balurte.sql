@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `baluarte` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `baluarte`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: baluarte
@@ -28,8 +26,9 @@ CREATE TABLE `cidade` (
   `cdcidade` int(11) NOT NULL AUTO_INCREMENT,
   `nmcidade` varchar(45) NOT NULL,
   `sgestado` varchar(2) NOT NULL,
-  PRIMARY KEY (`cdcidade`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`cdcidade`),
+  KEY `sgestado_idx` (`sgestado`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +37,7 @@ CREATE TABLE `cidade` (
 
 LOCK TABLES `cidade` WRITE;
 /*!40000 ALTER TABLE `cidade` DISABLE KEYS */;
-INSERT INTO `cidade` VALUES (1,'IPATINGA','MG'),(2,'TIMOTEO','MG'),(3,'CEL FABRICIANO','MG'),(4,'RIO DE JANEIRO','RJ'),(5,'BELO HORIZONTE','MG'),(6,'IPABA','MG'),(7,'JUDESCITY','JC');
+INSERT INTO `cidade` VALUES (1,'IPATINGA','MG'),(2,'TIMOTEO','MG'),(3,'CEL FABRICIANO','MG'),(4,'RIO DE JANEIRO','RJ'),(5,'BELO HORIZONTE','MG'),(6,'IPABA','MG'),(7,'JUDESCITY','BA'),(8,'PATOS DE MINAS','MG'),(9,'OLINDA','PE');
 /*!40000 ALTER TABLE `cidade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,7 +71,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'m16716081 ','123.864.266-70','1999-11-20','Rua Guaranis, 170',1,'Juliana','(31) 3825-6237','35162-070'),(2,'m16795633 ','228.276.365-30','2002-12-02','Rua 12, 22',4,'Rodrigo','(11) 4002-8922','12312-313'),(4,'m12346578 ','664.661.636-10','1998-09-21','Rua China',5,'Lucas','(31) 9999-9999','35162-876'),(5,'m1525665  ','313.416.393-47','2012-12-12','Rua Inglaterra',3,'José','(31) 8745-6265','12312-332'),(6,'m1268698  ','062.191.475-45','1999-03-28','Rua Cava Grande, 679',2,'André Luiz','(31) 8620-8033','32165-191'),(7,'m5166123  ','289.467.703-09','1999-02-07','Rua Silas',1,'Robson','(15) 4568-7955','12315-644'),(8,'m5498153  ','278.394.136-84','2015-12-01','Rua Jaspe, 15',5,'Gabriela','(31) 8496-8646','21368-796'),(10,'m55646546 ','123.864.266-70','1999-02-14','Rua Inglaterra',4,'Pedro','(31) 9878-9495','35142-414'),(11,'1231132123','123.864.266-70','0416-04-02','Rua Jacruysbor',7,'Judesmar','(64) 7285-4919','35486-159'),(12,'m16716081 ','123.864.266-70','1999-11-20','Rua Guaranis, 170',1,'Juliana','(31) 3825-6237','35162-070');
+INSERT INTO `cliente` VALUES (1,'m16716081 ','123.864.266-70','1999-11-20','Rua Guaranis, 170',1,'Peixe','(31) 3825-6237','35162-070'),(2,'m16795633 ','228.276.365-30','2002-12-09','Rua 12, 22',4,'Rodrigo','(11) 4002-8922','12312-313'),(4,'m12346578 ','664.661.636-10','1998-09-21','Rua China',5,'Lucas','(31) 9999-9999','35162-876'),(5,'m1525665  ','313.416.393-47','2012-12-12','Rua Inglaterra',3,'José','(31) 8745-6265','12312-332'),(6,'m1268698  ','062.191.475-45','1999-03-28','Rua Cava Grande, 679',2,'André Luiz','(31) 8620-8033','32165-191'),(7,'m5166123  ','289.467.703-09','1999-02-07','Rua Silas',1,'Robson','(15) 4568-7955','12315-644'),(8,'m5498153  ','278.394.136-84','2015-12-01','Rua Jaspe, 15',5,'Gabriela','(31) 8496-8646','21368-796'),(10,'m55646546 ','123.864.266-70','1999-02-14','Rua Inglaterra',4,'Pedro','(31) 9878-9495','35142-414'),(11,'1231132123','123.864.266-70','0416-04-02','Rua Jacruysbor',7,'Judesmar','(64) 7285-4919','35486-159'),(12,'1233456','123.864.266-70','2016-04-04','Rua Jamaica',6,'Antonio','31988428792','35162-070');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,6 +127,31 @@ CREATE TABLE `compra_produto` (
 LOCK TABLES `compra_produto` WRITE;
 /*!40000 ALTER TABLE `compra_produto` DISABLE KEYS */;
 /*!40000 ALTER TABLE `compra_produto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `estado`
+--
+
+DROP TABLE IF EXISTS `estado`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `estado` (
+  `codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `sgestado` varchar(2) NOT NULL,
+  `nmestado` varchar(30) NOT NULL,
+  PRIMARY KEY (`codigo`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `estado`
+--
+
+LOCK TABLES `estado` WRITE;
+/*!40000 ALTER TABLE `estado` DISABLE KEYS */;
+INSERT INTO `estado` VALUES (1,'AC','Acre'),(2,'AL','Alagoas'),(3,'AP','Amapá'),(4,'AM','Amazonas'),(5,'BA','Bahia'),(6,'CE','Ceará'),(7,'DF','Distrito Federal'),(8,'ES','Espírito Santo'),(9,'GO','Goiás'),(10,'MA','Maranhão'),(11,'MT','Mato Grosso'),(12,'MS','Mato Grosso do Sul'),(13,'MG','Minas Gerais'),(14,'PA','Pará'),(15,'PB','Paraíba'),(16,'PR','Paraná'),(17,'PE','Pernambuco'),(18,'PI','Piauí'),(19,'RJ','Rio de Janeiro'),(20,'RN','Rio Grande do Norte'),(21,'RS','Rio Grande do Sul'),(22,'RO','Rondônia'),(23,'RR','Roraima'),(24,'SC','Santa Catarina'),(25,'SP','São Paulo'),(26,'SE','Sergipe'),(27,'TO','Tocantins');
+/*!40000 ALTER TABLE `estado` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -201,9 +225,11 @@ DROP TABLE IF EXISTS `produto`;
 CREATE TABLE `produto` (
   `cdproduto` int(11) NOT NULL AUTO_INCREMENT,
   `nmproduto` varchar(40) NOT NULL,
-  `descricao` varchar(40) NOT NULL,
+  `descricao` varchar(40) DEFAULT NULL,
+  `vlunit` double NOT NULL,
+  `quant` int(11) NOT NULL,
   PRIMARY KEY (`cdproduto`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,6 +238,7 @@ CREATE TABLE `produto` (
 
 LOCK TABLES `produto` WRITE;
 /*!40000 ALTER TABLE `produto` DISABLE KEYS */;
+INSERT INTO `produto` VALUES (1,'Vestido','Roxo',30,3),(2,'Cropped','Blusa',20.5,4),(3,'Macaquinho','Jeans',40,2),(4,'Blusinha','Bonita',15,2);
 /*!40000 ALTER TABLE `produto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -281,4 +308,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-21 23:56:11
+-- Dump completed on 2016-04-22 21:17:48
