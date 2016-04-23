@@ -15,6 +15,11 @@ public class Produto {
 		this.desc = desc;
 	}
 	
+	private Produto(String nome) {
+				this.nome = nome;
+		
+	}
+	
 	public Produto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -29,6 +34,10 @@ public class Produto {
 
 	public static Produto newInstance(String nome, double vlUnit, int qtd, String desc){
 		return new Produto(nome,vlUnit,qtd,desc);
+	}
+	
+	public static Produto newInstance(String nome) {
+		return new Produto(nome);
 	}
 	
 	public long getCod() {
@@ -55,6 +64,8 @@ public class Produto {
 	public void setQtd(int qtd) {
 		this.qtd = qtd;
 	}
+
+
 	
 	
 }

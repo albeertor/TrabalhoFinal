@@ -21,7 +21,7 @@ public class ProdutoDAO implements IRepositorioProduto {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public boolean inserir(Produto prod) {
 		try {
@@ -33,7 +33,7 @@ public class ProdutoDAO implements IRepositorioProduto {
 			stmt.setString(3, prod.getDesc());
 			stmt.setDouble(4, prod.getVlUnit());
 			stmt.setInt(5, prod.getQtd());
-			
+
 			stmt.execute();
 			stmt.close();
 
@@ -66,6 +66,7 @@ public class ProdutoDAO implements IRepositorioProduto {
 
 	@Override
 	public boolean alterar(Produto prod) {
+
 		if (prod != null) {
 			try {
 				PreparedStatement stmt = conexao.prepareStatement(
@@ -87,29 +88,31 @@ public class ProdutoDAO implements IRepositorioProduto {
 				return false;
 			}
 		}
+
 		return false;
 	}
 
 	@Override
 	public List<Produto> getLista() {
+
 		List<Produto> lista = new ArrayList<Produto>();
 
 		PreparedStatement stmt;
 		try {
-			stmt = conexao.prepareStatement("SELECT * FROM cliente");
+			stmt = conexao.prepareStatement("SELECT * FROM produto");
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 
 				Produto p = new Produto();
-				p.setCod(rs.getLong("cdproduto"));
+				p.setCod(rs.getInt("cdproduto"));
 				p.setNome(rs.getString("nmproduto"));
 				p.setDesc(rs.getString("descricao"));
 				p.setQtd(rs.getInt("quant"));
 				p.setVlUnit(rs.getDouble("vlunit"));
-									
+
 				lista.add(p);
-				}
+			}
 
 			rs.close();
 			stmt.close();
@@ -124,24 +127,110 @@ public class ProdutoDAO implements IRepositorioProduto {
 
 	@Override
 	public List<Produto> getPesquisa(Produto prod) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Produto> lista = new ArrayList<Produto>();
+
+		PreparedStatement stmt;
+		if (prod != null) {
+			if (prod.getCod() == 0) {
+				try {
+					stmt = conexao.prepareStatement("SELECT * FROM produto WHERE nmproduto like ?");
+					stmt.setString(1, prod.getNome() + "%");
+					ResultSet rs = stmt.executeQuery();
+
+					while (rs.next()) {
+
+						Produto p = new Produto();
+						p.setCod(rs.getInt("cdproduto"));
+						p.setNome(rs.getString("nmproduto"));
+						p.setDesc(rs.getString("descricao"));
+						p.setQtd(rs.getInt("quant"));
+						p.setVlUnit(rs.getDouble("vlunit"));
+
+						lista.add(p);
+					}
+
+					rs.close();
+					stmt.close();
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			} else {
+				if (prod.getNome() == null) {
+
+					try {
+						stmt = conexao.prepareStatement("SELECT * FROM produto WHERE cdproduto = ?");
+						stmt.setLong(1, prod.getCod());
+						ResultSet rs = stmt.executeQuery();
+
+						while (rs.next()) {
+
+							Produto p = new Produto();
+							p.setCod(rs.getInt("cdproduto"));
+							p.setNome(rs.getString("nmproduto"));
+							p.setDesc(rs.getString("descricao"));
+							p.setQtd(rs.getInt("quant"));
+							p.setVlUnit(rs.getDouble("vlunit"));
+
+							lista.add(p);
+						}
+
+						rs.close();
+						stmt.close();
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						stmt = conexao.prepareStatement("SELECT * FROM produto WHERE cdproduto = ?, nmproduto like ?");
+						stmt.setLong(1, prod.getCod());
+						stmt.setString(2, prod.getNome() + "%");
+						ResultSet rs = stmt.executeQuery();
+
+						while (rs.next()) {
+
+							Produto p = new Produto();
+							p.setCod(rs.getInt("cdproduto"));
+							p.setNome(rs.getString("nmproduto"));
+							p.setDesc(rs.getString("descricao"));
+							p.setQtd(rs.getInt("quant"));
+							p.setVlUnit(rs.getDouble("vlunit"));
+
+							lista.add(p);
+						}
+
+						rs.close();
+						stmt.close();
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		return lista;
 	}
 
 	@Override
 	public boolean excluir(Produto prod) {
-		try {
-			PreparedStatement stmt = conexao.prepareStatement("DELETE FROM produto WHERE cdproduto=?");
-			stmt.setLong(1, prod.getCod());
+		if (prod != null) {
+			try {
+				PreparedStatement stmt = conexao.prepareStatement("DELETE FROM produto WHERE cdproduto=?");
+				stmt.setLong(1, prod.getCod());
 
-			stmt.execute();
-			stmt.close();
+				stmt.execute();
+				stmt.close();
 
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
+		return false;
 	}
 
 }

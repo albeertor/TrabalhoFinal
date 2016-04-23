@@ -44,7 +44,7 @@ public class UICliente {
 
 		JanelaClienteInserir j = null;
 		try {
-			j = new JanelaClienteInserir(proxId, getListaCidade());
+			j = new JanelaClienteInserir(proxId, getListaCidade(), this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -79,7 +79,7 @@ public class UICliente {
 		if (c != null) {
 			JanelaClienteInserir jc = null;
 			try {
-				jc = new JanelaClienteInserir(c, getListaCidade());
+				jc = new JanelaClienteInserir(c, getListaCidade(), this);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

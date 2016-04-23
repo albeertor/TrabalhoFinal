@@ -3,6 +3,8 @@ package programa.ui.fx;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import programa.negocio.entidades.Produto;
+import programa.ui.fx.TextFieldUtils.Mask;
 
 public class JanelaProdutoInserirController implements Initializable {
 	@FXML
@@ -39,8 +42,13 @@ public class JanelaProdutoInserirController implements Initializable {
 			fVlUnit.setText(p.getVlUnit() + "");
 			fQtd.setText(p.getQtd() + "");
 			taDesc.setText(p.getDesc());
+		}else{
+			fCod.setText(proxCod+"");
 		}
-
+		TextFieldUtils.setMask(fVlUnit, Mask.MASK_Double);
+		
+		TextFieldUtils.setMask(fQtd, Mask.MASK_Inteiro);
+	
 		btSalvar.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -49,13 +57,6 @@ public class JanelaProdutoInserirController implements Initializable {
 
 				boolean validacao = true;
 
-				if (fCod.getText().equals("") || Integer.parseInt(fCod.getText()) < 0) {
-					fCod.setStyle(" -fx-control-inner-background: pink;");
-					validacao = false;
-				} else {
-					fCod.setStyle(" -fx-control-inner-background: white;");
-				}
-
 				if (fNome.getText().equals("")) {
 					fNome.setStyle(" -fx-control-inner-background: pink;");
 					validacao = false;
@@ -63,14 +64,14 @@ public class JanelaProdutoInserirController implements Initializable {
 					fNome.setStyle(" -fx-control-inner-background: white;");
 				}
 
-				if (fQtd.getText().equals("") || Integer.parseInt(fQtd.getText()) < 0) {
+				if (fQtd.getText().equals("")) {
 					fQtd.setStyle(" -fx-control-inner-background: pink;");
 					validacao = false;
 				} else {
 					fQtd.setStyle(" -fx-control-inner-background: white;");
 				}
 
-				if (fVlUnit.getText().equals("") || Integer.parseInt(fVlUnit.getText()) < 0) {
+				if (fVlUnit.getText().equals("")) {
 					fVlUnit.setStyle(" -fx-control-inner-background: pink;");
 					validacao = false;
 				} else {
@@ -95,11 +96,11 @@ public class JanelaProdutoInserirController implements Initializable {
 					String desc = taDesc.getText();
 					long cod = Long.valueOf(fCod.getText()).longValue();
 					int qtd = Integer.parseInt(fQtd.getText());
-					int vlUnit = Integer.parseInt(fVlUnit.getText());
+					double vlUnit = Double.parseDouble(fVlUnit.getText());
 
 					Produto prod = Produto.newInstance(nome, vlUnit, qtd, desc);
 					prod.setCod(p.getCod());
-					uiProduto.alterarProduto(prod);
+					uiProduto.alterar(prod);
 
 					stage.close();
 				}
@@ -111,8 +112,8 @@ public class JanelaProdutoInserirController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-
+				Stage stg = (Stage) btCancelar.getScene().getWindow();
+				stg.close();
 			}
 		});
 	}

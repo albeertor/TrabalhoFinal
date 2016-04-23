@@ -22,7 +22,7 @@ public class JanelaProdutoLista extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage stage) throws Exception {
 		JanelaProdutoLista.stage = stage;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ListarProduto.fxml"));
 		loader.setController(new JanelaProdutoListaController(produtos, uiProduto));

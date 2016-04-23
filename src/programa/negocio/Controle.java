@@ -85,4 +85,28 @@ public class Controle {
 	public boolean excluir(Produto p) {
 		return cProduto.excluir(p);
 	}
+
+	public boolean inserir(Cidade c) {
+		return cCidade.inserir(c);
+	}
+
+	public boolean alterar(Cidade c) {
+		return cCidade.alterar(c);
+	}
+
+	public boolean excluir(Cidade c) {
+		return cCidade.excluir(c);
+	}
+
+	public long getProxId() {
+		return cCidade.getProxId();
+	}
+	
+	public List<String> getEstado(){
+		return cCidade.getEstado();
+	}
+
+	public List<Cidade> getPesquisa(Cidade c) {
+		return cCidade.getPesquisa(c);
+	}
 }

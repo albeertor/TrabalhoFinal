@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import programa.negocio.Controle;
+import programa.negocio.entidades.Cliente;
 import programa.negocio.entidades.Produto;
 
 public class UIProduto {
@@ -17,7 +18,7 @@ public class UIProduto {
 
 	public void lerProduto() {
 		long proxCod = ctr.proxCod();
-
+		System.out.println(proxCod);
 		JanelaProdutoInserir j = null;
 		try {
 			j = new JanelaProdutoInserir(proxCod,this);
@@ -39,7 +40,18 @@ public class UIProduto {
 
 	}
 
-	public void alterarProduto(Produto prod) {
+	public void alterarProduto(Produto p) {
+		if (p != null) {
+			JanelaProdutoInserir jc = null;
+			try {
+				jc = new JanelaProdutoInserir(p, this);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void alterar(Produto prod) {
 		if (ctr.alterar(prod)) {
 			alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Produto");

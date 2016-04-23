@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import programa.dados.CidadeDAO;
 import programa.dados.ClienteDAO;
@@ -41,10 +40,18 @@ public class JanelaPrincipal extends Application {
 		Controle ctr = new Controle(repoCliente,repoCidade,repoProduto);
 		
 		uiCliente = new UICliente(ctr);
-		uiCidade = new UICidade(ctr);
+		setUiCidade(new UICidade(ctr));
 		uiProduto = new UIProduto(ctr);
 		
 		launch();
+	}
+
+	public static UICidade getUiCidade() {
+		return uiCidade;
+	}
+
+	public static void setUiCidade(UICidade uiCidade) {
+		JanelaPrincipal.uiCidade = uiCidade;
 	}
 
 }

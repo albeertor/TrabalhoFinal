@@ -1,10 +1,8 @@
 package programa.ui.fx;
 
 import javafx.scene.control.MenuItem;
-
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,9 +11,9 @@ import javafx.scene.control.Button;
 
 public class JanelaPrincipalController implements Initializable {
 	@FXML
-	private Button btFechar, btCliente, btProduto;
+	private Button btFechar, btCliente, btProduto, btCidade;
 	@FXML
-	private MenuItem itemClienteInserir, itemClienteControle, itemProdutoInserir, itemProdutoControle;
+	private MenuItem itemClienteInserir, itemClienteControle, itemProdutoInserir, itemProdutoControle,itemCidadeInserir, itemCidadeControle;
 
 	private UICliente uiCliente;
 	private UICidade uiCidade;
@@ -52,7 +50,31 @@ public class JanelaPrincipalController implements Initializable {
 				uiProduto.listarProdutos();
 			}
 		});
+		
+		btCidade.setOnAction(new EventHandler<ActionEvent>() {
 
+			@Override
+			public void handle(ActionEvent event) {
+				uiCidade.listarCidade();
+			}
+		});
+
+		itemCidadeInserir.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				uiCidade.lerCidade();
+			}
+		});
+		
+		itemCidadeControle.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				uiCidade.listarCidade();
+			}
+		});
+		
 		itemClienteInserir.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -88,4 +110,5 @@ public class JanelaPrincipalController implements Initializable {
 		
 
 	}
+
 }

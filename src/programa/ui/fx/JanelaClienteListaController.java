@@ -4,26 +4,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import programa.Programa;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Cliente;
+import programa.ui.fx.TextFieldUtils.Mask;
 
-import java.awt.Color;
-import java.awt.event.ActionListener;
 import java.net.URL;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -150,7 +142,11 @@ public class JanelaClienteListaController implements Initializable {
 		nmcidades[0] = "QUALQUER CIDADE";
 		ObservableList<String> nmCid = FXCollections.observableArrayList(nmcidades);
 		cbCidade.setItems(nmCid);
-
+		
+		TextFieldUtils.setMask(fCpf, Mask.MASK_CPF);
+		
+		TextFieldUtils.setMask(fCodigo, Mask.MASK_Inteiro);
+		
 		btFechar.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -211,7 +207,7 @@ public class JanelaClienteListaController implements Initializable {
 						cli = c.get(i);
 				}
 				if (cli != null) {
-					Programa.uiCliente.excluirCliente(cli);
+					uiCliente.excluirCliente(cli);
 					cliente.clear();
 					Stage stg = (Stage) btExcluir.getScene().getWindow();
 					stg.close();
@@ -321,7 +317,7 @@ public class JanelaClienteListaController implements Initializable {
 				if (validacao == true) {
 					if(nome == null && cpf == null && cod == 0 && c == null){
 						cliente.clear();
-						Programa.uiCliente.listarClientes();
+						uiCliente.listarClientes();
 						Stage stg = (Stage) btResetar.getScene().getWindow();
 						stg.close();
 					}else{

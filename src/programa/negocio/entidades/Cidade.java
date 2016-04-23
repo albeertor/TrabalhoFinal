@@ -5,6 +5,18 @@ public class Cidade {
 	private String nome;
 	private String sgEstado;
 	
+	private Cidade(String nome, String sgEstado) {
+		this.nome = nome;
+		this.sgEstado = sgEstado;
+	}
+	
+	public Cidade() {
+	}
+
+	public static Cidade newInstance(String nome, String sgEstado){
+		return new Cidade(nome, sgEstado);
+	}
+	
 	public long getCodCidade() {
 		return codCidade;
 	}
@@ -24,6 +36,7 @@ public class Cidade {
 	public void setSgEstado(String sgEstado) {
 		this.sgEstado = sgEstado;
 	}
+	
 	@Override
 	public String toString() {
 		return nome;

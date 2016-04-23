@@ -3,9 +3,9 @@ package programa.ui.fx;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-import programa.Programa;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Cliente;
+import programa.ui.fx.TextFieldUtils.Mask;
 
 import java.net.URL;
 import java.time.Instant;
@@ -47,11 +47,12 @@ public class JanelaClienteInserirController implements Initializable {
 	private long proxId;
 	private List<Cidade> listaCidade;
 	private List<String> estado;
+	private UICliente uiCliente;
 
-	public JanelaClienteInserirController(Cliente c, long proxId, List<Cidade> listaCidade) {
+	public JanelaClienteInserirController(Cliente c, long proxId, List<Cidade> listaCidade, UICliente uiCLiente) {
 		this.c = c;
 		this.proxId = proxId;
-		System.out.println(proxId);
+		this.uiCliente = uiCLiente;
 		this.listaCidade = listaCidade;
 	}
 
@@ -98,7 +99,7 @@ public class JanelaClienteInserirController implements Initializable {
 
 			dtNasc.setValue(dte);
 
-			estado = Programa.uiCidade.getListaEstado();
+			estado = JanelaPrincipal.getUiCidade().getListaEstado();
 			String[] est = new String[estado.size()];
 			for (int i = 0; i < estado.size(); i++) {
 				est[i] = estado.get(i);
@@ -120,7 +121,7 @@ public class JanelaClienteInserirController implements Initializable {
 		} else {
 			fCod.setText(proxId + "");
 
-			estado = Programa.uiCidade.getListaEstado();
+			estado = JanelaPrincipal.getUiCidade().getListaEstado();
 			String[] est = new String[estado.size()];
 			for (int i = 0; i < estado.size(); i++) {
 				est[i] = estado.get(i);
@@ -137,61 +138,22 @@ public class JanelaClienteInserirController implements Initializable {
 			cbCidade.setItems(nmCid);
 
 		}
+		TextFieldUtils.setMask(fTel, Mask.MASK_TELEFONE);
 		
-		fTel.textProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
-					fTel.setText(newValue);
-                } else {
-                	fTel.setText(oldValue);
-                }
-			}
-		});
 		
-		fCPF.textProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
-					fCPF.setText(newValue);
-                } else {
-                	fCPF.setText(oldValue);
-                }
-			}
-		});
+		TextFieldUtils.setMask(fCPF, Mask.MASK_CPF);
 		
-		fCEP.textProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
-					fCEP.setText(newValue);
-                } else {
-                	fCEP.setText(oldValue);
-                }
-			}
-		});
+		TextFieldUtils.setMask(fCEP, Mask.MASK_CEP);
 		
-		fRG.textProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.matches("\\-?\\d+[\\.,]?\\d*") || newValue.isEmpty()) {
-					fRG.setText(newValue);
-                } else {
-                	fRG.setText(oldValue);
-                }
-			}
-		});
+		
+		TextFieldUtils.setMask(fRG, Mask.MASK_Inteiro);
 		 
 		cbSgEstado.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				String sgEst = cbSgEstado.getSelectionModel().getSelectedItem();
-				List<Cidade> city = Programa.uiCidade.getListaCest(sgEst);
+				List<Cidade> city = JanelaPrincipal.getUiCidade().getListaCest(sgEst);
 				String[] nmcidades = new String[city.size()];
 				for (int i = 0; i < city.size(); i++) {
 					nmcidades[i] = city.get(i).getNome();
@@ -316,7 +278,7 @@ public class JanelaClienteInserirController implements Initializable {
 
 					Cliente cliente = Cliente.newInstance(nome, date, tel, cpf, rg, cep, endereco, c);
 					cliente.setCodCliente(proxId);
-					Programa.uiCliente.inserirCliente(cliente);
+					uiCliente.inserirCliente(cliente);
 					stage.close();
 				}
 				if (validacao == true && c != null) {
@@ -337,7 +299,7 @@ public class JanelaClienteInserirController implements Initializable {
 
 					Cliente cliente = Cliente.newInstance(nome, date, tel, cpf, rg, cep, endereco, cid);
 					cliente.setCodCliente(c.getCodCliente());
-					Programa.uiCliente.alterar(cliente);
+					uiCliente.alterar(cliente);
 					stage.close();
 				}
 				if (validacao == false) {

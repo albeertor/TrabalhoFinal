@@ -27,5 +27,29 @@ public class ControladorCidade {
 	public List<Cidade> getListaCest(String sgEst) {
 		return repoCidade.getListaCest(sgEst);
 	}
+
+	public boolean inserir(Cidade c) {
+		return repoCidade.inserir(c);
+	}
+	
+	public boolean alterar(Cidade c) {
+		return repoCidade.alterar(c);
+	}
+	
+	public boolean excluir(Cidade c) {
+		return repoCidade.excluir(c);
+	}
+
+	public long getProxId() {
+		return repoCidade.getProxId();
+	}
+	
+	public List<String> getEstado(){
+		return repoCidade.getEstado();
+	}
+
+	public List<Cidade> getPesquisa(Cidade c) {
+		return repoCidade.getPesquisa(c);
+	}
 	
 }

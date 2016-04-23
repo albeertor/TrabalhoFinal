@@ -15,16 +15,19 @@ public class JanelaClienteInserir extends Application {
 	private List<Cidade> listaCidade;
 	private long proxId;
 	private Cliente c = null;
+	private UICliente uiCliente;
 
-	public JanelaClienteInserir(long proxId, List<Cidade> listaCidade) throws Exception {
+	public JanelaClienteInserir(long proxId, List<Cidade> listaCidade, UICliente uiCliente) throws Exception {
 		this.proxId = proxId;
 		this.listaCidade = listaCidade;		
+		this.uiCliente = uiCliente;
 		start(new Stage());
 	}
 
-	public JanelaClienteInserir(Cliente c, List<Cidade> listaCidade) throws Exception {		
+	public JanelaClienteInserir(Cliente c, List<Cidade> listaCidade, UICliente uiCliente) throws Exception {		
 		this.c = c;
 		this.listaCidade = listaCidade;
+		this.uiCliente = uiCliente;
 		start(new Stage());
 	}
 
@@ -32,7 +35,7 @@ public class JanelaClienteInserir extends Application {
 	public void start(Stage stage) throws Exception {
 		JanelaClienteInserir.stage = stage;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("InserirCliente.fxml"));
-		loader.setController(new JanelaClienteInserirController(c, proxId, listaCidade));
+		loader.setController(new JanelaClienteInserirController(c, proxId, listaCidade, uiCliente));
 		Parent parent = loader.load();
 		Scene scene = new Scene(parent);
 		stage.setScene(scene);

@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import programa.negocio.entidades.Cliente;
 import programa.negocio.entidades.Produto;
+import programa.ui.fx.TextFieldUtils.Mask;
 
 public class JanelaProdutoListaController implements Initializable {
 	@FXML
@@ -111,6 +112,8 @@ public class JanelaProdutoListaController implements Initializable {
 		columnQtd.setCellValueFactory(new PropertyValueFactory<ItensProperty, Integer>("qtd"));
 		columnVlUnit.setCellValueFactory(new PropertyValueFactory<ItensProperty, Double>("vlUnit"));
 		
+		TextFieldUtils.setMask(fCodigo, Mask.MASK_Inteiro);
+	
 		btFechar.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -152,8 +155,9 @@ public class JanelaProdutoListaController implements Initializable {
 						prod = produtos.get(i);
 				}
 				if (prod != null) {
-					uiProduto.alterarProduto(prod);
+					
 					prods.clear();
+					uiProduto.alterarProduto(prod);
 					Stage stg = (Stage) btAlterar.getScene().getWindow();
 					stg.close();
 				}
@@ -171,8 +175,9 @@ public class JanelaProdutoListaController implements Initializable {
 						prod = produtos.get(i);
 				}
 				if (prod != null) {
-					uiProduto.excluir(prod);
+					
 					prods.clear();
+					uiProduto.excluir(prod);
 					Stage stg = (Stage) btExcluir.getScene().getWindow();
 					stg.close();
 				}
@@ -189,6 +194,74 @@ public class JanelaProdutoListaController implements Initializable {
 				chCodigo.setSelected(false);
 				chNome.setSelected(false);
 				
+			}
+		});
+		
+		btPesquisar.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				boolean validacao = false;
+
+				String nome = null;
+				if (chNome.isSelected() && fNome.getText() != null) {
+					nome = fNome.getText();
+					fNome.setStyle(" -fx-control-inner-background: white;");
+					validacao = true;
+				} else {
+					if (chNome.isSelected() && fNome.getText() == null) {
+						fNome.setStyle(" -fx-control-inner-background: pink;");
+
+					}
+					if (chNome.isSelected() == false && fNome.getText() != null) {
+						chNome.setStyle(" -fx-control-inner-background: pink;");
+
+					}
+
+				}
+				if (chNome.isSelected() == false && fNome.getText() == null) {
+					fNome.setStyle(" -fx-control-inner-background: white;");
+					validacao = true;
+				}
+
+				long cod = 0;
+				if (chCodigo.isSelected() && fCodigo.getText() != null) {
+					cod = Long.valueOf(fCodigo.getText()).longValue();
+					fCodigo.setStyle(" -fx-control-inner-background: white;");
+					validacao = true;
+				} else {
+					if (chCodigo.isSelected() && fCodigo.getText() == null) {
+						fCodigo.setStyle(" -fx-control-inner-background: pink;");
+
+					}
+					if (chCodigo.isSelected() == false && fCodigo.getText() != null) {
+						chCodigo.setStyle(" -fx-control-inner-background: pink;");
+					}
+
+				}
+				if (chCodigo.isSelected() == false && fCodigo.getText() == null) {
+					fCodigo.setStyle(" -fx-control-inner-background: white;");
+					validacao = true;
+				}
+				
+				if (validacao == true) {
+					
+					Produto prodPesq = Produto.newInstance(nome);
+
+					prodPesq.setCod(cod);
+					List<Produto> pesq = uiProduto.listarPesquisa(prodPesq);
+
+					prods.clear();
+
+					try {
+						JanelaProdutoLista j = new JanelaProdutoLista(pesq, uiProduto);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Stage stg = (Stage) btExcluir.getScene().getWindow();
+					stg.close();
+					}
 			}
 		});
 
