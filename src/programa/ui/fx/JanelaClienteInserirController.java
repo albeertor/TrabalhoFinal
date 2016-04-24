@@ -1,6 +1,7 @@
 package programa.ui.fx;
 
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import programa.negocio.entidades.Cidade;
@@ -84,6 +85,10 @@ public class JanelaClienteInserirController implements Initializable {
 				}
 			}
 		});
+		
+		FxUtil.autoCompleteComboBox(cbSgEstado, FxUtil.AutoCompleteMode.STARTS_WITH);
+		
+		FxUtil.autoCompleteComboBox(cbCidade, FxUtil.AutoCompleteMode.STARTS_WITH);
 
 		if (c != null) {
 			fCod.setText(c.getCodCliente() + "");
@@ -139,20 +144,18 @@ public class JanelaClienteInserirController implements Initializable {
 
 		}
 		TextFieldUtils.setMask(fTel, Mask.MASK_TELEFONE);
-		
-		
+				
 		TextFieldUtils.setMask(fCPF, Mask.MASK_CPF);
 		
 		TextFieldUtils.setMask(fCEP, Mask.MASK_CEP);
-		
-		
+				
 		TextFieldUtils.setMask(fRG, Mask.MASK_Inteiro);
 		 
 		cbSgEstado.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				String sgEst = cbSgEstado.getSelectionModel().getSelectedItem();
+				String sgEst = FxUtil.getComboBoxValue(cbSgEstado);
 				List<Cidade> city = JanelaPrincipal.getUiCidade().getListaCest(sgEst);
 				String[] nmcidades = new String[city.size()];
 				for (int i = 0; i < city.size(); i++) {
@@ -240,8 +243,8 @@ public class JanelaClienteInserirController implements Initializable {
 				} else {
 					fTel.setStyle(" -fx-control-inner-background: white;");
 				}
-
-				if (cbSgEstado.getSelectionModel().getSelectedItem() == null) {
+				
+				if (FxUtil.getComboBoxValue(cbSgEstado) == null) {
 					cbSgEstado.setStyle(" -fx-background-color: pink;");
 					validacao = false;
 					errorSg = ("Selecione um estado!\n");
@@ -250,7 +253,7 @@ public class JanelaClienteInserirController implements Initializable {
 					errorSg = ("\n");
 				}
 
-				if (cbCidade.getSelectionModel().getSelectedItem() == null) {
+				if (FxUtil.getComboBoxValue(cbCidade) == null) {
 					cbCidade.setStyle(" -fx-background-color: pink;");
 					validacao = false;
 					errorCidade = ("Selecione uma cidade!\n");
@@ -268,7 +271,7 @@ public class JanelaClienteInserirController implements Initializable {
 					String endereco = fEndereco.getText();
 
 					Cidade c = null;
-					String nmCidade = cbCidade.getSelectionModel().getSelectedItem();
+					String nmCidade = FxUtil.getComboBoxValue(cbCidade);
 
 					for (int i = 0; i < listaCidade.size(); i++) {
 						if (listaCidade.get(i).getNome().equals(nmCidade)) {
@@ -290,7 +293,7 @@ public class JanelaClienteInserirController implements Initializable {
 					String endereco = fEndereco.getText();
 
 					Cidade cid = null;
-					String nmCidade = (String) cbCidade.getSelectionModel().getSelectedItem();
+					String nmCidade = (String) FxUtil.getComboBoxValue(cbCidade);
 					for (int i = 0; i < listaCidade.size(); i++) {
 						if (listaCidade.get(i).getNome() == nmCidade) {
 							cid = listaCidade.get(i);

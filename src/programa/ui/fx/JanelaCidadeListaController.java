@@ -2,6 +2,7 @@ package programa.ui.fx;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.SimpleIntegerProperty;
@@ -12,8 +13,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBase;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -97,6 +101,8 @@ public class JanelaCidadeListaController implements Initializable{
 		columnNome.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("nome"));
 		columnSgEstado.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("sgEstado"));
 		
+		FxUtil.autoCompleteComboBox(cbSgEstado, FxUtil.AutoCompleteMode.STARTS_WITH);
+		
 		estado = uiCidade.getListaEstado();
 		String[] est = new String[estado.size()];
 		for (int i = 0; i < estado.size(); i++) {
@@ -168,11 +174,20 @@ public class JanelaCidadeListaController implements Initializable{
 						cid = listaCidade.get(i);
 				}
 				if (cid != null) {
-					
-					city.clear();
-					uiCidade.excluir(cid);
-					Stage stg = (Stage) btExcluir.getScene().getWindow();
-					stg.close();
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("Excluir");
+					alert.setHeaderText("Você vai excluir a cidade: ");
+					alert.setContentText("Código: " + cid.getCodCidade() + "\nNome: " + cid.getNome() + "\nTem certeza?");
+
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == ButtonType.OK){
+						uiCidade.excluir(cid);
+						Stage stg = (Stage) btExcluir.getScene().getWindow();
+						city.clear();
+						stg.close();
+					} else {
+						alert.close();
+					}					
 				}
 			}
 		});

@@ -2,6 +2,7 @@ package programa.ui.fx;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.SimpleDoubleProperty;
@@ -13,11 +14,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import programa.negocio.entidades.Cliente;
@@ -175,11 +179,21 @@ public class JanelaProdutoListaController implements Initializable {
 						prod = produtos.get(i);
 				}
 				if (prod != null) {
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("Excluir");
+					alert.setHeaderText("Você vai excluir o produto: ");
+					alert.setContentText("Código: " + prod.getCod() + "\nNome: " + prod.getNome() + "\nTem certeza?");
+
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == ButtonType.OK){						
+						uiProduto.excluir(prod);
+						Stage stg = (Stage) btExcluir.getScene().getWindow();
+						prods.clear();
+						stg.close();
+					} else {
+						alert.close();
+					}
 					
-					prods.clear();
-					uiProduto.excluir(prod);
-					Stage stg = (Stage) btExcluir.getScene().getWindow();
-					stg.close();
 				}
 			}
 		});

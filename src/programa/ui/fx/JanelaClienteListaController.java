@@ -2,6 +2,7 @@ package programa.ui.fx;
 
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import programa.negocio.entidades.Cidade;
@@ -10,6 +11,7 @@ import programa.ui.fx.TextFieldUtils.Mask;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.SimpleIntegerProperty;
@@ -22,7 +24,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -122,6 +126,7 @@ public class JanelaClienteListaController implements Initializable {
 	}
 
 	public void initialize(URL url, ResourceBundle bundle) {
+		FxUtil.autoCompleteComboBox(cbCidade, FxUtil.AutoCompleteMode.STARTS_WITH);
 
 		for (int i = 0; i < c.size(); i++) {
 			cliente.add(new ItensProperty(c.get(i).getCodCliente(), c.get(i).getNome(), c.get(i).getTel(),
@@ -206,11 +211,22 @@ public class JanelaClienteListaController implements Initializable {
 					if (cod == c.get(i).getCodCliente())
 						cli = c.get(i);
 				}
-				if (cli != null) {
-					uiCliente.excluirCliente(cli);
-					cliente.clear();
-					Stage stg = (Stage) btExcluir.getScene().getWindow();
-					stg.close();
+				if (cli != null) {					
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("Excluir");
+					alert.setHeaderText("Você vai excluir o cliente: ");
+					alert.setContentText("Código: " + cli.getCodCliente() + "\nNome: " + cli.getNome() + "\nTem certeza?");
+
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == ButtonType.OK){
+						uiCliente.excluirCliente(cli);						
+						Stage stg = (Stage) btExcluir.getScene().getWindow();
+						cliente.clear();
+						stg.close();
+					} else {
+						alert.close();
+					}
+					
 				}
 			}
 		});
@@ -300,9 +316,9 @@ public class JanelaClienteListaController implements Initializable {
 				}
 
 				Cidade c = null;
-				if (chCidade.isSelected() && cbCidade.getSelectionModel().getSelectedItem() != null) {
+				if (chCidade.isSelected() && FxUtil.getComboBoxValue(cbCidade) != null) {
 
-					String nmCidade = (String) cbCidade.getSelectionModel().getSelectedItem();
+					String nmCidade = (String) FxUtil.getComboBoxValue(cbCidade);
 					if (!nmCidade.equals("QUALQUER CIDADE")) {
 						for (int i = 0; i < listaCidade.size(); i++) {
 							if (listaCidade.get(i).getNome() == nmCidade)
