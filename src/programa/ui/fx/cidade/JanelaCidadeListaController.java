@@ -35,7 +35,7 @@ import programa.ui.fx.util.TextFieldUtils;
 import programa.ui.fx.util.FxUtil.AutoCompleteMode;
 import programa.ui.fx.util.TextFieldUtils.Mask;
 
-public class JanelaCidadeListaController implements Initializable{
+public class JanelaCidadeListaController implements Initializable {
 	@FXML
 	private TextField fCodigo, fNome;
 	@FXML
@@ -50,72 +50,76 @@ public class JanelaCidadeListaController implements Initializable{
 	private TableView<ItensProperty> tbCidade;
 	@FXML
 	private Button btFechar, btResetar, btInserir, btAlterar, btExcluir, btPesquisar, btLimpar;
-	
+
 	private UICidade uiCidade;
 	private List<Cidade> listaCidade;
 	private List<String> estado;
-	
+
 	private static ObservableList<ItensProperty> city = FXCollections.observableArrayList();
-	
+
 	public JanelaCidadeListaController(UICidade uiCidade, List<Cidade> listaCidade) {
 		this.uiCidade = uiCidade;
 		this.listaCidade = listaCidade;
 	}
-	
+
 	public class ItensProperty {
 		private SimpleIntegerProperty cod;
-		private SimpleStringProperty nome;		
+		private SimpleStringProperty nome;
 		private SimpleStringProperty sgEstado;
-		
+
 		public ItensProperty(long cod, String nome, String sgEstado) {
 			this.cod = new SimpleIntegerProperty((int) cod);
 			this.nome = new SimpleStringProperty(nome);
 			this.sgEstado = new SimpleStringProperty(sgEstado);
 		}
-		
+
 		public int getCod() {
 			return cod.get();
 		}
+
 		public void setCod(int cod) {
 			this.cod.set(cod);
 		}
+
 		public String getNome() {
 			return nome.get();
 		}
+
 		public void setNome(String nome) {
 			this.nome.set(nome);
 		}
+
 		public String getSgEstado() {
 			return sgEstado.get();
 		}
+
 		public void setSgEstado(String sgEstado) {
 			this.sgEstado.set(sgEstado);
-		}		
+		}
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		for (int i = 0; i < listaCidade.size(); i++) {
-			city.add(new ItensProperty(listaCidade.get(i).getCodCidade(), listaCidade.get(i).getNome(), listaCidade.get(i).getsgEstado()));
+			city.add(new ItensProperty(listaCidade.get(i).getCodCidade(), listaCidade.get(i).getNome(),
+					listaCidade.get(i).getsgEstado()));
 		}
-		
+
 		tbCidade.setItems(city);
 		columnCodigo.setCellValueFactory(new PropertyValueFactory<ItensProperty, Integer>("cod"));
 		columnNome.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("nome"));
 		columnSgEstado.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("sgEstado"));
-		
-		
+
 		estado = uiCidade.getListaEstado();
-		String[] est = new String[estado.size() + 1];
+		String[] est = new String[estado.size()];
 		for (int i = 0; i < estado.size(); i++) {
-			est[i + 1] = estado.get(i);
+			est[i] = estado.get(i);
 		}
-		est[0] = "QUALQUER ESTADO";
 		ObservableList<String> estad = FXCollections.observableArrayList(est);
 		cbSgEstado.setItems(estad);
-		
+
 		TextFieldUtils.setMask(fCodigo, Mask.MASK_Inteiro);
-	
+
 		btFechar.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -145,7 +149,7 @@ public class JanelaCidadeListaController implements Initializable{
 				uiCidade.lerCidade();
 			}
 		});
-		
+
 		btAlterar.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -157,7 +161,7 @@ public class JanelaCidadeListaController implements Initializable{
 						cid = listaCidade.get(i);
 				}
 				if (cid != null) {
-					
+
 					city.clear();
 					uiCidade.alterarCidade(cid);
 					Stage stg = (Stage) btAlterar.getScene().getWindow();
@@ -180,17 +184,18 @@ public class JanelaCidadeListaController implements Initializable{
 					Alert alert = new Alert(AlertType.CONFIRMATION);
 					alert.setTitle("Excluir");
 					alert.setHeaderText("Você vai excluir a cidade: ");
-					alert.setContentText("Código: " + cid.getCodCidade() + "\nNome: " + cid.getNome() + "\nTem certeza?");
+					alert.setContentText(
+							"Código: " + cid.getCodCidade() + "\nNome: " + cid.getNome() + "\nTem certeza?");
 
 					Optional<ButtonType> result = alert.showAndWait();
-					if (result.get() == ButtonType.OK){
+					if (result.get() == ButtonType.OK) {
 						uiCidade.excluir(cid);
 						Stage stg = (Stage) btExcluir.getScene().getWindow();
 						city.clear();
 						stg.close();
 					} else {
 						alert.close();
-					}					
+					}
 				}
 			}
 		});
@@ -202,10 +207,10 @@ public class JanelaCidadeListaController implements Initializable{
 				fCodigo.setText(null);
 				fNome.setText(null);
 				cbSgEstado.getSelectionModel().select(0);
-				
+
 			}
 		});
-		
+
 		btPesquisar.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -217,25 +222,22 @@ public class JanelaCidadeListaController implements Initializable{
 					nome = fNome.getText();
 					validacao = true;
 				}
-				
+
 				long cod = 0;
 				if (!fCodigo.getText().isEmpty()) {
 					cod = Long.valueOf(fCodigo.getText()).longValue();
 					validacao = true;
 				}
-				
+
 				String est = null;
-				if(cbSgEstado.getSelectionModel().getSelectedItem() != null){
+				if (cbSgEstado.getSelectionModel().getSelectedItem() != null) {
 					est = cbSgEstado.getSelectionModel().getSelectedItem();
-					if(est.equals("QUALQUER ESTADO")){
-						est = null;
-					}
+
 					validacao = true;
 				}
-			
-				
+
 				if (validacao == true) {
-					
+
 					Cidade cidPesq = Cidade.newInstance(nome, est);
 
 					cidPesq.setCodCidade(cod);
@@ -251,7 +253,7 @@ public class JanelaCidadeListaController implements Initializable{
 					}
 					Stage stg = (Stage) btPesquisar.getScene().getWindow();
 					stg.close();
-					}
+				}
 			}
 		});
 	}

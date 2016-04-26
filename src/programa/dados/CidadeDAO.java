@@ -266,13 +266,38 @@ public class CidadeDAO implements IRepositorioCidade {
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
+					} else {
+						if (c.getsgEstado() != null && c.getNome() != null) {
+							try {
+								stmt = conexao.prepareStatement(
+										"SELECT * FROM cidade WHERE nmcidade like ? and sgestado = ? ORDER BY nmcidade ASC");
+								stmt.setString(1, c.getNome() + "%");
+								stmt.setString(2, c.getsgEstado());
+								ResultSet rs = stmt.executeQuery();
+
+								while (rs.next()) {
+									Cidade city = new Cidade();
+									city.setCodCidade(rs.getLong("cdcidade"));
+									city.setNome(rs.getString("nmcidade"));
+									city.setSgEstado(rs.getString("sgestado"));
+
+									lista.add(city);
+								}
+
+								rs.close();
+								stmt.close();
+
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+						}
 					}
 				}
 			} else {
-				if (c.getNome() == null && c.getsgEstado() != null){
+				if (c.getNome() == null && c.getsgEstado() != null) {
 					try {
 						stmt = conexao.prepareStatement(
-								"SELECT * FROM cidade WHERE sgestado = ?, cdcidade = ? ORDER BY nmcidade ASC");
+								"SELECT * FROM cidade WHERE sgestado = ? and cdcidade = ? ORDER BY nmcidade ASC");
 						stmt.setString(1, c.getsgEstado());
 						stmt.setLong(2, c.getCodCidade());
 						ResultSet rs = stmt.executeQuery();
@@ -293,12 +318,12 @@ public class CidadeDAO implements IRepositorioCidade {
 						e.printStackTrace();
 					}
 				}
-					
+
 				else {
 					if (c.getsgEstado() == null && c.getNome() != null) {
 						try {
 							stmt = conexao.prepareStatement(
-									"SELECT * FROM cidade WHERE nmcidade like ?, cdcidade = ? ORDER BY nmcidade ASC");
+									"SELECT * FROM cidade WHERE nmcidade like ? and cdcidade = ? ORDER BY nmcidade ASC");
 							stmt.setString(1, c.getNome() + "%");
 							stmt.setLong(2, c.getCodCidade());
 							ResultSet rs = stmt.executeQuery();
@@ -317,6 +342,58 @@ public class CidadeDAO implements IRepositorioCidade {
 
 						} catch (SQLException e) {
 							e.printStackTrace();
+						}
+					} else {
+						if (c.getsgEstado() == null && c.getNome() == null) {
+							try {
+								stmt = conexao.prepareStatement(
+										"SELECT * FROM cidade WHERE cdcidade = ? ORDER BY nmcidade ASC");
+
+								stmt.setLong(1, c.getCodCidade());
+								ResultSet rs = stmt.executeQuery();
+
+								while (rs.next()) {
+									Cidade city = new Cidade();
+									city.setCodCidade(rs.getLong("cdcidade"));
+									city.setNome(rs.getString("nmcidade"));
+									city.setSgEstado(rs.getString("sgestado"));
+
+									lista.add(city);
+								}
+
+								rs.close();
+								stmt.close();
+
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+						} else {
+							if (c.getsgEstado() != null && c.getNome() != null) {
+								try {
+									stmt = conexao.prepareStatement(
+											"SELECT * FROM cidade WHERE cdcidade = ? and nmcidade like ? and sgestado = ?  ORDER BY nmcidade ASC");
+
+									stmt.setLong(1, c.getCodCidade());
+									stmt.setString(2, c.getNome() + "%");
+									stmt.setString(3, c.getsgEstado());
+									ResultSet rs = stmt.executeQuery();
+
+									while (rs.next()) {
+										Cidade city = new Cidade();
+										city.setCodCidade(rs.getLong("cdcidade"));
+										city.setNome(rs.getString("nmcidade"));
+										city.setSgEstado(rs.getString("sgestado"));
+
+										lista.add(city);
+									}
+
+									rs.close();
+									stmt.close();
+
+								} catch (SQLException e) {
+									e.printStackTrace();
+								}
+							}
 						}
 					}
 				}

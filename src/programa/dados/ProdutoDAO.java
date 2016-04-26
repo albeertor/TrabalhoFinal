@@ -131,7 +131,7 @@ public class ProdutoDAO implements IRepositorioProduto {
 		List<Produto> lista = new ArrayList<Produto>();
 
 		PreparedStatement stmt;
-		if (prod != null) {
+		if (prod != null) { 
 			if (prod.getCod() == 0) {
 				try {
 					stmt = conexao.prepareStatement("SELECT * FROM produto WHERE nmproduto like ?");

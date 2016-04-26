@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import jidefx.scene.control.field.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -40,10 +41,10 @@
 				<TableColumn fx:id="columnCidade" prefWidth="126.0" text="Cidade" />
 			</columns>
 		</TableView>
-		<TextField fx:id="fCodigo" layoutX="14.0" layoutY="67.0" prefHeight="25.0" prefWidth="62.0" />
-		<TextField fx:id="fNome" layoutX="98.0" layoutY="68.0" prefHeight="25.0" prefWidth="159.0" />
-		<TextField fx:id="fCpf" layoutX="279.0" layoutY="69.0" prefHeight="25.0" prefWidth="159.0" />
 		<ComboBox fx:id="cbCidade" layoutX="460.0" layoutY="68.0" prefHeight="25.0" prefWidth="129.0" />
+      <FormattedTextField fx:id="fCpf" layoutX="278.0" layoutY="69.0" prefHeight="25.0" prefWidth="159.0" />
+      <FormattedTextField fx:id="fNome" layoutX="98.0" layoutY="68.0" prefHeight="25.0" prefWidth="159.0" />
+      <FormattedTextField fx:id="fCodigo" layoutX="14.0" layoutY="67.0" prefHeight="25.0" prefWidth="62.0" />
 		<Button fx:id="btLimpar" layoutX="614.0" layoutY="39.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Limpar" />
 		<Button fx:id="btPesquisar" layoutX="614.0" layoutY="67.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Pesquisar" />
 		<ButtonBar layoutX="13.0" layoutY="394.0" prefHeight="40.0" prefWidth="676.0">

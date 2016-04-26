@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import jidefx.scene.control.field.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -8,16 +9,11 @@
 	<children>
 		<Label fx:id="lCod" layoutX="15.0" layoutY="11.0" text="Código do Cliente:" />
 		<TextField fx:id="fCod" disable="true" editable="false" layoutX="15.0" layoutY="31.0" prefHeight="25.0" prefWidth="108.0" />
-		<TextField fx:id="fNome" layoutX="15.0" layoutY="82.0" prefHeight="25.0" prefWidth="228.0" />
 		<Label fx:id="lNome" layoutX="15.0" layoutY="62.0" text="Nome:" />
 		<Label fx:id="lDtNasc" layoutX="15.0" layoutY="115.0" text="Data de Nascimento:" />
-		<TextField fx:id="fTel" layoutX="135.0" layoutY="135.0" prefHeight="25.0" prefWidth="108.0" />
 		<Label fx:id="lTel" layoutX="135.0" layoutY="115.0" text="Telefone:" />
-		<TextField fx:id="fCPF" layoutX="15.0" layoutY="190.0" prefHeight="25.0" prefWidth="108.0" />
 		<Label fx:id="lCPF" layoutX="15.0" layoutY="170.0" text="CPF:" />
-		<TextField fx:id="fRG" layoutX="135.0" layoutY="190.0" prefHeight="25.0" prefWidth="108.0" />
 		<Label fx:id="lRG" layoutX="135.0" layoutY="170.0" text="RG:" />
-		<TextField fx:id="fCEP" layoutX="15.0" layoutY="246.0" prefHeight="25.0" prefWidth="108.0" />
 		<Label fx:id="lCEP" layoutX="15.0" layoutY="226.0" text="CEP:" />
 		<TextField fx:id="fEndereco" layoutX="15.0" layoutY="300.0" prefHeight="25.0" prefWidth="228.0" />
 		<Label fx:id="lEndereco" layoutX="15.0" layoutY="280.0" text="Endereço:" />
@@ -32,5 +28,10 @@
 		</ButtonBar>
 		<ComboBox fx:id="cbCidade" layoutX="134.0" layoutY="354.0" prefHeight="25.0" prefWidth="110.0" />
       <DatePicker fx:id="dtNasc" layoutX="15.0" layoutY="135.0" prefHeight="25.0" prefWidth="108.0" />
+      <FormattedTextField fx:id="fTel" layoutX="135.0" layoutY="135.0" prefHeight="25.0" prefWidth="108.0" />
+      <FormattedTextField fx:id="fCPF" layoutX="16.0" layoutY="190.0" prefHeight="25.0" prefWidth="108.0" />
+      <FormattedTextField fx:id="fCEP" layoutX="14.0" layoutY="246.0" prefHeight="25.0" prefWidth="108.0" />
+      <FormattedTextField fx:id="fRG" layoutX="135.0" layoutY="190.0" prefHeight="25.0" prefWidth="108.0" />
+      <FormattedTextField fx:id="fNome" layoutX="14.0" layoutY="82.0" prefHeight="25.0" prefWidth="228.0" />
 	</children>
 </Pane>

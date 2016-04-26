@@ -5,10 +5,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import jidefx.scene.control.field.FormattedTextField;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Cliente;
 import programa.ui.fx.util.FxUtil;
 import programa.ui.fx.util.TextFieldUtils;
+import programa.ui.fx.util.Validation;
 import programa.ui.fx.util.FxUtil.AutoCompleteMode;
 import programa.ui.fx.util.TextFieldUtils.Mask;
 
@@ -50,7 +52,7 @@ public class JanelaClienteListaController implements Initializable {
 	@FXML
 	private TableColumn<ItensProperty, String> columnCidade;
 	@FXML
-	private TextField fCodigo, fNome, fCpf;
+	private FormattedTextField fCpf,fCodigo, fNome;
 	@FXML
 	private ComboBox<String> cbCidade;
 	@FXML
@@ -127,6 +129,10 @@ public class JanelaClienteListaController implements Initializable {
 
 	public void initialize(URL url, ResourceBundle bundle) {
 
+		Validation.toCpfField(fCpf);
+		Validation.validate(fNome, Validation.OBRIGATORIO);
+		Validation.validate(fCodigo, Validation.OBRIGATORIOSNUMERO);
+		
 		for (int i = 0; i < c.size(); i++) {
 			cliente.add(new ItensProperty(c.get(i).getCodCliente(), c.get(i).getNome(), c.get(i).getTel(),
 					c.get(i).getCpf(), c.get(i).getCidade().getNome()));
@@ -139,11 +145,11 @@ public class JanelaClienteListaController implements Initializable {
 		columnCpf.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("cpf"));
 		columnCidade.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("cidade"));
 
-		String[] nmcidades = new String[listaCidade.size() + 1];
+		String[] nmcidades = new String[listaCidade.size()];
 		for (int i = 0; i < listaCidade.size(); i++) {
-			nmcidades[i + 1] = listaCidade.get(i).getNome();
+			nmcidades[i] = listaCidade.get(i).getNome();
 		}
-		nmcidades[0] = "QUALQUER CIDADE";
+
 		ObservableList<String> nmCid = FXCollections.observableArrayList(nmcidades);
 		cbCidade.setItems(nmCid);
 
@@ -271,13 +277,13 @@ public class JanelaClienteListaController implements Initializable {
 				Cidade c = null;
 				if (cbCidade.getSelectionModel().getSelectedItem() != null) {
 					String nmCidade = (String) cbCidade.getSelectionModel().getSelectedItem();
-					if (!nmCidade.equals("QUALQUER CIDADE")) {
-						for (int i = 0; i < listaCidade.size(); i++) {
-							if (listaCidade.get(i).getNome() == nmCidade)
-								c = listaCidade.get(i);
-						}
-						validacao = true;
+
+					for (int i = 0; i < listaCidade.size(); i++) {
+						if (listaCidade.get(i).getNome() == nmCidade)
+							c = listaCidade.get(i);
 					}
+					validacao = true;
+
 				}
 
 				if (validacao == true) {

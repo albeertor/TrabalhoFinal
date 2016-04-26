@@ -4,6 +4,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import jidefx.scene.control.field.FormattedTextField;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Cliente;
 import programa.ui.fx.JanelaPrincipal;
@@ -12,6 +13,7 @@ import programa.ui.fx.util.TextFieldUtils;
 import programa.ui.fx.util.validarCPF;
 import programa.ui.fx.util.FxUtil.AutoCompleteMode;
 import programa.ui.fx.util.TextFieldUtils.Mask;
+import programa.ui.fx.util.Validation;
 
 import java.net.URL;
 import java.time.Instant;
@@ -41,7 +43,9 @@ public class JanelaClienteInserirController implements Initializable {
 	@FXML
 	private Button btCancelar, btSalvar;
 	@FXML
-	private TextField fCod, fNome, fTel, fCPF, fCEP, fRG, fEndereco;
+	private TextField fCod, fEndereco;
+	@FXML
+	private FormattedTextField fTel, fCPF, fRG, fCEP, fNome;
 	@FXML
 	private DatePicker dtNasc;
 	@FXML
@@ -144,14 +148,13 @@ public class JanelaClienteInserirController implements Initializable {
 			cbCidade.setItems(nmCid);
 
 		}
-		TextFieldUtils.setMask(fTel, Mask.MASK_TELEFONE);
-				
-		TextFieldUtils.setMask(fCPF, Mask.MASK_CPF);
 		
-		TextFieldUtils.setMask(fCEP, Mask.MASK_CEP);
-				
-		TextFieldUtils.setMask(fRG, Mask.MASK_Inteiro);
-		 
+		Validation.toTelefoneField(fTel);
+		Validation.toCpfField(fCPF);		
+		Validation.toCEPField(fCEP);
+		Validation.validate(fRG, Validation.RG);
+		Validation.validate(fNome, Validation.VARCHAR45);
+		
 		cbSgEstado.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

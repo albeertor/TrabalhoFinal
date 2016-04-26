@@ -4,12 +4,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
+
 /**
  * Created by Lucas Silva Chaves on 22/04/2016.
  * lucasxp205@gmail.com
  */
 public class TextFieldUtils {
-
+	
     public static void setMask(TextField textField, Mask mask) {
         textField.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -68,5 +69,6 @@ public class TextFieldUtils {
         private Mask(int value) {
             this.value = value;
         }
+
     }
 }
