@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.cidade;
 
 import java.net.URL;
 import java.util.List;
@@ -27,16 +27,19 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Produto;
-import programa.ui.fx.JanelaProdutoListaController.ItensProperty;
-import programa.ui.fx.TextFieldUtils.Mask;
+import programa.ui.fx.JanelaPrincipal;
+import programa.ui.fx.produto.JanelaProdutoLista;
+import programa.ui.fx.produto.JanelaProdutoListaController.ItensProperty;
+import programa.ui.fx.util.FxUtil;
+import programa.ui.fx.util.TextFieldUtils;
+import programa.ui.fx.util.FxUtil.AutoCompleteMode;
+import programa.ui.fx.util.TextFieldUtils.Mask;
 
 public class JanelaCidadeListaController implements Initializable{
 	@FXML
 	private TextField fCodigo, fNome;
 	@FXML
 	private ComboBox<String> cbSgEstado;
-	@FXML
-	private CheckBox chCodigo, chNome, chSgEstado;
 	@FXML
 	private TableColumn<ItensProperty, Integer> columnCodigo;
 	@FXML
@@ -101,13 +104,13 @@ public class JanelaCidadeListaController implements Initializable{
 		columnNome.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("nome"));
 		columnSgEstado.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("sgEstado"));
 		
-		FxUtil.autoCompleteComboBox(cbSgEstado, FxUtil.AutoCompleteMode.STARTS_WITH);
 		
 		estado = uiCidade.getListaEstado();
-		String[] est = new String[estado.size()];
+		String[] est = new String[estado.size() + 1];
 		for (int i = 0; i < estado.size(); i++) {
-			est[i] = estado.get(i);
+			est[i + 1] = estado.get(i);
 		}
+		est[0] = "QUALQUER ESTADO";
 		ObservableList<String> estad = FXCollections.observableArrayList(est);
 		cbSgEstado.setItems(estad);
 		
@@ -200,10 +203,55 @@ public class JanelaCidadeListaController implements Initializable{
 				fNome.setText(null);
 				cbSgEstado.getSelectionModel().select(0);
 				
-				chCodigo.setSelected(false);
-				chNome.setSelected(false);
-				chSgEstado.setSelected(false);
+			}
+		});
+		
+		btPesquisar.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				boolean validacao = false;
+
+				String nome = null;
+				if (!fNome.getText().isEmpty()) {
+					nome = fNome.getText();
+					validacao = true;
+				}
 				
+				long cod = 0;
+				if (!fCodigo.getText().isEmpty()) {
+					cod = Long.valueOf(fCodigo.getText()).longValue();
+					validacao = true;
+				}
+				
+				String est = null;
+				if(cbSgEstado.getSelectionModel().getSelectedItem() != null){
+					est = cbSgEstado.getSelectionModel().getSelectedItem();
+					if(est.equals("QUALQUER ESTADO")){
+						est = null;
+					}
+					validacao = true;
+				}
+			
+				
+				if (validacao == true) {
+					
+					Cidade cidPesq = Cidade.newInstance(nome, est);
+
+					cidPesq.setCodCidade(cod);
+					List<Cidade> pesq = uiCidade.listarPesquisa(cidPesq);
+
+					city.clear();
+
+					try {
+						JanelaCidadeLista j = new JanelaCidadeLista(pesq, uiCidade);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Stage stg = (Stage) btPesquisar.getScene().getWindow();
+					stg.close();
+					}
 			}
 		});
 	}

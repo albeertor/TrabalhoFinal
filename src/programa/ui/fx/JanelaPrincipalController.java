@@ -1,6 +1,10 @@
 package programa.ui.fx;
 
 import javafx.scene.control.MenuItem;
+import programa.ui.fx.cidade.UICidade;
+import programa.ui.fx.cliente.UICliente;
+import programa.ui.fx.produto.UIProduto;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;

@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.cidade;
 
 import java.util.List;
 
@@ -10,24 +10,22 @@ import javafx.stage.Stage;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Cliente;
 
-public class JanelaClienteLista extends Application {
+public class JanelaCidadeLista extends Application{
 	private static Stage stage;
-	private UICliente uiCliente;
-	private List<Cliente> clientes;
+	private UICidade uiCidade;
 	private List<Cidade> listaCidade;
 
-	public JanelaClienteLista(List<Cliente> clientes, List<Cidade> listaCidade, UICliente uiCliente) throws Exception {
-		this.uiCliente = uiCliente;
-		this.clientes = clientes;
+	public JanelaCidadeLista(List<Cidade> listaCidade, UICidade uiCidade) throws Exception {
+		this.uiCidade = uiCidade;
 		this.listaCidade = listaCidade;
 		start(new Stage());
 	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		JanelaClienteLista.stage = stage;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ListarCliente.fxml"));
-		loader.setController(new JanelaClienteListaController(uiCliente, clientes, listaCidade));
+		JanelaCidadeLista.stage = stage;
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ListarCidade.fxml"));
+		loader.setController(new JanelaCidadeListaController(uiCidade, listaCidade));
 		Parent parent = loader.load();
 		Scene scene = new Scene(parent);
 		stage.setScene(scene);

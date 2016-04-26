@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -39,13 +40,9 @@
 				<TableColumn fx:id="columnCidade" prefWidth="126.0" text="Cidade" />
 			</columns>
 		</TableView>
-		<CheckBox fx:id="chCodigo" layoutX="14.0" layoutY="41.0" mnemonicParsing="false" text="Código:" />
 		<TextField fx:id="fCodigo" layoutX="14.0" layoutY="67.0" prefHeight="25.0" prefWidth="62.0" />
-		<CheckBox fx:id="chNome" layoutX="98.0" layoutY="42.0" mnemonicParsing="false" text="Nome:" />
 		<TextField fx:id="fNome" layoutX="98.0" layoutY="68.0" prefHeight="25.0" prefWidth="159.0" />
-		<CheckBox fx:id="chCpf" layoutX="279.0" layoutY="43.0" mnemonicParsing="false" text="CPF:" />
 		<TextField fx:id="fCpf" layoutX="279.0" layoutY="69.0" prefHeight="25.0" prefWidth="159.0" />
-		<CheckBox fx:id="chCidade" layoutX="460.0" layoutY="43.0" mnemonicParsing="false" text="Cidade:" />
 		<ComboBox fx:id="cbCidade" layoutX="460.0" layoutY="68.0" prefHeight="25.0" prefWidth="129.0" />
 		<Button fx:id="btLimpar" layoutX="614.0" layoutY="39.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Limpar" />
 		<Button fx:id="btPesquisar" layoutX="614.0" layoutY="67.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Pesquisar" />
@@ -58,5 +55,9 @@
 				<Button fx:id="btFechar" mnemonicParsing="false" text="Fechar" />
 			</buttons>
 		</ButtonBar>
+      <Text layoutX="14.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código:" />
+      <Text layoutX="99.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:" />
+      <Text layoutX="280.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPF:" />
+      <Text layoutX="460.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cidade:" />
 	</children>
 </Pane>

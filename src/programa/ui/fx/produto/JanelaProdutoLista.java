@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.produto;
 
 import java.util.List;
 

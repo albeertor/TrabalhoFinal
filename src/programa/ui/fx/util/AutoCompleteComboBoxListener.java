@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.util;
 
 import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
 

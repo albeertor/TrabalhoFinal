@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.produto;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +14,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import programa.negocio.entidades.Produto;
-import programa.ui.fx.TextFieldUtils.Mask;
+import programa.ui.fx.util.TextFieldUtils;
+import programa.ui.fx.util.TextFieldUtils.Mask;
 
 public class JanelaProdutoInserirController implements Initializable {
 	@FXML

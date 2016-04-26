@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.cidade;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.cliente;
 
 import java.util.List;
 
@@ -7,9 +7,8 @@ import javafx.scene.control.Alert.AlertType;
 import programa.negocio.Controle;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Cliente;
-
-import programa.ui.fx.JanelaClienteInserir;
-import programa.ui.fx.JanelaClienteLista;
+import programa.ui.fx.cliente.JanelaClienteInserir;
+import programa.ui.fx.cliente.JanelaClienteLista;
 
 public class UICliente {
 	private Controle ctr;

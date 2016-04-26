@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.cidade;
 
 import java.util.List;
 

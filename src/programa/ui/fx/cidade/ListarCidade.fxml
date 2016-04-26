@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -37,9 +38,7 @@
 				<TableColumn fx:id="columnSgEstado" prefWidth="103.0" text="Estado" />
 			</columns>
 		</TableView>
-		<CheckBox fx:id="chCodigo" layoutX="16.0" layoutY="42.0" mnemonicParsing="false" text="Código:" />
 		<TextField fx:id="fCodigo" layoutX="16.0" layoutY="68.0" prefHeight="25.0" prefWidth="83.0" />
-		<CheckBox fx:id="chNome" layoutX="110.0" layoutY="42.0" mnemonicParsing="false" text="Nome:" />
 		<TextField fx:id="fNome" layoutX="110.0" layoutY="68.0" prefHeight="25.0" prefWidth="126.0" />
 		<Button fx:id="btLimpar" layoutX="371.0" layoutY="40.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Limpar" />
 		<Button fx:id="btPesquisar" layoutX="371.0" layoutY="68.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Pesquisar" />
@@ -52,7 +51,9 @@
 				<Button fx:id="btFechar" mnemonicParsing="false" text="Fechar" />
 			</buttons>
 		</ButtonBar>
-      <CheckBox fx:id="chSgEstado" layoutX="250.0" layoutY="42.0" mnemonicParsing="false" text="Estado:" />
       <ComboBox fx:id="cbSgEstado" layoutX="250.0" layoutY="68.0" prefHeight="25.0" prefWidth="99.0" />
+      <Text layoutX="17.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código:" />
+      <Text layoutX="111.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Nome:" />
+      <Text layoutX="250.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estado:" />
 	</children>
 </Pane>

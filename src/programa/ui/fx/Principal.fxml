@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="298.0" prefWidth="527.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
 
 	<children>
-		<MenuBar prefHeight="25.0" prefWidth="600.0">
+		<MenuBar prefHeight="25.0" prefWidth="527.0">
 			<menus>
 				<Menu fx:id="menuCliente" mnemonicParsing="false" text="Cliente">
 					<items>
@@ -55,21 +55,57 @@
 				</Menu>
 			</menus>
 		</MenuBar>
-		<Button fx:id="btFechar" layoutX="527.0" layoutY="361.0" mnemonicParsing="false" text="Fechar" />
-		<Button fx:id="btCliente" layoutX="111.0" layoutY="68.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="Cliente">
-			<font>
-				<Font size="20.0" />
-			</font>
-		</Button>
-		<Button fx:id="btProduto" layoutX="224.0" layoutY="68.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="Produto">
-			<font>
-				<Font size="20.0" />
-			</font>
-		</Button>
-      <Button fx:id="btCidade" layoutX="111.0" layoutY="179.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="Cidade">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
+      <Group layoutX="37.0" layoutY="67.0">
+         <children>
+            <Group layoutX="1.0">
+               <children>
+            		<Button fx:id="btCliente" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="145.0" text="Cliente">
+            			<font>
+            				<Font size="20.0" />
+            			</font>
+            		</Button>
+            		<Button fx:id="btProduto" layoutX="154.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="145.0" text="Produto">
+            			<font>
+            				<Font size="20.0" />
+            			</font>
+            		</Button>
+                  <Button fx:id="btCidade" layoutX="308.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="145.0" text="Cidade">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Group>
+            <Group disable="true" layoutY="98.0">
+               <children>
+                  <Button fx:id="btVenda" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="145.0" text="Venda">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btPagamento" layoutX="155.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="145.0" text="Pagamentos">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btEstoque" layoutX="309.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="145.0" text="Estoque">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Separator layoutX="100.0" layoutY="52.0" prefHeight="3.0" prefWidth="405.0" />
+      <Separator layoutX="108.0" layoutY="142.0" prefHeight="3.0" prefWidth="397.0" />
+      <Separator layoutX="502.0" layoutY="52.0" orientation="VERTICAL" prefHeight="193.0" prefWidth="6.0" />
+      <Separator layoutX="19.0" layoutY="52.0" orientation="VERTICAL" prefHeight="193.0" prefWidth="6.0" />
+		<Button fx:id="btFechar" layoutX="440.0" layoutY="259.0" mnemonicParsing="false" text="Fechar" />
+      <Separator layoutX="20.0" layoutY="244.0" prefHeight="3.0" prefWidth="484.0" />
+      <Separator layoutX="20.0" layoutY="52.0" prefHeight="3.0" prefWidth="24.0" />
+      <Text layoutX="55.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dados" />
+      <Text layoutX="55.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Controle" />
+      <Separator layoutX="20.0" layoutY="142.0" prefHeight="3.0" prefWidth="24.0" />
 	</children>
 </Pane>

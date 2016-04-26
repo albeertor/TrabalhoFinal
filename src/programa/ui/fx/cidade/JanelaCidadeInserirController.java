@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.cidade;
 
 import java.net.URL;
 import java.util.List;
@@ -16,6 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Produto;
+import programa.ui.fx.util.FxUtil;
+import programa.ui.fx.util.FxUtil.AutoCompleteMode;
 
 public class JanelaCidadeInserirController implements Initializable{
 	@FXML
@@ -55,7 +57,6 @@ public class JanelaCidadeInserirController implements Initializable{
 			fCod.setText(proxCod+"");
 		}
 		
-		FxUtil.autoCompleteComboBox(cbSgEstado, FxUtil.AutoCompleteMode.STARTS_WITH);
 		
 		btSalvar.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -71,7 +72,7 @@ public class JanelaCidadeInserirController implements Initializable{
 					fNome.setStyle(" -fx-control-inner-background: white;");
 				}
 				
-				if (FxUtil.getComboBoxValue(cbSgEstado) == null) {
+				if (cbSgEstado.getSelectionModel().getSelectedItem() == null) {
 					cbSgEstado.setStyle(" -fx-background-color: pink;");
 					validacao = false;
 				} else {
@@ -81,7 +82,7 @@ public class JanelaCidadeInserirController implements Initializable{
 				
 				if (validacao == true && c == null) {
 					String nome = fNome.getText().toUpperCase();
-					String sgEstado = FxUtil.getComboBoxValue(cbSgEstado);	
+					String sgEstado = cbSgEstado.getSelectionModel().getSelectedItem();	
 
 					Cidade city = Cidade.newInstance(nome, sgEstado);
 					city.setCodCidade(proxCod);
@@ -91,7 +92,7 @@ public class JanelaCidadeInserirController implements Initializable{
 				}
 				if (validacao == true && c != null) {
 					String nome = fNome.getText().toUpperCase();
-					String sgEstado = FxUtil.getComboBoxValue(cbSgEstado);	
+					String sgEstado = cbSgEstado.getSelectionModel().getSelectedItem();	
 
 					Cidade city = Cidade.newInstance(nome, sgEstado);
 					city.setCodCidade(c.getCodCidade());

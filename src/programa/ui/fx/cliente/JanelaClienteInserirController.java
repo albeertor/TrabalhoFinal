@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.cliente;
 
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -6,7 +6,12 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import programa.negocio.entidades.Cidade;
 import programa.negocio.entidades.Cliente;
-import programa.ui.fx.TextFieldUtils.Mask;
+import programa.ui.fx.JanelaPrincipal;
+import programa.ui.fx.util.FxUtil;
+import programa.ui.fx.util.TextFieldUtils;
+import programa.ui.fx.util.validarCPF;
+import programa.ui.fx.util.FxUtil.AutoCompleteMode;
+import programa.ui.fx.util.TextFieldUtils.Mask;
 
 import java.net.URL;
 import java.time.Instant;
@@ -86,10 +91,6 @@ public class JanelaClienteInserirController implements Initializable {
 			}
 		});
 		
-		FxUtil.autoCompleteComboBox(cbSgEstado, FxUtil.AutoCompleteMode.STARTS_WITH);
-		
-		FxUtil.autoCompleteComboBox(cbCidade, FxUtil.AutoCompleteMode.STARTS_WITH);
-
 		if (c != null) {
 			fCod.setText(c.getCodCliente() + "");
 			fNome.setText(c.getNome());
@@ -155,7 +156,7 @@ public class JanelaClienteInserirController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				String sgEst = FxUtil.getComboBoxValue(cbSgEstado);
+				String sgEst = cbSgEstado.getSelectionModel().getSelectedItem();
 				List<Cidade> city = JanelaPrincipal.getUiCidade().getListaCest(sgEst);
 				String[] nmcidades = new String[city.size()];
 				for (int i = 0; i < city.size(); i++) {
@@ -244,7 +245,7 @@ public class JanelaClienteInserirController implements Initializable {
 					fTel.setStyle(" -fx-control-inner-background: white;");
 				}
 				
-				if (FxUtil.getComboBoxValue(cbSgEstado) == null) {
+				if (cbSgEstado.getSelectionModel().getSelectedItem()== null) {
 					cbSgEstado.setStyle(" -fx-background-color: pink;");
 					validacao = false;
 					errorSg = ("Selecione um estado!\n");
@@ -253,7 +254,7 @@ public class JanelaClienteInserirController implements Initializable {
 					errorSg = ("\n");
 				}
 
-				if (FxUtil.getComboBoxValue(cbCidade) == null) {
+				if (cbCidade.getSelectionModel().getSelectedItem() == null) {
 					cbCidade.setStyle(" -fx-background-color: pink;");
 					validacao = false;
 					errorCidade = ("Selecione uma cidade!\n");
@@ -271,7 +272,7 @@ public class JanelaClienteInserirController implements Initializable {
 					String endereco = fEndereco.getText();
 
 					Cidade c = null;
-					String nmCidade = FxUtil.getComboBoxValue(cbCidade);
+					String nmCidade = cbCidade.getSelectionModel().getSelectedItem();
 
 					for (int i = 0; i < listaCidade.size(); i++) {
 						if (listaCidade.get(i).getNome().equals(nmCidade)) {
@@ -293,7 +294,7 @@ public class JanelaClienteInserirController implements Initializable {
 					String endereco = fEndereco.getText();
 
 					Cidade cid = null;
-					String nmCidade = (String) FxUtil.getComboBoxValue(cbCidade);
+					String nmCidade = (String) cbCidade.getSelectionModel().getSelectedItem();
 					for (int i = 0; i < listaCidade.size(); i++) {
 						if (listaCidade.get(i).getNome() == nmCidade) {
 							cid = listaCidade.get(i);

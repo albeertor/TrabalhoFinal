@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import programa.negocio.entidades.Cidade;
+import programa.negocio.entidades.Produto;
 
 public class CidadeDAO implements IRepositorioCidade {
 	private Connection conexao;
@@ -20,7 +21,7 @@ public class CidadeDAO implements IRepositorioCidade {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public long getProxId() {
 		try {
@@ -55,7 +56,7 @@ public class CidadeDAO implements IRepositorioCidade {
 				c.setCodCidade(rs.getLong("cdcidade"));
 				c.setNome(rs.getString("nmcidade"));
 				c.setSgEstado(rs.getString("sgestado"));
-			
+
 				lista.add(c);
 			}
 
@@ -75,15 +76,15 @@ public class CidadeDAO implements IRepositorioCidade {
 		try {
 			stmt = conexao.prepareStatement("SELECT * FROM cidade WHERE cdcidade = ?");
 			stmt.setInt(1, cdCidade);
-			
+
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				Cidade c = new Cidade();
 				c.setCodCidade(rs.getLong("cdcidade"));
 				c.setNome(rs.getString("nmcidade"));
-				c.setSgEstado(rs.getString("sgestado"));	
-				
+				c.setSgEstado(rs.getString("sgestado"));
+
 				return c;
 			}
 
@@ -93,7 +94,7 @@ public class CidadeDAO implements IRepositorioCidade {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 
 	}
@@ -120,9 +121,9 @@ public class CidadeDAO implements IRepositorioCidade {
 
 		return lista;
 	}
-	
+
 	@Override
-	public List<String> getEstado(){
+	public List<String> getEstado() {
 		List<String> lista = new ArrayList<String>();
 
 		PreparedStatement stmt;
@@ -142,7 +143,7 @@ public class CidadeDAO implements IRepositorioCidade {
 		}
 
 		return lista;
-		
+
 	}
 
 	@Override
@@ -152,7 +153,7 @@ public class CidadeDAO implements IRepositorioCidade {
 		PreparedStatement stmt;
 		try {
 			stmt = conexao.prepareStatement("SELECT * FROM cidade WHERE sgestado = ? ORDER BY nmcidade ASC");
-			stmt.setString(1	, sgEst);	
+			stmt.setString(1, sgEst);
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -160,7 +161,7 @@ public class CidadeDAO implements IRepositorioCidade {
 				c.setCodCidade(rs.getLong("cdcidade"));
 				c.setNome(rs.getString("nmcidade"));
 				c.setSgEstado(rs.getString("sgestado"));
-			
+
 				lista.add(c);
 			}
 
@@ -177,12 +178,10 @@ public class CidadeDAO implements IRepositorioCidade {
 	@Override
 	public boolean inserir(Cidade c) {
 		try {
-			PreparedStatement stmt = conexao.prepareStatement(
-					"INSERT into cidade(nmCidade, sgESTADO) value (?,?)");
+			PreparedStatement stmt = conexao.prepareStatement("INSERT into cidade(nmCidade, sgESTADO) value (?,?)");
 
 			stmt.setString(1, c.getNome());
 			stmt.setString(2, c.getsgEstado());
-			
 
 			stmt.execute();
 			stmt.close();
@@ -198,8 +197,8 @@ public class CidadeDAO implements IRepositorioCidade {
 	public boolean alterar(Cidade c) {
 		if (c != null) {
 			try {
-				PreparedStatement stmt = conexao.prepareStatement(
-						"UPDATE cidade SET nmcidade = ?, sgestado = ? WHERE cdcidade=?");
+				PreparedStatement stmt = conexao
+						.prepareStatement("UPDATE cidade SET nmcidade = ?, sgestado = ? WHERE cdcidade=?");
 
 				stmt.setString(1, c.getNome());
 				stmt.setString(2, c.getsgEstado());
@@ -236,8 +235,93 @@ public class CidadeDAO implements IRepositorioCidade {
 
 	@Override
 	public List<Cidade> getPesquisa(Cidade c) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
+		List<Cidade> lista = new ArrayList<Cidade>();
+
+		PreparedStatement stmt;
+		if (c != null) {
+			if (c.getCodCidade() == 0) {
+				if (c.getNome() == null && c.getsgEstado() != null)
+					lista = getListaCest(c.getsgEstado());
+				else {
+					if (c.getsgEstado() == null && c.getNome() != null) {
+						try {
+							stmt = conexao.prepareStatement(
+									"SELECT * FROM cidade WHERE nmcidade like ? ORDER BY nmcidade ASC");
+							stmt.setString(1, c.getNome() + "%");
+							ResultSet rs = stmt.executeQuery();
+
+							while (rs.next()) {
+								Cidade city = new Cidade();
+								city.setCodCidade(rs.getLong("cdcidade"));
+								city.setNome(rs.getString("nmcidade"));
+								city.setSgEstado(rs.getString("sgestado"));
+
+								lista.add(city);
+							}
+
+							rs.close();
+							stmt.close();
+
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			} else {
+				if (c.getNome() == null && c.getsgEstado() != null){
+					try {
+						stmt = conexao.prepareStatement(
+								"SELECT * FROM cidade WHERE sgestado = ?, cdcidade = ? ORDER BY nmcidade ASC");
+						stmt.setString(1, c.getsgEstado());
+						stmt.setLong(2, c.getCodCidade());
+						ResultSet rs = stmt.executeQuery();
+
+						while (rs.next()) {
+							Cidade city = new Cidade();
+							city.setCodCidade(rs.getLong("cdcidade"));
+							city.setNome(rs.getString("nmcidade"));
+							city.setSgEstado(rs.getString("sgestado"));
+
+							lista.add(city);
+						}
+
+						rs.close();
+						stmt.close();
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+					
+				else {
+					if (c.getsgEstado() == null && c.getNome() != null) {
+						try {
+							stmt = conexao.prepareStatement(
+									"SELECT * FROM cidade WHERE nmcidade like ?, cdcidade = ? ORDER BY nmcidade ASC");
+							stmt.setString(1, c.getNome() + "%");
+							stmt.setLong(2, c.getCodCidade());
+							ResultSet rs = stmt.executeQuery();
+
+							while (rs.next()) {
+								Cidade city = new Cidade();
+								city.setCodCidade(rs.getLong("cdcidade"));
+								city.setNome(rs.getString("nmcidade"));
+								city.setSgEstado(rs.getString("sgestado"));
+
+								lista.add(city);
+							}
+
+							rs.close();
+							stmt.close();
+
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+		return lista;
+	}
 }

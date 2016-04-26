@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.produto;
 
 import java.net.URL;
 import java.util.List;
@@ -26,7 +26,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import programa.negocio.entidades.Cliente;
 import programa.negocio.entidades.Produto;
-import programa.ui.fx.TextFieldUtils.Mask;
+import programa.ui.fx.util.TextFieldUtils;
+import programa.ui.fx.util.TextFieldUtils.Mask;
 
 public class JanelaProdutoListaController implements Initializable {
 	@FXML
@@ -43,8 +44,6 @@ public class JanelaProdutoListaController implements Initializable {
 	private Button btFechar, btResetar, btInserir, btAlterar, btExcluir, btPesquisar, btLimpar;
 	@FXML
 	private TableView<ItensProperty> tbProduto;
-	@FXML
-	private CheckBox chCodigo, chNome;
 	@FXML
 	private Stage stage;
 
@@ -205,8 +204,6 @@ public class JanelaProdutoListaController implements Initializable {
 				fCodigo.setText(null);
 				fNome.setText(null);
 				
-				chCodigo.setSelected(false);
-				chNome.setSelected(false);
 				
 			}
 		});
@@ -218,43 +215,14 @@ public class JanelaProdutoListaController implements Initializable {
 				boolean validacao = false;
 
 				String nome = null;
-				if (chNome.isSelected() && fNome.getText() != null) {
+				if (!fNome.getText().isEmpty()) {
 					nome = fNome.getText();
-					fNome.setStyle(" -fx-control-inner-background: white;");
-					validacao = true;
-				} else {
-					if (chNome.isSelected() && fNome.getText() == null) {
-						fNome.setStyle(" -fx-control-inner-background: pink;");
-
-					}
-					if (chNome.isSelected() == false && fNome.getText() != null) {
-						chNome.setStyle(" -fx-control-inner-background: pink;");
-
-					}
-
-				}
-				if (chNome.isSelected() == false && fNome.getText() == null) {
-					fNome.setStyle(" -fx-control-inner-background: white;");
 					validacao = true;
 				}
-
+				
 				long cod = 0;
-				if (chCodigo.isSelected() && fCodigo.getText() != null) {
+				if (!fCodigo.getText().isEmpty()) {
 					cod = Long.valueOf(fCodigo.getText()).longValue();
-					fCodigo.setStyle(" -fx-control-inner-background: white;");
-					validacao = true;
-				} else {
-					if (chCodigo.isSelected() && fCodigo.getText() == null) {
-						fCodigo.setStyle(" -fx-control-inner-background: pink;");
-
-					}
-					if (chCodigo.isSelected() == false && fCodigo.getText() != null) {
-						chCodigo.setStyle(" -fx-control-inner-background: pink;");
-					}
-
-				}
-				if (chCodigo.isSelected() == false && fCodigo.getText() == null) {
-					fCodigo.setStyle(" -fx-control-inner-background: white;");
 					validacao = true;
 				}
 				

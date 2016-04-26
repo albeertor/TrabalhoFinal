@@ -12,6 +12,9 @@ import programa.dados.IRepositorioCliente;
 import programa.dados.IRepositorioProduto;
 import programa.dados.ProdutoDAO;
 import programa.negocio.Controle;
+import programa.ui.fx.cidade.UICidade;
+import programa.ui.fx.cliente.UICliente;
+import programa.ui.fx.produto.UIProduto;
 
 public class JanelaPrincipal extends Application {
 	private static Stage stage;

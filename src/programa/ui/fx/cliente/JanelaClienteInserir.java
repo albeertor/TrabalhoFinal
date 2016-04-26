@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.cliente;
 
 import java.util.List;
 

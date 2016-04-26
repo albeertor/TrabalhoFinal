@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.util;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

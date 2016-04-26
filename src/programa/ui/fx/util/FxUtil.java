@@ -1,4 +1,4 @@
-package programa.ui.fx;
+package programa.ui.fx.util;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
