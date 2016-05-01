@@ -19,23 +19,28 @@ public class UICidade {
 	
 	public List<Cidade> getListaCidade() {
 		List<Cidade> cidades = ctr.getListaCidades();
-		return cidades;
-		
+		return cidades;		
 	}
 	
+	public List<Cidade> getListaCidadeCod() {
+		List<Cidade> cidades = ctr.getListaCidadesCod();
+		return cidades;		
+	}
+	
+	
 	public void listarCidade(){
-		List<Cidade> cid = getListaCidade();
+		List<Cidade> cid = getListaCidadeCod();
 		try {
 			JanelaCidadeLista j = new JanelaCidadeLista(cid, this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+/*	
 	public List<Cidade> listarPesquisa(Cidade c) {
 		return ctr.getPesquisa(c);
 	}
-
+*/
 
 	public Cidade getCidade(int cdCidade) {
 		return ctr.getCidade(cdCidade);

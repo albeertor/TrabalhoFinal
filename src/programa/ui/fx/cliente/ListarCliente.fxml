@@ -11,24 +11,16 @@
 		<MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="704.0">
 			<menus>
 				<Menu id="menuInserir" fx:id="menuInserir" mnemonicParsing="false" text="Inserir">
-					<items>
-						<MenuItem mnemonicParsing="false" text="Close" />
-					</items>
+					
 				</Menu>
 				<Menu id="menuAlterar" fx:id="menuAlterar" mnemonicParsing="false" text="Alterar">
-					<items>
-						<MenuItem mnemonicParsing="false" text="Delete" />
-					</items>
+					
 				</Menu>
 				<Menu id="menuExcluir" fx:id="menuExcluir" mnemonicParsing="false" text="Excluir">
-					<items>
-						<MenuItem mnemonicParsing="false" text="About" />
-					</items>
+					
 				</Menu>
 				<Menu id="menuFechar" fx:id="menuFechar" mnemonicParsing="false" text="Fechar">
-					<items>
-						<MenuItem mnemonicParsing="false" text="About" />
-					</items>
+				
 				</Menu>
 			</menus>
 		</MenuBar>
@@ -42,11 +34,10 @@
 			</columns>
 		</TableView>
 		<ComboBox fx:id="cbCidade" layoutX="460.0" layoutY="68.0" prefHeight="25.0" prefWidth="129.0" />
-      <FormattedTextField fx:id="fCpf" layoutX="278.0" layoutY="69.0" prefHeight="25.0" prefWidth="159.0" />
-      <FormattedTextField fx:id="fNome" layoutX="98.0" layoutY="68.0" prefHeight="25.0" prefWidth="159.0" />
-      <FormattedTextField fx:id="fCodigo" layoutX="14.0" layoutY="67.0" prefHeight="25.0" prefWidth="62.0" />
-		<Button fx:id="btLimpar" layoutX="614.0" layoutY="39.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Limpar" />
-		<Button fx:id="btPesquisar" layoutX="614.0" layoutY="67.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Pesquisar" />
+      <FormattedTextField fx:id="fCpf" disable="true" layoutX="278.0" layoutY="68.0" prefHeight="25.0" prefWidth="159.0" />
+      <FormattedTextField fx:id="fCodigo" layoutX="14.0" layoutY="68.0" prefHeight="25.0" prefWidth="62.0" />
+		<Button fx:id="btLimpar" layoutX="614.0" layoutY="68.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Limpar" />
+	 <TextField fx:id="fNome" layoutX="98.0" layoutY="68.0" prefHeight="25.0" prefWidth="159.0" />
 		<ButtonBar layoutX="13.0" layoutY="394.0" prefHeight="40.0" prefWidth="676.0">
 			<buttons>
 				<Button fx:id="btInserir" mnemonicParsing="false" text="Inserir" />

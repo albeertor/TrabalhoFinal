@@ -32,7 +32,7 @@ public class TextFieldUtils {
         MASK_Double(1) {
             @Override
             public String regex() {
-                return "\\d+[\\.,]?\\d{0,2}";
+                return "\\d{0,5}+[\\.,]?\\d{0,2}";
             }
 
 

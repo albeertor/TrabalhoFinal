@@ -26,13 +26,12 @@ public class ProdutoDAO implements IRepositorioProduto {
 	public boolean inserir(Produto prod) {
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(
-					"INSERT into produto(cdproduto, nmproduto, descricao, vlunit, quant) value (?,?,?,?,?)");
+					"INSERT into produto(cdproduto, nmproduto, descricao, vlunit) value (?,?,?,?)");
 
 			stmt.setLong(1, prod.getCod());
 			stmt.setString(2, prod.getNome());
 			stmt.setString(3, prod.getDesc());
 			stmt.setDouble(4, prod.getVlUnit());
-			stmt.setInt(5, prod.getQtd());
 
 			stmt.execute();
 			stmt.close();
@@ -70,13 +69,12 @@ public class ProdutoDAO implements IRepositorioProduto {
 		if (prod != null) {
 			try {
 				PreparedStatement stmt = conexao.prepareStatement(
-						"UPDATE produto SET nmproduto=?, descricao=?, vlunit=?, quant=? WHERE cdproduto=?");
+						"UPDATE produto SET nmproduto=?, descricao=?, vlunit=? WHERE cdproduto=?");
 
 				stmt.setString(1, prod.getNome());
 				stmt.setString(2, prod.getDesc());
 				stmt.setDouble(3, prod.getVlUnit());
-				stmt.setInt(4, prod.getQtd());
-				stmt.setLong(5, prod.getCod());
+				stmt.setLong(4, prod.getCod());
 
 				stmt.execute();
 				stmt.close();
@@ -108,7 +106,6 @@ public class ProdutoDAO implements IRepositorioProduto {
 				p.setCod(rs.getInt("cdproduto"));
 				p.setNome(rs.getString("nmproduto"));
 				p.setDesc(rs.getString("descricao"));
-				p.setQtd(rs.getInt("quant"));
 				p.setVlUnit(rs.getDouble("vlunit"));
 
 				lista.add(p);
@@ -125,7 +122,7 @@ public class ProdutoDAO implements IRepositorioProduto {
 
 	}
 
-	@Override
+/*	@Override
 	public List<Produto> getPesquisa(Produto prod) {
 
 		List<Produto> lista = new ArrayList<Produto>();
@@ -213,7 +210,7 @@ public class ProdutoDAO implements IRepositorioProduto {
 
 		return lista;
 	}
-
+*/
 	@Override
 	public boolean excluir(Produto prod) {
 		if (prod != null) {

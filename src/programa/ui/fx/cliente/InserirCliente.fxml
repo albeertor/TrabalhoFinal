@@ -15,7 +15,6 @@
 		<Label fx:id="lCPF" layoutX="15.0" layoutY="170.0" text="CPF:" />
 		<Label fx:id="lRG" layoutX="135.0" layoutY="170.0" text="RG:" />
 		<Label fx:id="lCEP" layoutX="15.0" layoutY="226.0" text="CEP:" />
-		<TextField fx:id="fEndereco" layoutX="15.0" layoutY="300.0" prefHeight="25.0" prefWidth="228.0" />
 		<Label fx:id="lEndereco" layoutX="15.0" layoutY="280.0" text="Endereço:" />
 		<Label fx:id="lSgEstado" layoutX="15.0" layoutY="334.0" text="Sigla do Estado:" />
 		<Label fx:id="lCidade" layoutX="135.0" layoutY="334.0" text="Cidade:" />
@@ -31,7 +30,8 @@
       <FormattedTextField fx:id="fTel" layoutX="135.0" layoutY="135.0" prefHeight="25.0" prefWidth="108.0" />
       <FormattedTextField fx:id="fCPF" layoutX="16.0" layoutY="190.0" prefHeight="25.0" prefWidth="108.0" />
       <FormattedTextField fx:id="fCEP" layoutX="14.0" layoutY="246.0" prefHeight="25.0" prefWidth="108.0" />
-      <FormattedTextField fx:id="fRG" layoutX="135.0" layoutY="190.0" prefHeight="25.0" prefWidth="108.0" />
-      <FormattedTextField fx:id="fNome" layoutX="14.0" layoutY="82.0" prefHeight="25.0" prefWidth="228.0" />
+      <TextField fx:id="fNome" layoutX="14.0" layoutY="82.0" prefHeight="25.0" prefWidth="228.0" />
+      <TextField fx:id="fEndereco" layoutX="15.0" layoutY="300.0" prefHeight="25.0" prefWidth="228.0" />
+      <TextField fx:id="fRG" layoutX="135.0" layoutY="190.0" prefHeight="25.0" prefWidth="108.0" />
 	</children>
 </Pane>

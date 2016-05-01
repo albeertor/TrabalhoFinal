@@ -70,6 +70,11 @@ public class Validation {
         validate(field, CEP);
    }
     
+    public static void toCodField(FormattedTextField field){
+    	field.getPatternVerifiers().put("numberA", new IntegerRangePatternVerifier(0, 99999));
+    	field.setPattern("numberA");
+    	validate(field, OBRIGATORIOSNUMERO);
+    }
     /**
      * 
      * Configura FormattedTextField em campo inteiro.
@@ -78,14 +83,12 @@ public class Validation {
      * @param field 
      */
     public static void toIntegerField(FormattedTextField field) {
-        field.getPatternVerifiers().put("int",
-                new IntegerRangePatternVerifier(0, 999999999));
-        field.setPattern("int");
- 
+        field.getPatternVerifiers().put("int", new IntegerRangePatternVerifier(0, 99999));
+        field.setPattern("int"); 
         validate(field, INTEIRO);
     }
  
-    /*public static void toLetraField(FormattedTextField field) {
+    public static void toLetraField(FormattedTextField field) {
         if (field != null) {
             field.textProperty().addListener(new ChangeListener<String>() {
                 @Override
@@ -102,13 +105,15 @@ public class Validation {
             });
             validate(field, OBRIGATORIOSNUMERO);
         }
-    }*/
+    }
  
+    
     public static Decorator error() {
         return new Decorator(new ImageView(new Image(
                 "/jidefx/scene/control/decoration/overlay_error.png")));
     }
  
+  
     public static Decorator ok() {
         return new Decorator(new ImageView(new Image(
                 "/jidefx/scene/control/decoration/overlay_correct.png")));
@@ -116,6 +121,7 @@ public class Validation {
  
     // Verifica se todos os campos validados estão ok... Se sim a propriedade é
     // true
+  
     public static SimpleBooleanProperty validateGroup(Pane pane) {
  
         for (Node node : pane.getChildren()) {
@@ -138,6 +144,7 @@ public class Validation {
      *
      * @param field
      */
+  
     public static void validate(ComboBox field) {
         field.setUserData(false);
         field.valueProperty().addListener(new ChangeListener() {
@@ -160,6 +167,7 @@ public class Validation {
      * @param field
      * @param pattern
      */
+   
     public static void validate(TextField field, String pattern) {
         field.setUserData(false);
         field.textProperty().addListener(new ChangeListener<String>() {

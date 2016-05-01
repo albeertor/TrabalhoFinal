@@ -37,7 +37,7 @@ public class ControladorCliente {
 		return repoCliente.excluir(c);		
 	}
 
-	public List<Cliente> getPesquisa(Cliente c) {
+	/*public List<Cliente> getPesquisa(Cliente c) {
 		return repoCliente.getPesquisa(c);
-	}
+	}*/
 }

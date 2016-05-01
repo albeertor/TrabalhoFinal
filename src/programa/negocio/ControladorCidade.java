@@ -18,15 +18,7 @@ public class ControladorCidade {
 
 	public Cidade getCidade(int cdCidade) {
 		return repoCidade.getCidade(cdCidade);
-	}
-
-	public List<String> getListaEstado() {
-		return repoCidade.getListaEstado();
-	}
-
-	public List<Cidade> getListaCest(String sgEst) {
-		return repoCidade.getListaCest(sgEst);
-	}
+	}	
 
 	public boolean inserir(Cidade c) {
 		return repoCidade.inserir(c);
@@ -47,9 +39,21 @@ public class ControladorCidade {
 	public List<String> getEstado(){
 		return repoCidade.getEstado();
 	}
+	
+	public List<String> getListaEstado() {
+		return repoCidade.getListaEstado();
+	}
 
+	public List<Cidade> getListaCest(String sgEst) {
+		return repoCidade.getListaCest(sgEst);
+	}
+/*
 	public List<Cidade> getPesquisa(Cidade c) {
 		return repoCidade.getPesquisa(c);
 	}
-	
+	*/
+
+	public List<Cidade> getListaCod() {
+		return repoCidade.getListaCod();
+	}
 }

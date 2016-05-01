@@ -6,8 +6,8 @@ import programa.dados.IRepositorioProduto;
 import programa.negocio.entidades.Produto;
 
 public class ControladorProduto {
-private IRepositorioProduto repoProduto;
-	
+	private IRepositorioProduto repoProduto;
+
 	public ControladorProduto(IRepositorioProduto repoProduto) {
 		this.repoProduto = repoProduto;
 	}
@@ -28,9 +28,10 @@ private IRepositorioProduto repoProduto;
 		return repoProduto.getLista();
 	}
 
-	public List<Produto> getPesquisa(Produto prod) {
-		return repoProduto.getPesquisa(prod);
-	}
+	/*
+	 * public List<Produto> getPesquisa(Produto prod) { return
+	 * repoProduto.getPesquisa(prod); }
+	 */
 
 	public boolean excluir(Produto p) {
 		return repoProduto.excluir(p);

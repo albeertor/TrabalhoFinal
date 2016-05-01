@@ -3,6 +3,8 @@ package programa.ui.fx;
 import javafx.scene.control.MenuItem;
 import programa.ui.fx.cidade.UICidade;
 import programa.ui.fx.cliente.UICliente;
+import programa.ui.fx.estoque.JanelaEstoque;
+import programa.ui.fx.estoque.UIEstoque;
 import programa.ui.fx.produto.UIProduto;
 
 import java.net.URL;
@@ -15,18 +17,20 @@ import javafx.scene.control.Button;
 
 public class JanelaPrincipalController implements Initializable {
 	@FXML
-	private Button btFechar, btCliente, btProduto, btCidade;
+	private Button btFechar, btCliente, btProduto, btCidade, btVenda, btPagamento, btEstoque;
 	@FXML
 	private MenuItem itemClienteInserir, itemClienteControle, itemProdutoInserir, itemProdutoControle,itemCidadeInserir, itemCidadeControle;
 
 	private UICliente uiCliente;
 	private UICidade uiCidade;
 	private UIProduto uiProduto;
+	private UIEstoque uiEstoque;
 
-	public JanelaPrincipalController(UICliente uiCliente, UICidade uiCidade, UIProduto uiProduto) {
+	public JanelaPrincipalController(UICliente uiCliente, UICidade uiCidade, UIProduto uiProduto, UIEstoque uiEstoque) {
 		this.uiCliente = uiCliente;
 		this.uiCidade = uiCidade;
 		this.uiProduto = uiProduto;
+		this.uiEstoque = uiEstoque;
 	}
 
 	public void initialize(URL url, ResourceBundle bundle) {
@@ -36,6 +40,14 @@ public class JanelaPrincipalController implements Initializable {
 			public void handle(ActionEvent arg0) {
 				System.exit(0);
 				// JOptionPane.showMessageDialog(null, "Mensagem");
+			}
+		});
+		
+		btEstoque.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				uiEstoque.listarEstoque();
 			}
 		});
 		

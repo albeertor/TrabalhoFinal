@@ -10,24 +10,16 @@
 		<MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="459.0">
 			<menus>
 				<Menu id="menuInserir" fx:id="menuInserir" mnemonicParsing="false" text="Inserir">
-					<items>
-						<MenuItem mnemonicParsing="false" text="Close" />
-					</items>
+					
 				</Menu>
 				<Menu id="menuAlterar" fx:id="menuAlterar" mnemonicParsing="false" text="Alterar">
-					<items>
-						<MenuItem mnemonicParsing="false" text="Delete" />
-					</items>
+				
 				</Menu>
 				<Menu id="menuExcluir" fx:id="menuExcluir" mnemonicParsing="false" text="Excluir">
-					<items>
-						<MenuItem mnemonicParsing="false" text="About" />
-					</items>
+					
 				</Menu>
 				<Menu id="menuFechar" fx:id="menuFechar" mnemonicParsing="false" text="Fechar">
-					<items>
-						<MenuItem mnemonicParsing="false" text="About" />
-					</items>
+					
 				</Menu>
 			</menus>
 		</MenuBar>
@@ -40,8 +32,7 @@
 		</TableView>
 		<TextField fx:id="fCodigo" layoutX="16.0" layoutY="68.0" prefHeight="25.0" prefWidth="83.0" />
 		<TextField fx:id="fNome" layoutX="110.0" layoutY="68.0" prefHeight="25.0" prefWidth="126.0" />
-		<Button fx:id="btLimpar" layoutX="371.0" layoutY="40.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Limpar" />
-		<Button fx:id="btPesquisar" layoutX="371.0" layoutY="68.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Pesquisar" />
+		<Button fx:id="btLimpar" layoutX="371.0" layoutY="68.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Limpar" />
 		<ButtonBar layoutX="9.0" layoutY="394.0" prefHeight="40.0" prefWidth="430.0">
 			<buttons>
 				<Button fx:id="btInserir" mnemonicParsing="false" text="Inserir" />

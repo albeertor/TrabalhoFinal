@@ -5,21 +5,19 @@ public class Produto {
 	private String nome;
 	private String desc;
 	private double vlUnit;
-	private int qtd;
-		
-	private Produto(String nome, double vlUnit, int qtd, String desc) {
+
+	private Produto(String nome, double vlUnit, String desc) {
 	
 		this.nome = nome;
 		this.vlUnit = vlUnit;
-		this.qtd = qtd;
 		this.desc = desc;
 	}
-	
+
 	private Produto(String nome) {
-				this.nome = nome;
-		
+		this.nome = nome;
+
 	}
-	
+
 	public Produto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -32,40 +30,36 @@ public class Produto {
 		this.desc = desc;
 	}
 
-	public static Produto newInstance(String nome, double vlUnit, int qtd, String desc){
-		return new Produto(nome,vlUnit,qtd,desc);
+	public static Produto newInstance(String nome, double vlUnit, String desc) {
+		return new Produto(nome, vlUnit, desc);
 	}
-	
+
 	public static Produto newInstance(String nome) {
 		return new Produto(nome);
 	}
-	
+
 	public long getCod() {
 		return cod;
 	}
+
 	public void setCod(long cod) {
 		this.cod = cod;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public double getVlUnit() {
 		return vlUnit;
 	}
+
 	public void setVlUnit(double vlUnit) {
 		this.vlUnit = vlUnit;
 	}
-	public int getQtd() {
-		return qtd;
-	}
-	public void setQtd(int qtd) {
-		this.qtd = qtd;
-	}
 
-
-	
-	
 }

@@ -58,9 +58,9 @@ public class UICliente {
 		}
 	}
 
-	public List<Cliente> listarPesquisa(Cliente c) {
+	/*public List<Cliente> listarPesquisa(Cliente c) {
 		return ctr.getPesquisa(c);
-	}
+	}*/
 
 	public void alterar(Cliente c) {
 		if (c != null) {
@@ -68,7 +68,7 @@ public class UICliente {
 				alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Cliente");
 				alert.setHeaderText(null);
-				alert.setContentText("Excluido com sucesso!");
+				alert.setContentText("Alterado com sucesso!");
 				alert.showAndWait();
 			}
 		}

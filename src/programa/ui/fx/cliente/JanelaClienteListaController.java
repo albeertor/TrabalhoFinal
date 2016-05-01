@@ -26,6 +26,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,7 +39,7 @@ import javafx.scene.control.TableColumn;
 
 public class JanelaClienteListaController implements Initializable {
 	@FXML
-	private Button btFechar, btResetar, btInserir, btAlterar, btExcluir, btPesquisar, btLimpar;
+	private Button btFechar, btResetar, btInserir, btAlterar, btExcluir, btLimpar;
 	@FXML
 	private TableView<ItensProperty> tbCliente;
 	@FXML
@@ -52,7 +53,9 @@ public class JanelaClienteListaController implements Initializable {
 	@FXML
 	private TableColumn<ItensProperty, String> columnCidade;
 	@FXML
-	private FormattedTextField fCpf,fCodigo, fNome;
+	private TextField fNome;
+	@FXML
+	private FormattedTextField fCpf, fCodigo;
 	@FXML
 	private ComboBox<String> cbCidade;
 	@FXML
@@ -127,31 +130,80 @@ public class JanelaClienteListaController implements Initializable {
 
 	}
 
-	public void initialize(URL url, ResourceBundle bundle) {
+	private ObservableList<ItensProperty> findCliente() {
+		ObservableList<ItensProperty> clienteEncontrados = FXCollections.observableArrayList();
 
-		Validation.toCpfField(fCpf);
-		Validation.validate(fNome, Validation.OBRIGATORIO);
-		Validation.validate(fCodigo, Validation.OBRIGATORIOSNUMERO);
+		for (ItensProperty itens : cliente) {
+			if (itens.getNome().toLowerCase().contains(fNome.getText().toLowerCase()))
+				clienteEncontrados.add(itens);
+		}
+		return clienteEncontrados;
+
+	}
+	
+	private ObservableList<ItensProperty> findClienteCod() {
+		ObservableList<ItensProperty> clienteEncontrados = FXCollections.observableArrayList();
+
+		for (ItensProperty itens : cliente) {
+			if (itens.getCod() == Integer.parseInt(fCodigo.getText()))
+				clienteEncontrados.add(itens);
+		}
+		return clienteEncontrados;
+	}
+	
+	private ObservableList<ItensProperty> findClienteCidade() {
+		ObservableList<ItensProperty> clienteEncontrados = FXCollections.observableArrayList();
 		
+		for (ItensProperty itens : cliente) {
+			if (itens.getCidade().equals(cbCidade.getSelectionModel().getSelectedItem())){
+				clienteEncontrados.add(itens);
+			}
+		}
+		return clienteEncontrados;
+	}
+	
+	private void reset(){
 		for (int i = 0; i < c.size(); i++) {
 			cliente.add(new ItensProperty(c.get(i).getCodCliente(), c.get(i).getNome(), c.get(i).getTel(),
 					c.get(i).getCpf(), c.get(i).getCidade().getNome()));
 		}
 
 		tbCliente.setItems(cliente);
+	}
+
+	public void initialize(URL url, ResourceBundle bundle) {
+
+		Validation.toCpfField(fCpf);
+		Validation.toCodField(fCodigo);
+
+		fNome.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue.matches(".{0,45}") || newValue.isEmpty()) {
+					fNome.setText(newValue);
+				} else {
+					fNome.setText(oldValue);
+				}
+
+			}
+		});
+
+		reset();
+
 		columnCodigo.setCellValueFactory(new PropertyValueFactory<ItensProperty, Integer>("cod"));
 		columnNome.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("nome"));
 		columnTel.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("tel"));
 		columnCpf.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("cpf"));
 		columnCidade.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("cidade"));
 
-		String[] nmcidades = new String[listaCidade.size()];
+		String[] nmcidades = new String[listaCidade.size() + 1];
 		for (int i = 0; i < listaCidade.size(); i++) {
-			nmcidades[i] = listaCidade.get(i).getNome();
+			nmcidades[i + 1] = listaCidade.get(i).getNome();
 		}
-
+		nmcidades[0] = "QUALQUER CIDADE";
 		ObservableList<String> nmCid = FXCollections.observableArrayList(nmcidades);
 		cbCidade.setItems(nmCid);
+		cbCidade.getSelectionModel().select(0);
 
 		TextFieldUtils.setMask(fCpf, Mask.MASK_CPF);
 
@@ -241,78 +293,62 @@ public class JanelaClienteListaController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				fCodigo.setText(null);
-				fNome.setText(null);
-				fCpf.setText(null);
-				cbCidade.getSelectionModel().select(-1);
+				fCodigo.setText("");
+				fNome.setText("");
+				fCpf.setText("");
+				cbCidade.getSelectionModel().select(0);
+				cliente.clear();
+				reset();
 
 			}
 		});
 
-		btPesquisar.setOnAction(new EventHandler<ActionEvent>() {
+		fNome.setOnKeyReleased(new EventHandler<Event>() {
 
 			@Override
-			public void handle(ActionEvent event) {
-				boolean validacao = false;
-
-				String nome = null;
-				if (!fNome.getText().isEmpty()) {
-					nome = fNome.getText();
-					validacao = true;
-				}
-
-				long cod = 0;
-				if (!fCodigo.getText().isEmpty()) {
-					cod = Long.valueOf(fCodigo.getText()).longValue();
-					fCodigo.setStyle(" -fx-control-inner-background: white;");
-					validacao = true;
-				}
-
-				String cpf = null;
-				if (!fCpf.getText().isEmpty()) {
-					cpf = fNome.getText();
-					validacao = true;
-				}
-
-				Cidade c = null;
-				if (cbCidade.getSelectionModel().getSelectedItem() != null) {
-					String nmCidade = (String) cbCidade.getSelectionModel().getSelectedItem();
-
-					for (int i = 0; i < listaCidade.size(); i++) {
-						if (listaCidade.get(i).getNome() == nmCidade)
-							c = listaCidade.get(i);
-					}
-					validacao = true;
-
-				}
-
-				if (validacao == true) {
-					if (nome == null && cpf == null && cod == 0 && c == null) {
-						cliente.clear();
-						uiCliente.listarClientes();
-						Stage stg = (Stage) btResetar.getScene().getWindow();
-						stg.close();
-					} else {
-						Cliente clientePesq = Cliente.newInstance(nome, cpf, c);
-
-						clientePesq.setCodCliente(cod);
-						List<Cliente> cPesq = uiCliente.listarPesquisa(clientePesq);
-
-						cliente.clear();
-
-						try {
-							JanelaClienteLista j = new JanelaClienteLista(cPesq, listaCidade, uiCliente);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						Stage stg = (Stage) btExcluir.getScene().getWindow();
-						stg.close();
-					}
-				}
+			public void handle(Event event) {
+				if (!fNome.getText().equals(""))
+					tbCliente.setItems(findCliente());
+				else
+					tbCliente.setItems(cliente);
 			}
+
+		});
+		
+		fCodigo.setOnKeyReleased(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				if (!fCodigo.getText().equals(""))
+					tbCliente.setItems(findClienteCod());
+				else
+					tbCliente.setItems(cliente);
+			}
+			
 		});
 
+		cbCidade.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				if (!cbCidade.getSelectionModel().getSelectedItem().equals("QUALQUER CIDADE"))
+					tbCliente.setItems(findClienteCidade());
+				else
+					tbCliente.setItems(cliente);
+			}
+		});
+//		fCpf.setOnKeyReleased(new EventHandler<Event>() {
+//
+//			@Override
+//			public void handle(Event event) {
+//				if (!fCpf.getText().equals("..-"))
+//					tbCliente.setItems(findClienteCpf());
+//				else
+//					tbCliente.setItems(cliente);
+//			}
+//		});
+
+	
 	}
 
 }

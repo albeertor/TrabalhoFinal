@@ -16,6 +16,6 @@ public interface IRepositorioProduto {
 
 	List<Produto> getLista();
 
-	List<Produto> getPesquisa(Produto prod);
+//	List<Produto> getPesquisa(Produto prod);
 
 }

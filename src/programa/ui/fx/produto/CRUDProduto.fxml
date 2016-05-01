@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="460.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab fx:id="tabCadastro" text="Cadastro">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="314.0" prefWidth="460.0">
+                     <children>
+                        <Label fx:id="lCod" layoutX="15.0" layoutY="11.0" text="Código do Produto:" />
+                        <TextField fx:id="fCod" disable="true" editable="false" layoutX="15.0" layoutY="31.0" prefHeight="25.0" prefWidth="108.0" />
+                        <TextField fx:id="fNomeInserir" layoutX="15.0" layoutY="82.0" prefHeight="25.0" prefWidth="228.0" />
+                        <Label fx:id="lNome" layoutX="15.0" layoutY="62.0" text="Nome do Produto:" />
+                        <ButtonBar layoutX="15.0" layoutY="358.0" prefHeight="40.0" prefWidth="228.0" />
+                        <Label layoutX="15.0" layoutY="114.0" text="Valor Unitário de Compra:" />
+                        <TextField fx:id="fVlUnit" layoutX="15.0" layoutY="136.0" prefHeight="25.0" prefWidth="228.0" />
+                        <Button fx:id="btSalvar" layoutX="97.0" layoutY="201.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Salvar" />
+                        <Button fx:id="btCancelar" layoutX="97.0" layoutY="233.0" minWidth="65.0" mnemonicParsing="false" prefHeight="25.0" text="Cancelar" />
+                     </children>
+                  </Pane>
+                  <TextArea fx:id="taDesc" layoutX="264.0" layoutY="81.0" prefHeight="178.0" prefWidth="181.0" />
+                  <Label fx:id="lDescricao" layoutX="264.0" layoutY="64.0" text="Descrição:" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab fx:id="tabListagem" text="Listagem">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="402.0" prefWidth="460.0">
+               <children>
+                  <Pane fx:id="pane" layoutY="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="316.0" prefWidth="459.0">
+                     <children>
+                        <TableView fx:id="tbProduto" layoutX="17.0" layoutY="76.0" prefHeight="194.0" prefWidth="430.0">
+                           <columns>
+                              <TableColumn fx:id="columnCodigo" prefWidth="94.0" text="Código" />
+                              <TableColumn fx:id="columnNome" prefWidth="219.0" text="Nome" />
+                              <TableColumn fx:id="columnVlUnit" prefWidth="116.0" text="Valor Unitário" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="fCodigo" layoutX="19.0" layoutY="38.0" prefHeight="25.0" prefWidth="106.0" />
+                        <TextField fx:id="fNome" layoutX="142.0" layoutY="38.0" prefHeight="25.0" prefWidth="159.0" />
+                        <Button fx:id="btLimpar" layoutX="374.0" layoutY="38.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Limpar" />
+                        <ButtonBar layoutX="15.0" layoutY="270.0" prefHeight="40.0" prefWidth="430.0">
+                           <buttons>
+                              <Button fx:id="btInserir" mnemonicParsing="false" text="Inserir" />
+                              <Button fx:id="btAlterar" mnemonicParsing="false" text="Alterar" />
+                              <Button fx:id="btExcluir" mnemonicParsing="false" text="Excluir" />
+                              <Button fx:id="btResetar" mnemonicParsing="false" text="Resetar" />
+                              <Button fx:id="btFechar" mnemonicParsing="false" text="Fechar" />
+                           </buttons>
+                        </ButtonBar>
+                        <Text layoutX="19.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código:" />
+                        <Text layoutX="142.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:" />
+                     </children>
+                  </Pane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

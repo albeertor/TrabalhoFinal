@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import jidefx.scene.control.field.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="413.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab fx:id="tabCadastro" text="Cadastro">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="417.0">
+               <children>
+                  <ComboBox fx:id="cbProduto" layoutX="15.0" layoutY="88.0" prefHeight="25.0" prefWidth="164.0" />
+                  <TextField fx:id="tfCodProduto" disable="true" layoutX="234.0" layoutY="88.0" prefHeight="25.0" prefWidth="164.0" />
+                  <TextField fx:id="tfVlCompra" disable="true" layoutX="15.0" layoutY="142.0" prefHeight="25.0" prefWidth="164.0" />
+                  <Text layoutX="16.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produto:" />
+                  <Text layoutX="16.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor de Compra:" />
+                  <Text layoutX="234.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código Produto:" />
+                  <Text layoutX="235.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor de Venda:" />
+                  <Button fx:id="btAdd" layoutX="187.0" layoutY="88.0" mnemonicParsing="false" text="+" />
+                  <DatePicker fx:id="dtEnt" disable="true" layoutX="16.0" layoutY="251.0" prefHeight="25.0" prefWidth="164.0" />
+                  <Text layoutX="16.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data de Entrada:" />
+                  <Text layoutX="16.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estoque atual:" />
+                  <TextField fx:id="tfCodEstoqueCadastro" disable="true" layoutX="16.0" layoutY="31.0" prefHeight="25.0" prefWidth="380.0" />
+                  <Text layoutX="16.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de Estoque:" />
+                  <FormattedTextField fx:id="tfEstoque" disable="true" layoutX="16.0" layoutY="196.0" prefHeight="25.0" prefWidth="163.0" />
+                  <ButtonBar layoutX="17.0" layoutY="284.0" prefHeight="40.0" prefWidth="381.0">
+                    <buttons>
+                      <Button fx:id="btSalvar" mnemonicParsing="false" text="Salvar" />
+                        <Button fx:id="btCancelar" mnemonicParsing="false" text="Cancelar" />
+                    </buttons>
+                  </ButtonBar>
+                  <DatePicker fx:id="dtAdicao" layoutX="235.0" layoutY="251.0" prefHeight="25.0" prefWidth="164.0" />
+                  <Text layoutX="235.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data de Adição:" />
+                  <FormattedTextField fx:id="tfVlVenda" layoutX="235.0" layoutY="142.0" prefHeight="25.0" prefWidth="164.0" />
+                  <Button fx:id="btAlterarEstoque" layoutX="235.0" layoutY="185.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="163.0" text="Alterar Estoque" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab fx:id="tabListagem" text="Listagem">
+      <content>
+        <AnchorPane fx:id="paneList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="500.0">
+               <children>
+                  <TableView fx:id="tbEstoque" layoutX="10.0" layoutY="76.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="393.0">
+                    <columns>
+                      <TableColumn fx:id="columnCod" prefWidth="64.0" text="Código" />
+                      <TableColumn fx:id="columnNome" prefWidth="242.0" text="Nome" />
+                        <TableColumn fx:id="columnEstoque" prefWidth="86.0" text="Estoque" />
+                    </columns>
+                  </TableView>
+                  <Text layoutX="12.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código:" />
+                  <Text layoutX="90.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:" />
+                  <Button fx:id="btLimpar" layoutX="317.0" layoutY="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Limpar" />
+                  <ButtonBar layoutX="14.0" layoutY="285.0" prefHeight="40.0" prefWidth="388.0">
+                    <buttons>
+                      <Button fx:id="btCadastrar" mnemonicParsing="false" text="Cadastrar" />
+                        <Button fx:id="btAlterar" mnemonicParsing="false" text="Alterar" />
+                        <Button fx:id="btResetar" minWidth="73.0" mnemonicParsing="false" prefHeight="25.0" text="Resetar" />
+                        <Button fx:id="btFechar" minWidth="73.0" mnemonicParsing="false" prefHeight="25.0" text="Fechar" />
+                    </buttons>
+                  </ButtonBar>
+                  <FormattedTextField fx:id="tfCod" layoutX="10.0" layoutY="31.0" prefHeight="25.0" prefWidth="63.0" />
+                  <FormattedTextField fx:id="tfNome" layoutX="90.0" layoutY="31.0" prefHeight="25.0" prefWidth="209.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

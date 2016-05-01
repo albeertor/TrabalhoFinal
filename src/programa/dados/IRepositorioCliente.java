@@ -18,7 +18,7 @@ public interface IRepositorioCliente {
 
 	boolean alterar(Cliente c);
 	
-	List<Cliente> getPesquisa(Cliente c);
+//	List<Cliente> getPesquisa(Cliente c);
 
 
 }

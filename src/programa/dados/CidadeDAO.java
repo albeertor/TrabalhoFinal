@@ -70,6 +70,35 @@ public class CidadeDAO implements IRepositorioCidade {
 		return lista;
 
 	}
+	
+	@Override
+	public List<Cidade> getListaCod() {
+		List<Cidade> lista = new ArrayList<Cidade>();
+
+		PreparedStatement stmt;
+		try {
+			stmt = conexao.prepareStatement("SELECT * FROM cidade ORDER BY cdcidade");
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Cidade c = new Cidade();
+				c.setCodCidade(rs.getLong("cdcidade"));
+				c.setNome(rs.getString("nmcidade"));
+				c.setSgEstado(rs.getString("sgestado"));
+
+				lista.add(c);
+			}
+
+			rs.close();
+			stmt.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return lista;
+
+	}
 
 	public Cidade getCidade(int cdCidade) {
 		PreparedStatement stmt;
@@ -233,7 +262,7 @@ public class CidadeDAO implements IRepositorioCidade {
 		}
 	}
 
-	@Override
+/*	@Override
 	public List<Cidade> getPesquisa(Cidade c) {
 
 		List<Cidade> lista = new ArrayList<Cidade>();
@@ -400,5 +429,5 @@ public class CidadeDAO implements IRepositorioCidade {
 			}
 		}
 		return lista;
-	}
+	}*/
 }

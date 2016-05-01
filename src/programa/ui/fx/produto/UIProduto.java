@@ -19,9 +19,9 @@ public class UIProduto {
 	public void lerProduto() {
 		long proxCod = ctr.proxCod();
 		System.out.println(proxCod);
-		JanelaProdutoInserir j = null;
+		JanelaProdutoCRUD j = null;
 		try {
-			j = new JanelaProdutoInserir(proxCod,this);
+			j = new JanelaProdutoCRUD(proxCod,getListaProdutos(), this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,16 +40,6 @@ public class UIProduto {
 
 	}
 
-	public void alterarProduto(Produto p) {
-		if (p != null) {
-			JanelaProdutoInserir jc = null;
-			try {
-				jc = new JanelaProdutoInserir(p, this);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
 	
 	public void alterar(Produto prod) {
 		if (ctr.alterar(prod)) {
@@ -60,18 +50,17 @@ public class UIProduto {
 			alert.showAndWait();
 		}
 	}
+	
+	public List<Produto> getListaProdutos(){
+		return ctr.getListaProdutos();
+	}
 
 	public void listarProdutos() {
-		List<Produto> produtos = ctr.getListaProdutos();
 		try {
-			JanelaProdutoLista j = new JanelaProdutoLista(produtos, this);
+			JanelaProdutoCRUD j = new JanelaProdutoCRUD(ctr.proxCod(), getListaProdutos(), this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public List<Produto> listarPesquisa(Produto prod) {
-		return ctr.getPesquisa(prod);
 	}
 
 	public void excluir(Produto p) {

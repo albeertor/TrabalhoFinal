@@ -9,28 +9,30 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import programa.negocio.entidades.Produto;
 
-public class JanelaProdutoLista extends Application {
-
+public class JanelaProdutoCRUD extends Application{
 	private static Stage stage;
-	private List<Produto> produtos;
+	private Produto p = null;
+	private long proxCod;
 	private UIProduto uiProduto;
+	private List<Produto> produtos;
 
-	public JanelaProdutoLista(List<Produto> produtos, UIProduto uiProduto) throws Exception {
-		this.produtos = produtos;
+	public JanelaProdutoCRUD(long proxCod, List<Produto> produtos, UIProduto uiProduto) throws Exception {	
+		this.proxCod = proxCod;
 		this.uiProduto = uiProduto;
+		this.produtos = produtos;
 		start(new Stage());
 	}
 
+
 	@Override
 	public void start(Stage stage) throws Exception {
-		JanelaProdutoLista.stage = stage;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ListarProduto.fxml"));
-		loader.setController(new JanelaProdutoListaController(produtos, uiProduto));
+		JanelaProdutoCRUD.stage = stage;
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("CRUDProduto.fxml"));
+		loader.setController(new JanelaProdutoCRUDController(proxCod,uiProduto, produtos));
 		Parent parent = loader.load();
 		Scene scene = new Scene(parent);
 		stage.setScene(scene);
-		stage.setTitle("Produto");
-	
+		stage.setTitle("Inserir Produto");
 		stage.show();
 	}
 

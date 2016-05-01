@@ -43,9 +43,9 @@ public class JanelaClienteInserirController implements Initializable {
 	@FXML
 	private Button btCancelar, btSalvar;
 	@FXML
-	private TextField fCod, fEndereco;
+	private TextField fCod, fNome, fRG, fEndereco;
 	@FXML
-	private FormattedTextField fTel, fCPF, fRG, fCEP, fNome;
+	private FormattedTextField fTel, fCPF, fCEP;
 	@FXML
 	private DatePicker dtNasc;
 	@FXML
@@ -95,12 +95,17 @@ public class JanelaClienteInserirController implements Initializable {
 			}
 		});
 		
+		Validation.toTelefoneField(fTel);
+		Validation.toCpfField(fCPF);		
+		Validation.toCEPField(fCEP);
+		
 		if (c != null) {
 			fCod.setText(c.getCodCliente() + "");
 			fNome.setText(c.getNome());
 			fTel.setText(c.getTel());
 			fCPF.setText(c.getCpf());
 			fCEP.setText(c.getCep());
+	
 			fRG.setText(c.getRg());
 			fEndereco.setText(c.getEndereco());
 
@@ -123,7 +128,6 @@ public class JanelaClienteInserirController implements Initializable {
 			}
 			ObservableList<String> nmCid = FXCollections.observableArrayList(nmcidades);
 			cbCidade.setItems(nmCid);
-			cbCidade.setDisable(true);
 
 			cbSgEstado.getSelectionModel().select(c.getCidade().getsgEstado());
 			cbCidade.getSelectionModel().select(c.getCidade().getNome());
@@ -149,11 +153,43 @@ public class JanelaClienteInserirController implements Initializable {
 
 		}
 		
-		Validation.toTelefoneField(fTel);
-		Validation.toCpfField(fCPF);		
-		Validation.toCEPField(fCEP);
-		Validation.validate(fRG, Validation.RG);
-		Validation.validate(fNome, Validation.VARCHAR45);
+	
+		fRG.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.matches(".{0,11}") || newValue.isEmpty()) {
+                	fRG.setText(newValue);
+                } else {
+                	fRG.setText(oldValue);
+                }
+
+            }
+        });
+		
+		fNome.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.matches(".{0,45}") || newValue.isEmpty()) {
+                	fNome.setText(newValue);
+                } else {
+                	fNome.setText(oldValue);
+                }
+
+            }
+        });
+		
+		fEndereco.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.matches(".{0,45}") || newValue.isEmpty()) {
+                	fEndereco.setText(newValue);
+                } else {
+                	fEndereco.setText(oldValue);
+                }
+
+            }
+        });
+		
 		
 		cbSgEstado.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -170,7 +206,7 @@ public class JanelaClienteInserirController implements Initializable {
 				cbCidade.setDisable(false);
 			}
 		});
-		;
+		
 
 		btSalvar.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -227,7 +263,7 @@ public class JanelaClienteInserirController implements Initializable {
 					fRG.setStyle(" -fx-control-inner-background: white;");
 				}
 
-				if (fCEP.getText().equals("     -   ") || fCEP.getText().equals("")) {
+				if (fCEP.getText().equals("-") || fCEP.getText().equals("")) {
 					fCEP.setStyle(" -fx-control-inner-background: pink;");
 					validacao = false;
 				} else {
@@ -241,7 +277,7 @@ public class JanelaClienteInserirController implements Initializable {
 					fEndereco.setStyle(" -fx-control-inner-background: white;");
 				}
 
-				if (fTel.getText().equals("(  )     -    ") || fTel.getText().equals("")) {
+				if (fTel.getText().equals("()-") || fTel.getText().equals("")) {
 					fTel.setStyle(" -fx-control-inner-background: pink;");
 					validacao = false;
 				} else {

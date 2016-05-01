@@ -9,6 +9,8 @@ public interface IRepositorioCidade {
 
 	List<Cidade> getLista();
 	
+	List<Cidade> getListaCod();
+	
 	Cidade getCidade(int cdCidade);
 
 	List<String> getListaEstado();
@@ -23,7 +25,7 @@ public interface IRepositorioCidade {
 
 	List<String> getEstado();
 
-	List<Cidade> getPesquisa(Cidade c);
-	
+//	List<Cidade> getPesquisa(Cidade c);
+
 	
 }

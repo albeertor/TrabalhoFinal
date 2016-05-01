@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,10 +27,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import programa.negocio.entidades.Cidade;
+import programa.negocio.entidades.Cliente;
 import programa.negocio.entidades.Produto;
 import programa.ui.fx.JanelaPrincipal;
-import programa.ui.fx.produto.JanelaProdutoLista;
-import programa.ui.fx.produto.JanelaProdutoListaController.ItensProperty;
 import programa.ui.fx.util.FxUtil;
 import programa.ui.fx.util.TextFieldUtils;
 import programa.ui.fx.util.FxUtil.AutoCompleteMode;
@@ -49,7 +49,7 @@ public class JanelaCidadeListaController implements Initializable {
 	@FXML
 	private TableView<ItensProperty> tbCidade;
 	@FXML
-	private Button btFechar, btResetar, btInserir, btAlterar, btExcluir, btPesquisar, btLimpar;
+	private Button btFechar, btResetar, btInserir, btAlterar, btExcluir, btLimpar;
 
 	private UICidade uiCidade;
 	private List<Cidade> listaCidade;
@@ -98,27 +98,100 @@ public class JanelaCidadeListaController implements Initializable {
 		}
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	private ObservableList<ItensProperty> findCidade() {
+		ObservableList<ItensProperty> cidadeEncontrados = FXCollections.observableArrayList();
+
+		for (ItensProperty itens : city) {
+			if (itens.getNome().contains(fNome.getText()))
+				cidadeEncontrados.add(itens);
+		}
+		return cidadeEncontrados;
+
+	}
+
+	private ObservableList<ItensProperty> findCidadeCod() {
+		ObservableList<ItensProperty> cidadeEncontrados = FXCollections.observableArrayList();
+
+		for (ItensProperty itens : city) {
+			if (itens.getCod() == Integer.parseInt(fCodigo.getText()))
+				cidadeEncontrados.add(itens);
+		}
+		return cidadeEncontrados;
+	}
+
+	private ObservableList<ItensProperty> findCidadeSg() {
+		ObservableList<ItensProperty> cidadeEncontrados = FXCollections.observableArrayList();
+
+		for (ItensProperty itens : city) {
+			if (itens.getSgEstado().equals(cbSgEstado.getSelectionModel().getSelectedItem())) {
+				cidadeEncontrados.add(itens);
+			}
+		}
+		return cidadeEncontrados;
+	}
+
+	private void reset() {
 		for (int i = 0; i < listaCidade.size(); i++) {
 			city.add(new ItensProperty(listaCidade.get(i).getCodCidade(), listaCidade.get(i).getNome(),
 					listaCidade.get(i).getsgEstado()));
 		}
 
 		tbCidade.setItems(city);
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		reset();
+
 		columnCodigo.setCellValueFactory(new PropertyValueFactory<ItensProperty, Integer>("cod"));
 		columnNome.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("nome"));
 		columnSgEstado.setCellValueFactory(new PropertyValueFactory<ItensProperty, String>("sgEstado"));
 
 		estado = uiCidade.getListaEstado();
-		String[] est = new String[estado.size()];
+		String[] est = new String[estado.size() + 1];
 		for (int i = 0; i < estado.size(); i++) {
-			est[i] = estado.get(i);
+			est[i + 1] = estado.get(i);
 		}
+		est[0] = "QUALQUER ESTADO";
 		ObservableList<String> estad = FXCollections.observableArrayList(est);
 		cbSgEstado.setItems(estad);
 
 		TextFieldUtils.setMask(fCodigo, Mask.MASK_Inteiro);
+
+		fNome.setOnKeyReleased(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				if (!fNome.getText().equals(""))
+					tbCidade.setItems(findCidade());
+				else
+					tbCidade.setItems(city);
+			}
+
+		});
+
+		fCodigo.setOnKeyReleased(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				if (!fCodigo.getText().equals(""))
+					tbCidade.setItems(findCidadeCod());
+				else
+					tbCidade.setItems(city);
+			}
+
+		});
+
+		cbSgEstado.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				if (!cbSgEstado.getSelectionModel().getSelectedItem().equals("QUALQUER ESTADO"))
+					tbCidade.setItems(findCidadeSg());
+				else
+					tbCidade.setItems(city);
+			}
+		});
 
 		btFechar.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -172,30 +245,50 @@ public class JanelaCidadeListaController implements Initializable {
 
 		btExcluir.setOnAction(new EventHandler<ActionEvent>() {
 
+			private Alert alert;
+
 			@Override
 			public void handle(ActionEvent event) {
 				int cod = tbCidade.getSelectionModel().getSelectedItem().getCod();
-				Cidade cid = null;
-				for (int i = 0; i < listaCidade.size(); i++) {
-					if (cod == listaCidade.get(i).getCodCidade())
-						cid = listaCidade.get(i);
-				}
-				if (cid != null) {
-					Alert alert = new Alert(AlertType.CONFIRMATION);
-					alert.setTitle("Excluir");
-					alert.setHeaderText("Você vai excluir a cidade: ");
-					alert.setContentText(
-							"Código: " + cid.getCodCidade() + "\nNome: " + cid.getNome() + "\nTem certeza?");
 
-					Optional<ButtonType> result = alert.showAndWait();
-					if (result.get() == ButtonType.OK) {
-						uiCidade.excluir(cid);
-						Stage stg = (Stage) btExcluir.getScene().getWindow();
-						city.clear();
-						stg.close();
-					} else {
-						alert.close();
+				List<Cliente> listaCliente = JanelaPrincipal.getUiCliente().getListaCliente();
+
+				boolean validate = true;
+				for (int i = 0; i < listaCliente.size(); i++) {
+					if (listaCliente.get(i).getCidade().getCodCidade() == cod)
+						validate = false;
+				}
+
+				if (validate) {
+					Cidade cid = null;
+					for (int i = 0; i < listaCidade.size(); i++) {
+						if (cod == listaCidade.get(i).getCodCidade())
+							cid = listaCidade.get(i);
 					}
+					if (cid != null) {
+						Alert alert = new Alert(AlertType.CONFIRMATION);
+						alert.setTitle("Excluir");
+						alert.setHeaderText("Você vai excluir a cidade: ");
+						alert.setContentText(
+								"Código: " + cid.getCodCidade() + "\nNome: " + cid.getNome() + "\nTem certeza?");
+
+						Optional<ButtonType> result = alert.showAndWait();
+						if (result.get() == ButtonType.OK) {
+							uiCidade.excluir(cid);
+							Stage stg = (Stage) btExcluir.getScene().getWindow();
+							city.clear();
+							stg.close();
+						} else {
+							alert.close();
+						}
+					}
+					
+				}else{
+					alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Cidade");
+					alert.setHeaderText("Não foi possivel excluir!");
+					alert.setContentText("Cidade ligada a algum cliente!");
+					alert.showAndWait();
 				}
 			}
 		});
@@ -204,58 +297,15 @@ public class JanelaCidadeListaController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				fCodigo.setText(null);
-				fNome.setText(null);
+				fCodigo.setText("");
+				fNome.setText("");
 				cbSgEstado.getSelectionModel().select(0);
+				city.clear();
+				reset();
 
 			}
 		});
 
-		btPesquisar.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				boolean validacao = false;
-
-				String nome = null;
-				if (!fNome.getText().isEmpty()) {
-					nome = fNome.getText();
-					validacao = true;
-				}
-
-				long cod = 0;
-				if (!fCodigo.getText().isEmpty()) {
-					cod = Long.valueOf(fCodigo.getText()).longValue();
-					validacao = true;
-				}
-
-				String est = null;
-				if (cbSgEstado.getSelectionModel().getSelectedItem() != null) {
-					est = cbSgEstado.getSelectionModel().getSelectedItem();
-
-					validacao = true;
-				}
-
-				if (validacao == true) {
-
-					Cidade cidPesq = Cidade.newInstance(nome, est);
-
-					cidPesq.setCodCidade(cod);
-					List<Cidade> pesq = uiCidade.listarPesquisa(cidPesq);
-
-					city.clear();
-
-					try {
-						JanelaCidadeLista j = new JanelaCidadeLista(pesq, uiCidade);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					Stage stg = (Stage) btPesquisar.getScene().getWindow();
-					stg.close();
-				}
-			}
-		});
 	}
 
 }

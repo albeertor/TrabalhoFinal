@@ -189,7 +189,7 @@ public class ClienteDAO implements IRepositorioCliente {
 		return false;
 	}
 
-	@Override
+/*	@Override
 	public List<Cliente> getPesquisa(Cliente c) {
 		List<Cliente> lista = new ArrayList<Cliente>();
 
@@ -742,5 +742,5 @@ public class ClienteDAO implements IRepositorioCliente {
 
 		return lista;
 	}
-
+*/
 }
